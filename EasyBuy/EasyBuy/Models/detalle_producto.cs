@@ -12,7 +12,8 @@ namespace EasyBuy.Models
         public int cantidad { get; set; }
         public String color { get; set; }
         public String talla { get; set; }
-        public String precio { get; set; }
+        public String precio { get; set; } 
         public String imagen { get; set; }
-     }
+        public char promocion { get; set; }
+    }
 }
