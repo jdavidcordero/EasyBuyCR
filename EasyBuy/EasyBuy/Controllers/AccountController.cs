@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using EasyBuy;
+using EasyBuy.Models;
 using EasyBuyCR.Models;
 
 namespace EasyBuyCR.Controllers
