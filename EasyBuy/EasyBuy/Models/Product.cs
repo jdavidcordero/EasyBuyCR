@@ -5,7 +5,10 @@ using System.Web;
 
 namespace EasyBuy.Models
 {
-    public class Class1
+    public class Product
     {
+        public int id_producto { get; set; }
+        public String description { get; set; }
+        public int id_empresa { get; set; }
     }
 }
