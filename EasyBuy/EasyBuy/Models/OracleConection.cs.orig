@@ -6,7 +6,10 @@ using Oracle.ManagedDataAccess.Client;
 using System.Configuration;
 using System.Security.Cryptography;
 using System.Text;
+<<<<<<< HEAD
 using EasyBuy.Models;
+=======
+>>>>>>> 55e9fb1acdd7c4becf3ec2440041bc154a71b9c7
 using System.Data;
 
 namespace EasyBuyCR.Models
