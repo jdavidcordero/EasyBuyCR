@@ -159,6 +159,11 @@ namespace EasyBuyCR.Controllers
         {
             if (ModelState.IsValid)
             {
+                try {
+                    con.RegistrarEmpresa(model);
+                } catch (Exception ex) {
+
+                }
                 
             }
 
