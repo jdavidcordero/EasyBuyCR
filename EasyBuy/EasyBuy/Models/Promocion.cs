@@ -12,6 +12,5 @@ namespace EasyBuy.Models
         public int nuevo_precio { get; set; }
         public DateTime fecha_inicio { get; set; }
         public DateTime fecha_final { get; set; }
-	    public DateTime otra_fecha { get; set; }
     }
 }
