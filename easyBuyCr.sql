@@ -122,12 +122,38 @@ IS
 /
 show error
 
+PROMPT inserto funcion detalle_producto
+CREATE OR REPLACE FUNCTION fun_insertar_detalle(Pid_producto number, 
+Pcantidad number, Pcolor varchar2, Ptalla varchar2, Pprecio varchar2, Pimagen varchar2, Ppromocion char)
+RETURN number
+IS
+   BEGIN	
+	insert into detalle_producto(id_producto, cantidad, color, talla, precio, imagen, promocion)
+	values(Pid_producto, Pcantidad, Pcolor, Ptalla, Pprecio, Pimagen, Ppromocion);
+
+	return seq_id_det_producto.currval;
+	
+   END;
+/
+show error
+
+PROMPT.................................TRIGGERS DE REGISTRO............................................
 PROMPT inserto triger producto
 CREATE OR REPLACE TRIGGER trig_insertar_producto
   BEFORE INSERT ON producto
   FOR EACH ROW
   BEGIN
     SELECT seq_id_producto.nextval INTO :new.id_producto FROM dual;
+  END
+;
+/
+
+PROMPT inserto triger detalle_producto
+CREATE OR REPLACE TRIGGER trig_insertar_det_producto
+  BEFORE INSERT ON detalle_producto
+  FOR EACH ROW
+  BEGIN
+    SELECT seq_id_det_producto.nextval INTO :new.id_producto FROM dual;
   END
 ;
 /
