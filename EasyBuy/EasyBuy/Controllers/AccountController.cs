@@ -155,26 +155,46 @@ namespace EasyBuyCR.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterViewModel model)
+        public ActionResult Register(CompanyRegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
                 try {
                     con.RegistrarEmpresa(model);
                 } catch (Exception ex) {
-
+                    ViewBag.Message = "Sucedió un error al registrar su empresa";
                 }
                 
             }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            return View("Index","Home");
         }
 
         [AllowAnonymous]
         public ActionResult CustomerRegister()
         {
             return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult CustomerRegister(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    con.RegistrarCliente(model);
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "Sucedió un error al registrar su empresa";
+                }
+
+            }
+
+            return View("Index", "Home");
         }
 
         //

@@ -90,11 +90,10 @@ namespace EasyBuyCR.Models
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "prc_insertar_cliente";
 
-            cmd.Parameters.Add("PNombre_empresa", model.Name);
-            cmd.Parameters.Add("PNumero_telefono", model.Lastname);
-            cmd.Parameters.Add("PDirección", model.Email);
-            cmd.Parameters.Add("PCorreo_tienda", model.Email);
+            cmd.Parameters.Add("PNombre_cliente", model.Name);
+            cmd.Parameters.Add("PApellido_cliente", model.Lastname);
             cmd.Parameters.Add("PPassword", model.Password);
+            cmd.Parameters.Add("PCorreo_cliente", model.Email);
             cmd.ExecuteNonQuery();
             conexion.Close();
         }
