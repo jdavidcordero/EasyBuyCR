@@ -16,6 +16,9 @@ drop table empresa;
 PROMPT cliente
 drop table cliente;
 
+PROMPT deseo
+drop table deseo;
+
 PROMPT.................................BORRADO DE SECUENCIAS..........................................
 
 drop sequence seq_id_empresa;
@@ -63,7 +66,8 @@ create table detalle_producto(
 	color	         varchar2(20),
 	talla			 varchar2(2),
 	precio			 varchar2(20),
-	imagen			 varchar2(100)
+	imagen			 varchar2(100),
+	promocion		 char
 );
 
 PROMPT promocion
