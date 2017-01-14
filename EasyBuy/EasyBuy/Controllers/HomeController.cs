@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace EasyBuy.Controllers
+namespace EasyBuyCR.Controllers
 {
     public class HomeController : Controller
     {
@@ -25,6 +25,14 @@ namespace EasyBuy.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult LogOff()
+        {
+            Session.Abandon();
+            Session.Clear();
+            Session.RemoveAll();
+            return RedirectToAction("Login","Account");
         }
     }
 }

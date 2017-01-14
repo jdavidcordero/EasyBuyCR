@@ -8,15 +8,16 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using EasyBuy.Models;
+using EasyBuyCR.Models;
 
-namespace EasyBuy.Controllers
+namespace EasyBuyCR.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        OracleConection con = OracleConection.obtenerInstancia();
 
         public AccountController()
         {
@@ -66,29 +67,55 @@ namespace EasyBuy.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public ActionResult Login(LoginViewModel model, string returnUrl)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(model);
+            //}
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
+            //// This doesn't count login failures towards account lockout
+            //// To enable password failures to trigger account lockout, change to shouldLockout: true
+            //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            //switch (result)
+            //{
+            //    case SignInStatus.Success:
+            //        return RedirectToLocal(returnUrl);
+            //    case SignInStatus.LockedOut:
+            //        return View("Lockout");
+            //    case SignInStatus.RequiresVerification:
+            //        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+            //    case SignInStatus.Failure:
+            //    default:
+            //        ModelState.AddModelError("", "Invalid login attempt.");
+            //        return View(model);
+            //}
+
+            if (ModelState.IsValid)
             {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                try
+                {
+
+                    Usuario usuario = con.validarUsuario(model.Email,model.Password);
+
+                    if (usuario != null)
+                    {
+                        Session["Cedula"] = usuario.CEDULA.ToString();
+                        Session["NombreUsuario"] = usuario.NOMBRE.ToString() + " " + usuario.APELLIDO1.ToString();
+                        return RedirectToAction("Index","Home");
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Cédula y/o contraseña incorrectas. Inténtelo de nuevo";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "Sucedió un error al iniciar sesión";
+                }
+
             }
+            return View();
         }
 
         //
@@ -151,7 +178,7 @@ namespace EasyBuy.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Name, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -170,6 +197,12 @@ namespace EasyBuy.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        [AllowAnonymous]
+        public ActionResult CustomerRegister()
+        {
+            return View();
         }
 
         //
@@ -391,8 +424,11 @@ namespace EasyBuy.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            //Session.Abandon();
+            //Session.Clear();
+            //Session.RemoveAll();
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login");
         }
 
         //

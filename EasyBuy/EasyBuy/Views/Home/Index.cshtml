@@ -1,36 +1,56 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Inicio";
 }
 
-<div class="jumbotron">
-    <h1><img src="~/images/EBFondoNegro.png" width="75" height="75" /> Easy Buy CR</h1>
-    <p class="lead">
+
+@*<div class="jumbotron">
+    <h1><img src="~/images/EBblanco.png" width="75" height="75" /> Easy Buy CR</h1>
+    <p class="lead txt-white">
         Easy Buy CR es una empresa que busca proporcionar al mercado costarricense la facilidad
         de comprar en distintos lugares del país, con acceso a las mejores tiendas y sus respectivas ofertas.
-        <a href="#" class="btn btn-green">Saber más &raquo;</a>
+        <a href="#" class="btn btn-white">Saber más &raquo;</a>
     </p>
-</div>
-
+</div>*@
 <div class="row">
-    <div class="col-md-4">
-        <h2>Empresas</h2>
-        <p>
-            Registrate para que comiences a promocionar tu negocio.
-        </p>
-        <p><a class="btn btn-green" href="~/Account/Register">Registrarse</a></p>
+    <div class="container">
+        <div class="col-md-12">
+            <h1><img src="~/images/EBazul.png" width="75" height="75" /> Easy Buy CR</h1>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Clientes</h2>
-        <p>
-            Registrate para comenzar a disfrutar de nuestro servicio.
-        </p>
-        <p><a class="btn btn-green" href="~/Account/Register">Registrarse</a></p>
+</div>
+<div class="row">
+    <div class="container">
+        <div class="col-md-12">
+            <p class="lead">
+                Easy Buy CR es una empresa que busca proporcionar al mercado costarricense la facilidad
+                de comprar en distintos lugares del país, con acceso a las mejores tiendas y sus respectivas ofertas.
+                <a href="#" class="btn btn-blue">Saber más &raquo;</a>
+            </p>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Beneficios</h2>
-        <p>
-            Conoce como trabajamos y que beneficios podemos ofrecerte.
-        </p>
-        <p><a class="btn btn-green" href="~/Home/About">Saber más &raquo;</a></p>
+</div>
+<div class="row row-blue">
+    <div class="container">
+        <div class="col-xs-6 col-sm-6 col-md-3">
+            <img src="~/images/Company.png" class="img-responsive" style="margin-top:5px; margin-bottom:5px;"/>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-3">
+            <h2 class="txt-white">Empresas</h2>
+            <p class="txt-white">
+                Registrese para comenzar a promocionar su negocio.
+            </p>
+            <a class="btn btn-white" href="~/Account/Register">Registrarse</a>
+        </div>
+        <div class="clearfix visible-xs visible-sm"></div>
+        <div class="col-xs-6 col-sm-6 col-md-3">
+            <img src="~/images/Costumer.png" class="img-responsive" style="margin-top:5px; margin-bottom:5px;"/>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-3">
+            <h2 class="txt-white">Clientes</h2>
+            <p class="txt-white">
+                Registrese para comenzar a disfrutar de nuestro servicio.
+            </p>
+            <a class="btn btn-white" href="~/Account/CustomerRegister">Registrarse</a>
+        </div>
     </div>
 </div>

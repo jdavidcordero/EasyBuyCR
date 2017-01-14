@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace EasyBuy.Models
+namespace EasyBuyCR.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
@@ -79,6 +79,50 @@ namespace EasyBuy.Models
         [Display(Name = "Confirmar contraseña")]
         [Compare("Password", ErrorMessage = "La contraseña y la contraseña de confirmación no son iguales.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "Nombre")]
+        public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Apellido")]
+        public string Lastname { get; set; }
+    }
+
+    public class CompanyRegisterViewModel {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Correo")]
+        public string Email { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "La {0} debe ser de al menos {2} caracteres.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Contraseña")]
+        public string Password { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirmar contraseña")]
+        [Compare("Password", ErrorMessage = "La contraseña y la contraseña de confirmación no son iguales.")]
+        public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "Nombre")]
+        public string CompanyName { get; set; }
+
+        [Required]
+        [Display(Name = "Dirección")]
+        public string CompanyAddress { get; set; }
+
+        [Required]
+        [Display(Name = "Provincia")]
+        public string CompanyCity { get; set; }
+
+        [Required]
+        [Phone]
+        [Display(Name = "Teléfono")]
+        public string CompanyPhoneNumber { get; set; }
     }
 
     public class ResetPasswordViewModel
@@ -110,4 +154,3 @@ namespace EasyBuy.Models
         public string Email { get; set; }
     }
 }
-
