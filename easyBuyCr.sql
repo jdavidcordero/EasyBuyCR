@@ -49,6 +49,12 @@ create table producto(
 	descripcion      varchar2(20)
 );
 
+PROMPT deseo
+create table deseo(
+	id_producto		number,
+	id_cliente		number
+);
+
 PROMPT detalle_producto
 create table detalle_producto(
 	id_detalle       number,
@@ -85,6 +91,7 @@ alter table empresa add constraint empresa_pk primary key(id_empresa);
 alter table producto add constraint producto_pk primary key(id_producto);
 alter table detalle_producto add constraint detalle_producto_pk primary key(id_detalle);
 alter table promocion add constraint promocion_pk primary key(id_promocion);
+alter table deseo add constraint deseo_pk primary key (id_producto,id_cliente);
 
 PROMPT....................................LLAVES FORANEAS.........................................
 alter table producto add constraint producto_fk1 foreign key (id_empresa) references empresa;
