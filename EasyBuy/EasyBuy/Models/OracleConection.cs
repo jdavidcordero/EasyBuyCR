@@ -6,6 +6,7 @@ using Oracle.ManagedDataAccess.Client;
 using System.Configuration;
 using System.Security.Cryptography;
 using System.Text;
+using System.Data;
 
 namespace EasyBuyCR.Models
 {
@@ -57,6 +58,44 @@ namespace EasyBuyCR.Models
             conexion.Dispose();
 
             return usuario;
+        }
+
+        public void RegistrarEmpresa(CompanyRegisterViewModel model) {
+
+            cmd = new OracleCommand();
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+
+            cmd.Connection = conexion;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "prc_insertar_empresa";
+
+            cmd.Parameters.Add("PNombre_empresa", model.CompanyName);
+            cmd.Parameters.Add("PNumero_telefono", model.CompanyPhoneNumber);
+            cmd.Parameters.Add("PDirección", model.CompanyAddress);
+            cmd.Parameters.Add("PCorreo_tienda", model.Email);
+            cmd.Parameters.Add("PPassword", model.Password);
+            cmd.ExecuteNonQuery();
+            conexion.Close();
+        }
+
+        public void RegistrarCliente(RegisterViewModel model)
+        {
+
+            cmd = new OracleCommand();
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+
+            cmd.Connection = conexion;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "prc_insertar_cliente";
+
+            cmd.Parameters.Add("PNombre_cliente", model.Name);
+            cmd.Parameters.Add("PApellido_cliente", model.Lastname);
+            cmd.Parameters.Add("PPassword", model.Password);
+            cmd.Parameters.Add("PCorreo_cliente", model.Email);
+            cmd.ExecuteNonQuery();
+            conexion.Close();
         }
 
         // Generar hash.
