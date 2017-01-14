@@ -11,6 +11,6 @@ namespace EasyBuy.Models
         public int id_producto { get; set; }
         public int nuevo_precio { get; set; }
         public DateTime fecha_inicio { get; set; }
-        public DateTime fecha_final { get; set; }
+        
     }
 }
