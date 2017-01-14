@@ -43,6 +43,7 @@ PROMPT empresa
 create table empresa(
 	id_empresa	     number,
 	nombre_empresa   varchar2(30),
+	password_empresa varchar2(20),
 	numero_telefono  varchar2(30),
 	direccion 		 varchar2(40),
 	correo_tienda	 varchar2(30)
@@ -105,6 +106,32 @@ alter table producto add constraint producto_fk1 foreign key (id_empresa) refere
 alter table detalle_producto add constraint detalle_producto_fk2 foreign key (id_producto) references producto;
 alter table promocion add constraint promocion_fk3 foreign key (id_producto) references producto;
 
+
+PROMPT.................................FUNCIONES DE REGISTRO............................................
+PROMPT inserto funcion producto
+CREATE OR REPLACE FUNCTION fun_insertar_producto(Pid_empresa varchar2, 
+Pdescripcion varchar2)
+RETURN number
+IS
+   BEGIN	
+	insert into producto(id_empresa, descripcion) values(Pid_empresa, Pdescripcion);
+
+	return seq_id_producto.currval;
+	
+   END;
+/
+show error
+
+PROMPT inserto triger producto
+CREATE OR REPLACE TRIGGER trig_insertar_producto
+  BEFORE INSERT ON producto
+  FOR EACH ROW
+  BEGIN
+    SELECT seq_id_producto.nextval INTO :new.id_producto FROM dual;
+  END
+;
+/
+
 PROMPT.............................PROCEDIMIENTO ALMACENADOS.........................................
 
 PROMPT procedimiento registrar cliente
@@ -125,12 +152,12 @@ show error
 PROMPT procedimiento registrar empresa
 create or replace procedure prc_insertar_empresa
 (PId_empresa in number, PNombre_empresa in varchar2, 
-PNumero_telefono in varchar2,PDireccion in varchar2, PCorreo_tienda in varchar2)is
+PNumero_telefono in varchar2, PDireccion in varchar2, PPassword_empresa in varchar2, PCorreo_tienda in varchar2)is
 
 begin
 
-		insert into empresa (id_empresa, nombre_empresa, numero_telefono, direccion, correo_tienda)
-		values (PId_empresa, PNombre_empresa, PNumero_telefono, PDireccion, PCorreo_tienda);
+		insert into empresa (id_empresa, nombre_empresa, numero_telefono, direccion, password_empresa, correo_tienda)
+		values (PId_empresa, PNombre_empresa, PNumero_telefono, PDireccion, PPassword_empresa, PCorreo_tienda);
 		commit;
 		
 end prc_insertar_empresa;
