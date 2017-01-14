@@ -6,6 +6,8 @@ using Oracle.ManagedDataAccess.Client;
 using System.Configuration;
 using System.Security.Cryptography;
 using System.Text;
+using EasyBuy.Models;
+using System.Data;
 
 namespace EasyBuyCR.Models
 {
@@ -99,6 +101,45 @@ namespace EasyBuyCR.Models
             {
                 return false;
             }
+        }
+
+
+        public void insertarProducto(String description, int id_empresa, List<detalle_producto> Lista_detalles)
+        {
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+            cmd = new OracleCommand();
+            cmd.Connection = conexion;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "fun_insertar_producto";
+            OracleParameter Resultado = new OracleParameter("Resultado", OracleDbType.Int32, ParameterDirection.ReturnValue);
+            cmd.Parameters.Add(Resultado);
+            cmd.Parameters.Add("descripcion", description);
+            cmd.Parameters.Add("id_empresa", id_empresa);
+
+            cmd.ExecuteNonQuery();
+            int idArticulo = int.Parse(Resultado.Value.ToString());
+            foreach (detalle_producto detalle in Lista_detalles)
+            {
+                if (detalle.cantidad != 0 && detalle.color != null && detalle.precio != null)
+                {
+                    cmd = new OracleCommand();
+                    cmd.Connection = conexion;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "fun_insertar_detalle";
+                    OracleParameter Resultado2 = new OracleParameter("Resultado", OracleDbType.Int32, ParameterDirection.ReturnValue);
+                    cmd.Parameters.Add(Resultado2);
+                    cmd.Parameters.Add("id_producto", Resultado);
+                    cmd.Parameters.Add("cantidad", detalle.cantidad);
+                    cmd.Parameters.Add("color", detalle.color);
+                    cmd.Parameters.Add("talla", detalle.talla);
+                    cmd.Parameters.Add("precio", detalle.precio);
+                    cmd.Parameters.Add("imagen", detalle.imagen);
+                    cmd.Parameters.Add("promocion", detalle.promocion);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            conexion.Close();
         }
     }
 }
