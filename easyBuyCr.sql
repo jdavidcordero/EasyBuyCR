@@ -108,6 +108,21 @@ alter table promocion add constraint promocion_fk3 foreign key (id_producto) ref
 
 
 PROMPT.................................FUNCIONES DE REGISTRO............................................
+PROMPT inserto funcion empresa
+CREATE OR REPLACE FUNCTION fun_insertar_empresa(Pnombre_empresa varchar2, Ppassword_empresa varchar2,
+Pnumero_telefono  varchar2, Pdireccion varchar2, Pcorreo_tienda	varchar2)
+RETURN number
+IS
+   BEGIN	
+	insert into empresa(nombre_empresa, password_empresa, numero_telefono, direccion, correo_tienda) 
+	values(Pnombre_empresa, Ppassword_empresa, Pnumero_telefono, Pdireccion, Pcorreo_tienda);
+
+	return seq_id_empresa.currval;
+	
+   END;
+/
+show error
+
 PROMPT inserto funcion producto
 CREATE OR REPLACE FUNCTION fun_insertar_producto(Pid_empresa varchar2, 
 Pdescripcion varchar2)
@@ -137,7 +152,18 @@ IS
 /
 show error
 
+
 PROMPT.................................TRIGGERS DE REGISTRO............................................
+PROMPT inserto triger insertar_empresa
+CREATE OR REPLACE TRIGGER trig_insertar_empresa
+  BEFORE INSERT ON empresa
+  FOR EACH ROW
+  BEGIN
+    SELECT seq_id_empresa.nextval INTO :new.id_empresa FROM dual;
+  END
+;
+/
+
 PROMPT inserto triger producto
 CREATE OR REPLACE TRIGGER trig_insertar_producto
   BEFORE INSERT ON producto
