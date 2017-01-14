@@ -1,6 +1,9 @@
 --EasyBayCR
 
 PROMPT....................................BORRADO DE TABLAS..........................................
+PROMPT deseo
+drop table deseo;
+
 PROMPT detalle_producto
 drop table detalle_producto;
 
@@ -15,6 +18,9 @@ drop table empresa;
 
 PROMPT cliente
 drop table cliente;
+
+PROMPT deseo
+drop table deseo;
 
 PROMPT.................................BORRADO DE SECUENCIAS..........................................
 
@@ -52,7 +58,7 @@ create table producto(
 PROMPT deseo
 create table deseo(
 	id_producto		number,
-	id_cliente		number
+	correo_cliente  varchar2(30)
 );
 
 PROMPT detalle_producto
@@ -63,7 +69,8 @@ create table detalle_producto(
 	color	         varchar2(20),
 	talla			 varchar2(2),
 	precio			 varchar2(20),
-	imagen			 varchar2(100)
+	imagen			 varchar2(100),
+	promocion		 char
 );
 
 PROMPT promocion
@@ -91,13 +98,100 @@ alter table empresa add constraint empresa_pk primary key(id_empresa);
 alter table producto add constraint producto_pk primary key(id_producto);
 alter table detalle_producto add constraint detalle_producto_pk primary key(id_detalle);
 alter table promocion add constraint promocion_pk primary key(id_promocion);
-alter table deseo add constraint deseo_pk primary key (id_producto,id_cliente);
+alter table deseo add constraint deseo_pk primary key (id_producto,correo_cliente);
 
 PROMPT....................................LLAVES FORANEAS.........................................
 alter table producto add constraint producto_fk1 foreign key (id_empresa) references empresa;
 alter table detalle_producto add constraint detalle_producto_fk2 foreign key (id_producto) references producto;
 alter table promocion add constraint promocion_fk3 foreign key (id_producto) references producto;
 
+PROMPT.............................PROCEDIMIENTO ALMACENADOS.........................................
 
+PROMPT procedimiento registrar cliente
+create or replace procedure prc_insertar_cliente
+(PNombre_cliente in varchar2, PApellido_cliente in varchar2, 
+PPassword in varchar2,PCorreo_cliente in varchar2)is
 
+begin
 
+		insert into cliente (nombre_cliente, apellido_cliente, password, correo_cliente)
+		values (PNombre_cliente, PApellido_cliente, PPassword, PCorreo_cliente);
+		commit;
+		
+end prc_insertar_cliente;
+/
+show error
+
+PROMPT procedimiento registrar empresa
+create or replace procedure prc_insertar_empresa
+(PId_empresa in number, PNombre_empresa in varchar2, 
+PNumero_telefono in varchar2,PDireccion in varchar2, PCorreo_tienda in varchar2)is
+
+begin
+
+		insert into empresa (id_empresa, nombre_empresa, numero_telefono, direccion, correo_tienda)
+		values (PId_empresa, PNombre_empresa, PNumero_telefono, PDireccion, PCorreo_tienda);
+		commit;
+		
+end prc_insertar_empresa;
+/
+show error
+
+PROMPT procedimiento registrar producto
+create or replace procedure prc_insertar_producto
+(PId_producto in number, PId_empresa in number, 
+PDescripcion in varchar2)is
+
+begin
+
+		insert into producto (id_producto, id_empresa, descripcion)
+		values (PId_producto, PId_empresa, PDescripcion);
+		commit;
+		
+end prc_insertar_producto;
+/
+show error
+
+PROMPT procedimiento registrar detalle_producto
+create or replace procedure prc_insertar_det_producto
+(PId_detalle in number, PId_producto in number, 
+PCantidad in number, PColor in varchar2, PTalla in varchar2, PPrecio in varchar2, PImagen in varchar2)is
+
+begin
+
+		insert into detalle_producto (id_detalle, id_producto, cantidad, color, talla, precio, imagen)
+		values (PId_detalle, PId_producto, PCantidad, PColor, PTalla, PPrecio, PImagen);
+		commit;
+		
+end prc_insertar_det_producto;
+/
+show error
+
+PROMPT procedimiento registrar promocion
+create or replace procedure prc_insertar_promocion
+(PId_promocion in number, PId_producto in number, 
+PNuevo_precio in number, PFecha_inicio in date, PFecha_final in date)is
+
+begin
+
+		insert into promocion (id_promocion, id_producto, nuevo_precio, fecha_inicio, fecha_final)
+		values (PId_promocion, PId_producto, PNuevo_precio, PFecha_inicio, PFecha_final);
+		commit;
+		
+end prc_insertar_promocion;
+/
+show error
+
+PROMPT procedimiento registrar deseos
+create or replace procedure prc_insertar_deseos
+(PId_producto in number, PCorreo_cliente in varchar2)is
+
+begin
+
+		insert into deseo (id_producto, correo_cliente)
+		values (PId_producto, PCorreo_cliente);
+		commit;
+		
+end prc_insertar_deseos;
+/
+show error
