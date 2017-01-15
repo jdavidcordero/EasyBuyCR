@@ -114,7 +114,7 @@ alter table producto add constraint producto_fk1 foreign key (correo_tienda) ref
 alter table detalle_producto add constraint detalle_producto_fk2 foreign key (id_producto) references producto;
 alter table promocion add constraint promocion_fk3 foreign key (id_producto) references producto;
 alter table cliente add constraint cliente_fk foreign key (correo_cliente) references usuario;
-alter table empresa add constraint empresa_fk foreign key (correo_tienda) references usuario;
+alter table usuario add constraint usuario_fk foreign key (correo_tienda) references empresa;
 alter table deseo add constraint deseo_fk1 foreign key (correo_cliente) references cliente;
 alter table deseo add constraint deseo_fk2 foreign key (id_producto) references producto;
 
@@ -491,6 +491,8 @@ values ('Carlos','Camaron','4a7d1ed414474e4033ac29ccb8653d9b','carcamaron@gmail.
 insert into usuario (correo, tipo) values ('arenascr@gmail.com','E');
 insert into empresa (nombre_empresa,password_empresa,numero_telefono,direccion,correo_tienda,provincia)
 values ('Arenas','4a7d1ed414474e4033ac29ccb8653d9b','88654355','Heredia Centro','arenascr@gmail.com','Heredia');
+insert into empresa (nombre_empresa,password_empresa,numero_telefono,direccion,correo_tienda,provincia)
+values ('Prueba','123','88654355','Heredia','prueba@gmail.com','Sna jose');
 --Clave 0000: 4a7d1ed414474e4033ac29ccb8653d9b
 
 PROMPT eliminó cliente
