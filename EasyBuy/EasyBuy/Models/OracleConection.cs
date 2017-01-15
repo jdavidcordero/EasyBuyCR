@@ -196,15 +196,16 @@ namespace EasyBuyCR.Models
         {
              conexion = new OracleConnection(cadena);
             conexion.Open();
-
+            producto.id_empresa = "prueba@gmail.com";
             cmd = new OracleCommand();
             cmd.Connection = conexion;
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "fun_insertar_producto";
+            cmd.CommandText = "fun_insertar_producto"; 
             OracleParameter Resultado = new OracleParameter("Resultado", OracleDbType.Int32, ParameterDirection.ReturnValue);
             cmd.Parameters.Add(Resultado);
+            cmd.Parameters.Add("correo_tienda", producto.id_empresa);
             cmd.Parameters.Add("descripcion",producto.description);
-            cmd.Parameters.Add("id_empresa", producto.id_empresa);
+            
 
             cmd.ExecuteNonQuery();
 
@@ -213,6 +214,26 @@ namespace EasyBuyCR.Models
             conexion.Close();
             return idPlan;
         }
+
+        public void guardarDetalle(detalle_producto detalle)
+        {
+            cmd = new OracleCommand();
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+            cmd.Connection = conexion;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "prc_insertar_det_producto";
+            cmd.Parameters.Add("id_producto", detalle.id_producto);
+            cmd.Parameters.Add("cantidad", detalle.cantidad);
+            cmd.Parameters.Add("color", detalle.color);
+            cmd.Parameters.Add("talla", detalle.talla);
+            cmd.Parameters.Add("precio", detalle.precio);
+            cmd.Parameters.Add("imagen", detalle.imagen);
+            cmd.Parameters.Add("promocion", detalle.promocion.ToString());
+            cmd.ExecuteNonQuery();
+            conexion.Close();
+        }
+
 
         public void insertarProducto(String description, int id_empresa, List<detalle_producto> Lista_detalles)
         {
@@ -253,5 +274,42 @@ namespace EasyBuyCR.Models
         }
 
         public void insertarDetalle() { }
+
+        public List<detalle_producto> getDetalles(int id_producto)
+        {
+            detalle_producto item = new detalle_producto();
+            List<detalle_producto> listaItem = new List<detalle_producto>();
+            listaItem.Clear();
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+            String sql = String.Format("select id_detalle,cantidad,color,talla,precio,imagen,promocion from detalle_producto  where id_producto={0}", id_producto);
+            cmd = new OracleCommand(sql, conexion);
+            OracleDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                item = new detalle_producto();
+                item.id_detalle = reader.GetInt32(0);
+                item.cantidad = reader.GetInt32(1);
+                item.color = reader.IsDBNull(2) ? "" : reader.GetString(2);
+                item.talla = reader.IsDBNull(3) ? "" : reader.GetString(3);
+                item.precio = reader.IsDBNull(4) ? "" : reader.GetString(4);
+                item.imagen = reader.IsDBNull(5) ? "" : reader.GetString(5);
+                if (reader.GetString(6).Equals("True"))
+                {
+                    item.promocion = true;
+                }
+                else
+                {
+                    item.promocion = false;
+                }
+                listaItem.Add(item);
+            }
+            reader.Dispose();
+            cmd.Dispose();
+            conexion.Close();
+
+            return listaItem;
+        }
     }
 }

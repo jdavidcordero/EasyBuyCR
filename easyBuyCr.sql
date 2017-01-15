@@ -496,6 +496,13 @@ insert into usuario (correo, tipo) values ('nikecr@gmail.com','E');
 insert into empresa (nombre_empresa,password_empresa,numero_telefono,direccion,correo_tienda,provincia)
 values ('Nike','4a7d1ed414474e4033ac29ccb8653d9b','88654355','Alajuela Centro','nikecr@gmail.com','Alajuela');
 --Clave 0000: 4a7d1ed414474e4033ac29ccb8653d9b
+=======
+insert into usuario (correo, tipo) values ('prueba@gmail.com','E');
+insert into empresa (nombre_empresa,password_empresa,numero_telefono,direccion,correo_tienda,provincia)
+values ('Prueba','123','88654355','Heredia','prueba@gmail.com','Sna jose');
+
+insert into producto(correo_tienda,descripcion) values ('prueba@gmail.com','Camisa tirantes');
+>>>>>>> bc33817f0ee036d19c2aecee908caca21c8ac429
 
 PROMPT eliminó cliente
 execute prc_eliminar_cliente('carcamaron@gmail.com');

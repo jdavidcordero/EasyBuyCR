@@ -13,7 +13,7 @@
     <span id="forEditar" class="form-editar glyphicon glyphicon-pencil" title="Editar Plan"></span>
     <br />
     <div id="Divformulario">
-        @using (Html.BeginForm("RegistrarProducto", "Producto", FormMethod.Post, new { role = "form", id = "FormPlan" }))
+        @using (Html.BeginForm("RegistrarProducto", "Producto", FormMethod.Post, new { role = "form", id = "FormProducto" }))
         {
             @Html.AntiForgeryToken() //Esto es para prevenir ataques CSRF
                                     @Html.ValidationSummary(true)
@@ -25,7 +25,7 @@
                                             <td>
                                                 <div class="input-group">
                                                     <div class="input-group-addon"><span class="glyphicon glyphicon-ok" style="font-size: 9px;"></span></div>
-                                                    @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control", @maxlength = "100", id = "descripcion" } })
+                                                    @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control", @maxlength = "100", id = "description" } })
                                                 </div>
                                             </td>
                                             <td>
@@ -34,13 +34,13 @@
                                         </tr>
                                     </table>
 
-                                    <input type="submit" value="Agregar Producto" class="boton" name="Agregar_Producto" id="btnCrearPlan" />
+                                    <input type="submit" value="Agregar Producto" class="boton" name="Agregar_Producto" id="btnCrearProducto" />
         }
 
     </div>
     @Html.Hidden("id_producto")
 
-    @Html.ActionLink("Agregar Producto", "AgregarDetalleCP", "Producto", null, new { @class = "popup boton", id = "btnAgregarCapa" })
+    @Html.ActionLink("Agregar Detalle", "AgregarDetalleCP", "Producto", null, new { @class = "popup boton", id = "btnAgregarDetalle" })
 
     <div id="contenido"></div>
 
@@ -52,6 +52,10 @@
     <script src="~/Scripts/Accounting.js"></script>
     <script src="~/Scripts/sweetalert.min.js"></script>
     <script src="~/Scripts/Accounting.js"></script>
+<script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+
+<link href="~/Content/smoothness.css" rel="stylesheet" />
+<link href="~/Content/sweetalert.css" rel="stylesheet" />
 }
 
 

@@ -22,6 +22,7 @@
             <td class="etiqueta"><label>Cantidad</label></td>
             <td class="etiqueta"><label>Color</label></td>
             <td class="etiqueta"><label>Imagen</label></td>
+            <td class="etiqueta"><label>Promocion</label></td>
         </tr>
         <tr>
             <td class="etiqueta">@Html.EditorFor(model => model.talla, new { htmlAttributes = new { @class = "form-control", id = "talla" } })</td>
@@ -29,22 +30,12 @@
             <td class="etiqueta">@Html.EditorFor(model => model.cantidad, new { htmlAttributes = new { @class = "form-control", id = "cantidad" } })</td>
             <td class="etiqueta">@Html.EditorFor(model => model.color, new { htmlAttributes = new { @class = "form-control", id = "color" } })</td>
             <td class="etiqueta">@Html.EditorFor(model => model.imagen, new { htmlAttributes = new { @class = "form-control", id = "imagen" } })</td>
-            <td class="etiqueta">@Html.EditorFor(model => model.talla, new { htmlAttributes = new { @class = "form-control", id = "id_producto" } })</td>
+            <td class="etiqueta">@Html.CheckBoxFor(model => model.promocion, new { @class = "form-control", id = "promocion" })</td>
 
-         </tr>
-        <tr>
-            <td class="etiqueta"><label>Promocion</label></td>
-        </tr>
-        <tr>
-            <td class="etiqueta">
-                <select id="promocion">
-                    <option id="si">Si</option>
-                    <option id="no" selected>No</option>
-                </select>
-            </td>  </tr>
-        <tr>
-            <td id="tdBoton">
-                <input type="submit" value="Agregar capacitacion" id="btnAgreCapa" class="boton" name="agregar" />
+       </tr>
+              <tr>
+               <td id="tdBoton">
+                <input type="submit" value="Agregar Detalle" id="btnAgrede" class="boton" name="agregar" />
             </td>
         </tr>
     </table>

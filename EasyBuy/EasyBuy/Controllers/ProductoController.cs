@@ -45,14 +45,14 @@ namespace EasyBuy.Controllers
         public JsonResult RegistrarProducto(Producto producto)
         {
             String mensaje = "";
-            int idProducto = 0;
+            int id_producto = 0;
             bool estado = false;
             try
             {
                 String id = (String)Session["correo_tienda"];
                 producto.id_empresa = id;
-                idProducto = con.GuardarProducto(producto);
-                mensaje = "El plan se ha ingresado correctamente \n";
+                id_producto = con.GuardarProducto(producto);
+                mensaje = "El   producto se ha ingresado correctamente \n";
                 estado = true;
             }
             catch (Exception exc)
@@ -60,7 +60,7 @@ namespace EasyBuy.Controllers
                 mensaje = "Error al crear producto" + exc.Message;
             }
 
-            return new JsonResult { Data = new { estado = estado, mensaje = mensaje, idProducto = idProducto } };
+            return new JsonResult { Data = new { estado = estado, mensaje = mensaje, id_producto = id_producto } };
         }
 
    
@@ -76,14 +76,13 @@ namespace EasyBuy.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult AgregarDetalle(detalle_producto capa)
+        public JsonResult AgregarDetalle(detalle_producto detalle)
         {
             bool estado = false;
             string mensaje = "";
             try
             {
-                //lista.agregar(capa);
-              //  con.guardarCapacitacion(capa);
+                con.guardarDetalle(detalle);
                 mensaje = "Detalle ingresada correctamente \n";
                 estado = true;
             }
@@ -95,5 +94,15 @@ namespace EasyBuy.Controllers
             return new JsonResult { Data = new { estado = estado, mensaje = mensaje } };
         }
 
+        public ActionResult ObtenerCapacitaciones(int id_producto)
+        {
+            return PartialView("_TablaDetalle", con.getDetalles(id_producto));
+        }
+
+        public ActionResult ObtenerDetalleCP(int id_producto)
+        {
+            //ViewBag.direccion = "CP";
+            return PartialView("_TablaDetalle", con.getDetalles(id_producto));
+        }
     }
 }

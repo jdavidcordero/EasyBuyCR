@@ -4,11 +4,10 @@ var ultimoScroll = 0;
 
 $(document).ready(function () {
 
-    //Oculta el boton btnAgregarCapa hasta que se cree un plan
-    $('#btnAgregarCapa').hide();
+    //Oculta el boton btnAgregardetalle hasta que se cree un plan
+    $('#btnAgregarDetalle').hide();
 
-    //Oculta los datos del presupuesto del plan
-    $('#divPresupuestos').hide();
+    $('#contenido').hide();
 
     //Ocultar y mostrar Formulario Crear Plan 
     $('#forMostrar').hide();
@@ -30,9 +29,6 @@ $(document).ready(function () {
 
     });
 
-    //Tooltip
-    $('[data-toggle="tooltip"]').tooltip();
-
     //Abre la ventana modal
     $('body').on("click", ".popup", function (e) {
         e.preventDefault();
@@ -40,10 +36,17 @@ $(document).ready(function () {
         abrirVentana(page);
     });
 
-    //Guarda el plan
-    $("body").on('submit', '#FormPlan', function (e) {
+    //Guarda el producto
+    $("body").on('submit', '#FormProducto', function (e) {
         e.preventDefault();
-        validarProducto();
+        GuardarProducto();
+    });
+    //Evento Guardar detalle
+    $("body").on('submit', '#FormGuardar', function (e) {
+        e.preventDefault();
+        $('#btnAgrede').attr('disabled', true);
+        GuardarDetalle();
+        $('#btnAgrede').attr('disabled', false);
     });
 
 
@@ -73,7 +76,7 @@ function abrirVentana(Page) {
 //Valida los datos del formulario crear plan 
 function validarProducto() {
 
-    if ($('#descripcion').val().trim() == '') {
+    if ($('#description').val().trim() == '') {
         swal("Error!", "Debe Agregar una descripcion", "error");
         return false;
     }
@@ -83,26 +86,30 @@ function validarProducto() {
 //Guardar Plan de Capacitaciones por AJAX
 function GuardarProducto() {
 
-    //Validación
+   // Validación
     if (!validarProducto()) {
         return false;
     }
 
     var producto = {
-        descripcion: $('#descripcion').val()
+        description: $('#description').val()
     };
     //Agrega validation token
-    descripcion.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
+    producto.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
 
     $.ajax({
         url: '/Producto/RegistrarProducto',
         type: 'POST',
         data: producto,
         success: function (data) {
-            if (data.estado) {
+            if (data.description!='') {
 
-                $('#descripcion').attr("readonly", "readonly");
-
+                $('#description').attr("readonly", "readonly");
+                $('#btnCrearProducto').hide();
+                $('#btnAgregarDetalle').show();
+                $('#contenido').show();
+                $('#divDetalle').show();
+                $('#id_producto').attr("value", data.id_producto);
                 swal({ title: "Bien!", text: data.mensaje, timer: 2000, type: "success", showConfirmButton: false });
             }
             else {
@@ -115,7 +122,6 @@ function GuardarProducto() {
     });
 }
 
-
 //Guardar Capacitación por AJAX
 function GuardarDetalle() {
 
@@ -123,34 +129,33 @@ function GuardarDetalle() {
     if (!validarDetalle()) {
         return false;
     }
-
-    //Valida si la capacitacion se puede ingresar en el plan de acuerdo al Presupusto
-    if (!validarPresupuestos()) {
-        return false;
-    }
-
-    var detalle = {
+    var detalle_producto = {
         id_producto: $('#id_producto').val(),
-        talla: 'talla',
+        talla: $('#talla').val(),
         precio: $('#precio').val(),
         cantidad: $('#cantidad').val(),
-        color: $('#imagen').val(),
+        color: $('#color').val(),
+        imagen: $('#imagen').val(),
+        promocion: $('#promocion').prop('checked')
      };
 
     //Agregar validation token
-    detalle.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
+    detalle_producto.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
 
     $.ajax({
-        url: '/Producto/RegistrarProducto',
+        url: '/Producto/AgregarDetalle',
         type: 'POST',
-        data: detalle,
+        data: detalle_producto,
         success: function (data) {
             if (data.estado) {
                 //cargarCapacitaciones();
                 //ajustesValores(capacitacion);
+
+                $('#id_producto').val('');
                 $('#talla').val('');
                 $('#precio').val('');
                 $('#cantidad').val('');
+                $('#color').val('');
                 $('#imagen').val('');
                 $dialog.dialog('close');
 
@@ -184,9 +189,36 @@ function validarDetalle() {
     }
 
     if (isNaN($('#precio').val().trim())) {
-        swal("Error!", "El Costo Capacitación debe ser un numero", "error");
+        swal("Error!", "El Costo  debe ser un numero", "error");
         return false;
     }
     return true;
+}
+
+
+//Carga la tabla de capacitaciones que pertenecen al plan
+function cargarCapacitaciones() {
+    $('#contenido').html("Cargando...");
+
+    $.ajax({
+        url: '/Producto/ObtenerDetalleCP',
+        type: 'GET',
+        data: {
+            'id_producto': $('#id_producto').val()
+        },
+        success: function (data) {
+            if (data.length > 0) {
+                $('#contenido').html(data);
+            }
+            else {
+                $('#contenido').html('');
+            }
+        },
+        error: function () {
+            swal("Error!", "Error al cargar detalles...", "error");
+            $('#contenido').html("No se ha podido cargar los detalles...");
+        }
+
+    });
 }
 
