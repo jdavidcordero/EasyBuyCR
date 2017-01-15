@@ -81,7 +81,7 @@ namespace EasyBuyCR.Controllers
 
                     if (usuario != null)
                     {
-                        Session["Cedula"] = usuario.CEDULA.ToString();
+                        Session["Correo"] = usuario.CORREO.ToString();
                         Session["NombreUsuario"] = usuario.NOMBRE.ToString() + " " + usuario.APELLIDO1.ToString();
                         return RedirectToAction("Index","Home");
                     }
