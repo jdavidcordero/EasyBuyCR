@@ -1,6 +1,7 @@
 --EasyBayCR
 
 PROMPT....................................BORRADO DE TABLAS..........................................
+
 PROMPT deseo
 drop table deseo;
 
@@ -19,8 +20,8 @@ drop table empresa;
 PROMPT cliente
 drop table cliente;
 
-PROMPT deseo
-drop table deseo;
+PROMPT usuario
+drop table usuario;
 
 PROMPT.................................BORRADO DE SECUENCIAS..........................................
 
@@ -31,11 +32,16 @@ drop sequence seq_id_promocion;
 
 PROMPT....................................CREACION DE TABLAS.........................................
 
+create table usuario(
+	correo varchar2(30),
+	tipo char
+);
+
 PROMPT cliente
 create table cliente(
 	nombre_cliente   varchar2(20),
 	apellido_cliente varchar2(20),
-	password		 varchar2(20),
+	password		 varchar2(50),
 	correo_cliente   varchar2(30)
 );
 
@@ -43,7 +49,7 @@ PROMPT empresa
 create table empresa(
 	id_empresa	     number,
 	nombre_empresa   varchar2(30),
-	password_empresa varchar2(20),
+	password_empresa varchar2(50),
 	numero_telefono  varchar2(30),
 	direccion 		 varchar2(40),
 	correo_tienda	 varchar2(30)
@@ -52,7 +58,7 @@ create table empresa(
 PROMPT producto
 create table producto(
 	id_producto	     number,
-	id_empresa       number,
+	correo_tienda    varchar2(30),
 	descripcion      varchar2(20)
 );
 
@@ -95,17 +101,21 @@ maxvalue 999999999;
 
 PROMPT....................................LLAVES PRIMARIAS.........................................
 alter table cliente add constraint cliente_pk primary key(correo_cliente);
-alter table empresa add constraint empresa_pk primary key(id_empresa);
+alter table empresa add constraint empresa_pk primary key(correo_tienda);
 alter table producto add constraint producto_pk primary key(id_producto);
 alter table detalle_producto add constraint detalle_producto_pk primary key(id_detalle);
 alter table promocion add constraint promocion_pk primary key(id_promocion);
 alter table deseo add constraint deseo_pk primary key (id_producto,correo_cliente);
+alter table usuario add constraint usuario_pk primary key (correo);
 
 PROMPT....................................LLAVES FORANEAS.........................................
-alter table producto add constraint producto_fk1 foreign key (id_empresa) references empresa;
+alter table producto add constraint producto_fk1 foreign key (correo_tienda) references empresa;
 alter table detalle_producto add constraint detalle_producto_fk2 foreign key (id_producto) references producto;
 alter table promocion add constraint promocion_fk3 foreign key (id_producto) references producto;
-
+alter table cliente add constraint cliente_fk foreign key (correo_cliente) references usuario;
+alter table empresa add constraint empresa_fk foreign key (correo_tienda) references usuario;
+alter table deseo add constraint deseo_fk1 foreign key (correo_cliente) references cliente;
+alter table deseo add constraint deseo_fk2 foreign key (id_producto) references producto;
 
 PROMPT.................................FUNCIONES DE REGISTRO............................................
 PROMPT inserto funcion empresa
@@ -274,3 +284,11 @@ begin
 end prc_insertar_deseos;
 /
 show error
+
+
+insert into usuario (correo, tipo) values ('dacorcam@hotmail.com','C');
+insert into cliente (nombre_cliente,apellido_cliente,password,correo_cliente) 
+values ('Jose','Cordero','4a7d1ed414474e4033ac29ccb8653d9b','dacorcam@hotmail.com');
+--Clave 0000: 4a7d1ed414474e4033ac29ccb8653d9b
+
+commit;
