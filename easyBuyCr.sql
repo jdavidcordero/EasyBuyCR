@@ -52,6 +52,7 @@ create table empresa(
 	password_empresa varchar2(50),
 	numero_telefono  varchar2(30),
 	direccion 		 varchar2(40),
+	provincia        varchar2(20),
 	correo_tienda	 varchar2(30)
 );
 
@@ -120,12 +121,12 @@ alter table deseo add constraint deseo_fk2 foreign key (id_producto) references 
 PROMPT.................................FUNCIONES DE REGISTRO............................................
 PROMPT inserto funcion empresa
 CREATE OR REPLACE FUNCTION fun_insertar_empresa(Pnombre_empresa varchar2, Ppassword_empresa varchar2,
-Pnumero_telefono  varchar2, Pdireccion varchar2, Pcorreo_tienda	varchar2)
+Pnumero_telefono  varchar2, Pdireccion varchar2, Pcorreo_tienda	varchar2, Pprovincia varchar2)
 RETURN number
 IS
    BEGIN	
-	insert into empresa(nombre_empresa, password_empresa, numero_telefono, direccion, correo_tienda) 
-	values(Pnombre_empresa, Ppassword_empresa, Pnumero_telefono, Pdireccion, Pcorreo_tienda);
+	insert into empresa(nombre_empresa, password_empresa, numero_telefono, direccion, correo_tienda,provincia) 
+	values(Pnombre_empresa, Ppassword_empresa, Pnumero_telefono, Pdireccion, Pcorreo_tienda, Pprovincia);
 
 	return seq_id_empresa.currval;
 	
@@ -214,12 +215,12 @@ show error
 PROMPT procedimiento registrar empresa
 create or replace procedure prc_insertar_empresa
 (PId_empresa in number, PNombre_empresa in varchar2, 
-PNumero_telefono in varchar2, PDireccion in varchar2, PPassword_empresa in varchar2, PCorreo_tienda in varchar2)is
+PNumero_telefono in varchar2, PDireccion in varchar2, PPassword_empresa in varchar2, PCorreo_tienda in varchar2,Pprovincia in varchar2)is
 
 begin
 
-		insert into empresa (id_empresa, nombre_empresa, numero_telefono, direccion, password_empresa, correo_tienda)
-		values (PId_empresa, PNombre_empresa, PNumero_telefono, PDireccion, PPassword_empresa, PCorreo_tienda);
+		insert into empresa (id_empresa, nombre_empresa, numero_telefono, direccion, password_empresa, correo_tienda,provincia)
+		values (PId_empresa, PNombre_empresa, PNumero_telefono, PDireccion, PPassword_empresa, PCorreo_tienda, Pprovincia);
 		commit;
 		
 end prc_insertar_empresa;
@@ -285,10 +286,27 @@ end prc_insertar_deseos;
 /
 show error
 
+PROMPT procedimiento registrar usuario
+create or replace procedure prc_insertar_usuario
+(Pcorreo in varchar2, PTipo in char)is
+
+begin
+
+		insert into usuario (correo, tipo)
+		values (Pcorreo, PTipo);
+		commit;
+		
+end prc_insertar_usuario;
+/
+show error
 
 insert into usuario (correo, tipo) values ('dacorcam@hotmail.com','C');
 insert into cliente (nombre_cliente,apellido_cliente,password,correo_cliente) 
 values ('Jose','Cordero','4a7d1ed414474e4033ac29ccb8653d9b','dacorcam@hotmail.com');
+
+insert into usuario (correo, tipo) values ('arenascr@gmail.com','E');
+insert into empresa (nombre_empresa,password_empresa,numero_telefono,direccion,correo_tienda,provincia)
+values ('Arenas','4a7d1ed414474e4033ac29ccb8653d9b','88654355','Heredia Centro','arenascr@gmail.com','Heredia');
 --Clave 0000: 4a7d1ed414474e4033ac29ccb8653d9b
 
 commit;

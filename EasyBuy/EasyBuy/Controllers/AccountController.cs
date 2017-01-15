@@ -90,8 +90,9 @@ namespace EasyBuyCR.Controllers
                         }
                         else {
                             Session["Tipo"] = usuario[0];
+                            Session["Correo"] = usuario[2];
                             Session["NombreUsuario"] = usuario[1];
-                            return RedirectToAction("Index", "Cliente");
+                            return RedirectToAction("About", "Home");
                         }
                         
                     }
@@ -157,6 +158,8 @@ namespace EasyBuyCR.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            String[] provincias = { "Alajuela", "Cartago", "Guanacaste", "Heredia", "Limón", "Puntarenas", "San José"};
+            ViewData["provincias"] = new SelectList(provincias);
             return View();
         }
 
@@ -171,13 +174,17 @@ namespace EasyBuyCR.Controllers
             {
                 try {
                     con.RegistrarEmpresa(model);
+                    Session["Tipo"] = "C";
+                    Session["Correo"] = model.Email;
+                    Session["NombreUsuario"] = model.CompanyName;
+                    return RedirectToAction("About", "Home");
                 } catch (Exception ex) {
                     ViewBag.Message = "Sucedió un error al registrar su empresa";
                 }
                 
             }
 
-            return View("Index","Home");
+            return RedirectToAction("Index","Home");
         }
 
         [AllowAnonymous]
@@ -196,6 +203,10 @@ namespace EasyBuyCR.Controllers
                 try
                 {
                     con.RegistrarCliente(model);
+                    Session["Tipo"] = "C";
+                    Session["Correo"] = model.Email;
+                    Session["NombreUsuario"] = model.Name + " " + model.Lastname;
+                    return RedirectToAction("Index", "Cliente");
                 }
                 catch (Exception ex)
                 {
@@ -204,7 +215,7 @@ namespace EasyBuyCR.Controllers
 
             }
 
-            return View("Index", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         //

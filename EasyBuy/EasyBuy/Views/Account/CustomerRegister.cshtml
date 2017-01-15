@@ -12,7 +12,7 @@
                     <li role="presentation"><a class="inactive-gray" href="~/Account/Register">Empresas</a></li>
                     <li role="presentation" class="active"><a class="active-green" href="~/Account/CustomerRegister">Clientes</a></li>
                 </ul>
-                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                @using (Html.BeginForm("CustomerRegister", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
                     <h2 class="txt-center">@ViewBag.Title</h2>

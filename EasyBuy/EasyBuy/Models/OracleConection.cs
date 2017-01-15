@@ -42,9 +42,8 @@ namespace EasyBuyCR.Models
 
             if (reader.Read())
             {
-                usuario = new String[5];
-                char tipo = reader.IsDBNull(0) ? 'X' : reader.GetChar(0);
-                usuario[0] = tipo.ToString();
+                usuario = new String[4];
+                usuario[0] = reader.IsDBNull(0) ? "" : reader.GetString(0);
             }
             
 
@@ -54,7 +53,7 @@ namespace EasyBuyCR.Models
                 {
                     cmd = new OracleCommand("select nombre_cliente,apellido_cliente,correo_cliente from cliente where correo_cliente = :correo and password = :contra", conexion);
                     cmd.Parameters.Add("correo", OracleDbType.Varchar2).Value = correo;
-                    cmd.Parameters.Add("contra", OracleDbType.Varchar2).Value = contrasena;
+                    cmd.Parameters.Add("contra", OracleDbType.Varchar2).Value = ObtenerHash(contrasena);
 
                     reader = cmd.ExecuteReader();
 
@@ -66,9 +65,9 @@ namespace EasyBuyCR.Models
                     }
                 }
                 else {
-                    cmd = new OracleCommand("select nombre_empresa,numero_telefono,correo_tienda,direccion from empresa where correo_tienda = :correo and password_empresa = :contra", conexion);
+                    cmd = new OracleCommand("select nombre_empresa,correo_tienda from empresa where correo_tienda = :correo and password_empresa = :contra", conexion);
                     cmd.Parameters.Add("correo", OracleDbType.Varchar2).Value = correo;
-                    cmd.Parameters.Add("contra", OracleDbType.Varchar2).Value = contrasena;
+                    cmd.Parameters.Add("contra", OracleDbType.Varchar2).Value = ObtenerHash(contrasena);
 
                     reader = cmd.ExecuteReader();
 
@@ -76,8 +75,6 @@ namespace EasyBuyCR.Models
                     {
                         usuario[1] = reader.IsDBNull(0) ? "" : reader.GetString(0);
                         usuario[2] = reader.IsDBNull(1) ? "" : reader.GetString(1);
-                        usuario[3] = reader.IsDBNull(2) ? "" : reader.GetString(2);
-                        usuario[4] = reader.IsDBNull(3) ? "" : reader.GetString(3);
                     }
                 }
             }
@@ -93,25 +90,33 @@ namespace EasyBuyCR.Models
 
         public void RegistrarEmpresa(CompanyRegisterViewModel model) {
 
+            RegistrarUsuario(model.Email, "E");
+
             cmd = new OracleCommand();
             conexion = new OracleConnection(cadena);
             conexion.Open();
 
             cmd.Connection = conexion;
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "prc_insertar_empresa";
+            cmd.CommandText = "fun_insertar_empresa";
 
-            cmd.Parameters.Add("PNombre_empresa", model.CompanyName);
-            cmd.Parameters.Add("PNumero_telefono", model.CompanyPhoneNumber);
-            cmd.Parameters.Add("PDirección", model.CompanyAddress);
-            cmd.Parameters.Add("PCorreo_tienda", model.Email);
-            cmd.Parameters.Add("PPassword", model.Password);
+            OracleParameter Resultado = new OracleParameter("Resultado", OracleDbType.Int32, ParameterDirection.ReturnValue);
+            cmd.Parameters.Add(Resultado);
+
+            cmd.Parameters.Add("Pnombre_empresa", model.CompanyName);
+            cmd.Parameters.Add("Ppassword_empresa", ObtenerHash(model.Password));
+            cmd.Parameters.Add("Pnumero_telefono", model.CompanyPhoneNumber);
+            cmd.Parameters.Add("Pdirección", model.CompanyAddress);
+            cmd.Parameters.Add("Pcorreo_tienda", model.Email);
+            cmd.Parameters.Add("Pprovincia", model.CompanyCity);
             cmd.ExecuteNonQuery();
             conexion.Close();
         }
 
         public void RegistrarCliente(RegisterViewModel model)
         {
+
+            RegistrarUsuario(model.Email, "C");
 
             cmd = new OracleCommand();
             conexion = new OracleConnection(cadena);
@@ -123,8 +128,25 @@ namespace EasyBuyCR.Models
 
             cmd.Parameters.Add("PNombre_cliente", model.Name);
             cmd.Parameters.Add("PApellido_cliente", model.Lastname);
-            cmd.Parameters.Add("PPassword", model.Password);
+            cmd.Parameters.Add("PPassword", ObtenerHash(model.Password));
             cmd.Parameters.Add("PCorreo_cliente", model.Email);
+            cmd.ExecuteNonQuery();
+            conexion.Close();
+        }
+
+        public void RegistrarUsuario(String correo, String tipo)
+        {
+
+            cmd = new OracleCommand();
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+
+            cmd.Connection = conexion;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "prc_insertar_usuario";
+
+            cmd.Parameters.Add("Pcorreo", correo);
+            cmd.Parameters.Add("PTipo", tipo);
             cmd.ExecuteNonQuery();
             conexion.Close();
         }

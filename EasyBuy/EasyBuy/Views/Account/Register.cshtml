@@ -27,7 +27,7 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.CompanyCity, new { @class = "col-md-3 control-label" })
                         <div class="col-md-9">
-                            @Html.TextBoxFor(m => m.CompanyCity, new { @class = "form-control" })
+                            @Html.DropDownList("CompanyCity", ViewData["provincias"] as SelectList, new { @class = "form-control" })
                         </div>
                     </div>
                     <div class="form-group">
