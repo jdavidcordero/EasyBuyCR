@@ -77,13 +77,23 @@ namespace EasyBuyCR.Controllers
                 try
                 {
 
-                    Usuario usuario = con.validarUsuario(model.Email,model.Password);
+                    String[] usuario = con.validarUsuario(model.Email,model.Password);
 
                     if (usuario != null)
                     {
-                        Session["Correo"] = usuario.CORREO.ToString();
-                        Session["NombreUsuario"] = usuario.NOMBRE.ToString() + " " + usuario.APELLIDO1.ToString();
-                        return RedirectToAction("Index","Home");
+                        if (usuario[0].Equals("C"))
+                        {
+                            Session["Tipo"] = usuario[0];
+                            Session["Correo"] = usuario[3];
+                            Session["NombreUsuario"] = usuario[1] + " " + usuario[2];
+                            return RedirectToAction("Index", "Cliente");
+                        }
+                        else {
+                            Session["Tipo"] = usuario[0];
+                            Session["NombreUsuario"] = usuario[1];
+                            return RedirectToAction("Index", "Cliente");
+                        }
+                        
                     }
                     else
                     {

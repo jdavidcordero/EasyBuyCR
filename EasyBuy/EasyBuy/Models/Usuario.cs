@@ -8,8 +8,6 @@ namespace EasyBuyCR.Models
 {
     public class Usuario
     {
-        
-        public String CEDULA { get; set; }
         public String NOMBRE { get; set; }
         public String APELLIDO1 { get; set; }
         [Required(ErrorMessage = "Por favor ingrese su correo", AllowEmptyStrings = false)]
@@ -18,6 +16,7 @@ namespace EasyBuyCR.Models
         [Required(ErrorMessage = "Por favor ingrese su contraseña", AllowEmptyStrings = false)]
         public String CONTRASENA { get; set; }
         public Boolean RECORDAR { get; set; }
+        public char TIPO { get; set; }
         
     }
 }

@@ -134,12 +134,12 @@ IS
 show error
 
 PROMPT inserto funcion producto
-CREATE OR REPLACE FUNCTION fun_insertar_producto(Pid_empresa varchar2, 
+CREATE OR REPLACE FUNCTION fun_insertar_producto(Pcorreo_tienda varchar2, 
 Pdescripcion varchar2)
 RETURN number
 IS
    BEGIN	
-	insert into producto(id_empresa, descripcion) values(Pid_empresa, Pdescripcion);
+	insert into producto(correo_tienda, descripcion) values(Pcorreo_tienda, Pdescripcion);
 
 	return seq_id_producto.currval;
 	
@@ -228,13 +228,13 @@ show error
 
 PROMPT procedimiento registrar producto
 create or replace procedure prc_insertar_producto
-(PId_producto in number, PId_empresa in number, 
+(PId_producto in number, Pcorreo_tienda in number, 
 PDescripcion in varchar2)is
 
 begin
 
-		insert into producto (id_producto, id_empresa, descripcion)
-		values (PId_producto, PId_empresa, PDescripcion);
+		insert into producto (id_producto, correo_tienda, descripcion)
+		values (PId_producto, Pcorreo_tienda, PDescripcion);
 		commit;
 		
 end prc_insertar_producto;

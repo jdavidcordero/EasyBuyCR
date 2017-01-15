@@ -29,27 +29,57 @@ namespace EasyBuyCR.Models
             return instancia;
         }
 
-        public Usuario validarUsuario(String correo, String contrasena)
+        public String[] validarUsuario(String correo, String contrasena)
         {
-            Usuario usuario = null;
+            String[] usuario = null;
             conexion = new OracleConnection(cadena);
             conexion.Open();
 
-            cmd = new OracleCommand("select id_cliente, nombre_cliente, apellido_cliente,correo_cliente from cliente where password = :contra and correo_cliente= :correo", conexion);
-
-            cmd.Parameters.Add("contra", OracleDbType.Varchar2).Value = ObtenerHash(contrasena);
+            cmd = new OracleCommand("select tipo from usuario where correo = :correo", conexion);
             cmd.Parameters.Add("correo", OracleDbType.Varchar2).Value = correo;
 
             OracleDataReader reader = cmd.ExecuteReader();
 
             if (reader.Read())
             {
-                usuario = new Usuario();
-                usuario.CEDULA = reader.IsDBNull(0) ? "" : reader.GetString(0);
-                usuario.NOMBRE = reader.IsDBNull(1) ? "" : reader.GetString(1);
-                usuario.APELLIDO1 = reader.IsDBNull(2) ? "" : reader.GetString(2);
-                usuario.CORREO = reader.IsDBNull(3) ? "" : reader.GetString(3);
+                usuario = new String[5];
+                char tipo = reader.IsDBNull(0) ? 'X' : reader.GetChar(0);
+                usuario[0] = tipo.ToString();
+            }
+            
 
+            if (usuario != null) 
+            {
+                if (usuario[0].Equals("C"))
+                {
+                    cmd = new OracleCommand("select nombre_cliente,apellido_cliente,correo_cliente from cliente where correo_cliente = :correo and password = :contra", conexion);
+                    cmd.Parameters.Add("correo", OracleDbType.Varchar2).Value = correo;
+                    cmd.Parameters.Add("contra", OracleDbType.Varchar2).Value = contrasena;
+
+                    reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        usuario[1] = reader.IsDBNull(0) ? "" : reader.GetString(0);
+                        usuario[2] = reader.IsDBNull(1) ? "" : reader.GetString(1);
+                        usuario[3] = reader.IsDBNull(2) ? "" : reader.GetString(2);
+                    }
+                }
+                else {
+                    cmd = new OracleCommand("select nombre_empresa,numero_telefono,correo_tienda,direccion from empresa where correo_tienda = :correo and password_empresa = :contra", conexion);
+                    cmd.Parameters.Add("correo", OracleDbType.Varchar2).Value = correo;
+                    cmd.Parameters.Add("contra", OracleDbType.Varchar2).Value = contrasena;
+
+                    reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        usuario[1] = reader.IsDBNull(0) ? "" : reader.GetString(0);
+                        usuario[2] = reader.IsDBNull(1) ? "" : reader.GetString(1);
+                        usuario[3] = reader.IsDBNull(2) ? "" : reader.GetString(2);
+                        usuario[4] = reader.IsDBNull(3) ? "" : reader.GetString(3);
+                    }
+                }
             }
 
             // Libera todo los recursos utilizados
