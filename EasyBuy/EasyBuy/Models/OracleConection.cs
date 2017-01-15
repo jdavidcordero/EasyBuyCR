@@ -252,7 +252,7 @@ namespace EasyBuyCR.Models
             int idArticulo = int.Parse(Resultado.Value.ToString());
             foreach (detalle_producto detalle in Lista_detalles)
             {
-                if (detalle.cantidad != 0 && detalle.color != null && detalle.precio != null)
+                if (detalle.cantidad != 0 && detalle.color != null && detalle.precio != 0)
                 {
                     cmd = new OracleCommand();
                     cmd.Connection = conexion;
@@ -293,7 +293,7 @@ namespace EasyBuyCR.Models
                 item.cantidad = reader.GetInt32(1);
                 item.color = reader.IsDBNull(2) ? "" : reader.GetString(2);
                 item.talla = reader.IsDBNull(3) ? "" : reader.GetString(3);
-                item.precio = reader.IsDBNull(4) ? "" : reader.GetString(4);
+                item.precio = reader.GetInt32(4);
                 item.imagen = reader.IsDBNull(5) ? "" : reader.GetString(5);
                 if (reader.GetString(6).Equals("True"))
                 {
@@ -310,6 +310,56 @@ namespace EasyBuyCR.Models
             conexion.Close();
 
             return listaItem;
+        }
+
+        public detalle_producto ObtenerDetalle(int id_detalle)
+        {
+            detalle_producto detalle = new detalle_producto();
+
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+            String sql = String.Format("select id_detalle,cantidad,color,talla,precio,imagen,promocion from detalle_producto  where id_detalle={0}", id_detalle);
+            cmd = new OracleCommand(sql, conexion);
+            OracleDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                detalle = new detalle_producto();
+                detalle.talla = reader.IsDBNull(3) ? "" : reader.GetString(0);
+                detalle.cantidad = reader.GetInt32(1);
+                detalle.precio = reader.GetInt32(2);
+                detalle.imagen = reader.IsDBNull(3) ? "" : reader.GetString(3);
+                detalle.color = reader.IsDBNull(4) ? "" : reader.GetString(4);
+              
+                if (reader.GetString(12).Equals("True"))
+                {
+                    detalle.promocion = true;
+                }
+                else
+                {
+                    detalle.promocion = false;
+                }
+            }
+            reader.Dispose();
+            cmd.Dispose();
+            conexion.Close();
+
+            return detalle;
+        }
+
+
+        public void EliminarDetalle(int idDeta)
+        {
+            cmd = new OracleCommand();
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+            cmd.Connection = conexion;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "prc_eliminar_detalle";
+
+            cmd.Parameters.Add("Pid_detalle", idDeta);
+            cmd.ExecuteNonQuery();
+            cmd.Dispose();
+            conexion.Close();
         }
     }
 }

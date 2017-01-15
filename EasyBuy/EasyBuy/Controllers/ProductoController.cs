@@ -3,6 +3,7 @@ using EasyBuyCR.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -94,7 +95,7 @@ namespace EasyBuy.Controllers
             return new JsonResult { Data = new { estado = estado, mensaje = mensaje } };
         }
 
-        public ActionResult ObtenerCapacitaciones(int id_producto)
+        public ActionResult ObtenerDetalle(int id_producto)
         {
             return PartialView("_TablaDetalle", con.getDetalles(id_producto));
         }
@@ -103,6 +104,46 @@ namespace EasyBuy.Controllers
         {
             //ViewBag.direccion = "CP";
             return PartialView("_TablaDetalle", con.getDetalles(id_producto));
+        }
+
+
+        public ActionResult EliminarDetalle(int id_detalle)
+        {
+            if (id_detalle < 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            detalle_producto detalle = con.ObtenerDetalle(id_detalle);
+
+            return PartialView(detalle);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("EliminarDetalle")]
+        public JsonResult Eliminar(int id_detalle)
+        {
+            bool estado = false;
+            string mensaje = "";
+            try
+            {
+
+
+                if (id_detalle < 0)
+                {
+                    mensaje = "EL id no puede ser negativo";
+                }
+
+                con.EliminarDetalle(id_detalle);
+                estado = true;
+                mensaje = "Detalle eliminada...";
+            }
+            catch (Exception exc)
+            {
+                mensaje = "Error al eliminar Detalle";
+            }
+
+            return new JsonResult { Data = new { estado = estado, mensaje = mensaje } };
         }
     }
 }

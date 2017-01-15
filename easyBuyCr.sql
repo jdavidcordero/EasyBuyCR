@@ -76,7 +76,7 @@ create table detalle_producto(
 	cantidad		 number,	
 	color	         varchar2(20),
 	talla			 varchar2(2),
-	precio			 varchar2(20),
+	precio			 number,
 	imagen			 varchar2(100),
 	promocion		 varchar2(20)
 );
@@ -150,7 +150,7 @@ show error
 
 PROMPT inserto funcion detalle_producto
 CREATE OR REPLACE FUNCTION fun_insertar_detalle(Pid_producto number, 
-Pcantidad number, Pcolor varchar2, Ptalla varchar2, Pprecio varchar2, Pimagen varchar2, Ppromocion char)
+Pcantidad number, Pcolor varchar2, Ptalla varchar2, Pprecio number, Pimagen varchar2, Ppromocion char)
 RETURN number
 IS
    BEGIN	
@@ -163,6 +163,16 @@ IS
 /
 show error
 
+CREATE OR REPLACE FUNCTION ObtenerDetalle(id_det number)
+     RETURN SYS_REFCURSOR
+  IS
+     deta SYS_REFCURSOR;
+  BEGIN
+           OPEN deta FOR
+                SELECT * from detalle_producto where id_detalle = id_det;
+     RETURN deta;
+END ObtenerDetalle;
+/
 
 
 PROMPT inserto funcion promocion
