@@ -1,0 +1,53 @@
+﻿@model  EasyBuy.Models.detalle_producto
+@{
+    ViewBag.Title = "_AgregarDetalle";
+}
+
+<h2>_AgregarDetalle</h2>
+
+
+<h2>Agregar Detalle</h2>
+<br />
+
+@using (Html.BeginForm("AgregarDetalle", "Producto", FormMethod.Post, new { role = "form", id = "FormGuardar" }))
+{
+    @*here role = "form" for bootstrap design (optional) *@
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <table class="tablacrearPlan" id="tablacrearPlan">
+        <tr>
+            <td class="etiqueta"><label>Talla</label></td>
+            <td class="etiqueta"><label>Precio</label></td>
+            <td class="etiqueta"><label>Cantidad</label></td>
+            <td class="etiqueta"><label>Color</label></td>
+            <td class="etiqueta"><label>Imagen</label></td>
+        </tr>
+        <tr>
+            <td class="etiqueta">@Html.EditorFor(model => model.talla, new { htmlAttributes = new { @class = "form-control", id = "talla" } })</td>
+            <td class="etiqueta">@Html.EditorFor(model => model.precio, new { htmlAttributes = new { @class = "form-control", id = "precio" } })</td>
+            <td class="etiqueta">@Html.EditorFor(model => model.cantidad, new { htmlAttributes = new { @class = "form-control", id = "cantidad" } })</td>
+            <td class="etiqueta">@Html.EditorFor(model => model.color, new { htmlAttributes = new { @class = "form-control", id = "color" } })</td>
+            <td class="etiqueta">@Html.EditorFor(model => model.imagen, new { htmlAttributes = new { @class = "form-control", id = "imagen" } })</td>
+            <td class="etiqueta">@Html.EditorFor(model => model.talla, new { htmlAttributes = new { @class = "form-control", id = "id_producto" } })</td>
+
+         </tr>
+        <tr>
+            <td class="etiqueta"><label>Promocion</label></td>
+        </tr>
+        <tr>
+            <td class="etiqueta">
+                <select id="promocion">
+                    <option id="si">Si</option>
+                    <option id="no" selected>No</option>
+                </select>
+            </td>  </tr>
+        <tr>
+            <td id="tdBoton">
+                <input type="submit" value="Agregar capacitacion" id="btnAgreCapa" class="boton" name="agregar" />
+            </td>
+        </tr>
+    </table>
+
+}
+
