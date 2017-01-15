@@ -52,7 +52,7 @@ namespace EasyBuy.Controllers
                 String id = (String)Session["correo_tienda"];
                 producto.id_empresa = id;
                 idProducto = con.GuardarProducto(producto);
-                mensaje = "El plan se ha ingresado correctamente \n";
+                mensaje = "El   producto se ha ingresado correctamente \n";
                 estado = true;
             }
             catch (Exception exc)
@@ -60,7 +60,7 @@ namespace EasyBuy.Controllers
                 mensaje = "Error al crear producto" + exc.Message;
             }
 
-            return new JsonResult { Data = new { estado = estado, mensaje = mensaje, idProducto = idProducto } };
+            return new JsonResult { Data = new { estado = estado, mensaje = mensaje, id_producto = idProducto } };
         }
 
    
@@ -76,14 +76,13 @@ namespace EasyBuy.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult AgregarDetalle(detalle_producto capa)
+        public JsonResult AgregarDetalle(detalle_producto detalle)
         {
             bool estado = false;
             string mensaje = "";
             try
             {
-                //lista.agregar(capa);
-              //  con.guardarCapacitacion(capa);
+                con.guardarDetalle(detalle);
                 mensaje = "Detalle ingresada correctamente \n";
                 estado = true;
             }

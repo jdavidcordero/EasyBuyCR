@@ -322,8 +322,7 @@ show error
 
 PROMPT procedimiento registrar producto
 create or replace procedure prc_insertar_producto
-(Pcorreo_tienda in number, 
-PDescripcion in varchar2)is
+(Pcorreo_tienda in varchar2, PDescripcion in varchar2)is
 
 begin
 
@@ -495,6 +494,8 @@ values ('Arenas','4a7d1ed414474e4033ac29ccb8653d9b','88654355','Heredia Centro',
 insert into usuario (correo, tipo) values ('prueba@gmail.com','E');
 insert into empresa (nombre_empresa,password_empresa,numero_telefono,direccion,correo_tienda,provincia)
 values ('Prueba','123','88654355','Heredia','prueba@gmail.com','Sna jose');
+
+insert into producto(correo_tienda,descripcion) values ('prueba@gmail.com','Camisa tirantes');
 --Clave 0000: 4a7d1ed414474e4033ac29ccb8653d9b
 
 PROMPT eliminó cliente
