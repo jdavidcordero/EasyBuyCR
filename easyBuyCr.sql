@@ -163,6 +163,89 @@ IS
 /
 show error
 
+PROMPT inserto funcion promocion
+CREATE OR REPLACE FUNCTION fun_insertar_promocion(Pid_producto number, Pnuevo_precio number,
+Pfecha_inicio date,
+Pfecha_final  date)
+RETURN number
+IS
+   BEGIN	
+	insert into promocion(id_producto, nuevo_precio, fecha_inicio, fecha_final)
+	values(Pid_producto, Pnuevo_precio, Pfecha_inicio, Pfecha_final);
+
+	return seq_id_promocion.currval;
+	
+   END;
+/
+show error
+
+PROMPT................................FUNCIONES DE ACTUALIZACION.......................................
+
+PROMPT actualizar funcion empresa
+CREATE OR REPLACE FUNCTION fun_actualizar_empresa(Pid_empresa number, Pnombre_empresa varchar2,
+Ppassword_empresa varchar2, Pnumero_telefono  varchar2, Pdireccion varchar2, Pcorreo_tienda	 varchar2)
+RETURN INT
+IS
+   BEGIN	
+	update empresa set  nombre_empresa = PNombre_empresa,
+						password_empresa = Ppassword_empresa,
+						numero_telefono  = Pnumero_telefono,
+						direccion = Pdireccion
+	where correo_tienda = Pcorreo_tienda;
+  
+   return seq_id_empresa.currval;
+   END fun_actualizar_empresa;
+/
+show error
+
+PROMPT actualizar funcion producto
+CREATE OR REPLACE FUNCTION fun_actualizar_producto(Pid_producto number, Pdescripcion varchar2)
+RETURN INT
+IS
+   BEGIN	
+	update producto set  descripcion = Pdescripcion
+	where id_producto = Pid_producto;
+  
+   return seq_id_producto.currval;
+   END fun_actualizar_producto;
+/
+show error
+
+PROMPT actualizar funcion detalle_producto
+CREATE OR REPLACE FUNCTION fun_actualizar_detalle(Pid_detalle number, Pcantidad number,
+Pcolor varchar2, Ptalla	varchar2, Pprecio varchar2, Pimagen	varchar2, Ppromocion char)
+RETURN INT
+IS
+   BEGIN	
+	update detalle_producto set  cantidad = Pcantidad,
+								 color = Pcolor,
+								 talla = Ptalla,
+								 precio = Pprecio,
+								 imagen = Pimagen,
+								 promocion = Ppromocion
+	where id_detalle = Pid_detalle;
+  
+   return seq_id_det_producto.currval;
+   END fun_actualizar_detalle;
+/
+show error
+
+PROMPT actualizar funcion promocion
+CREATE OR REPLACE FUNCTION fun_actualizar_promocion(Pid_promocion number, Pnuevo_precio number,
+Pfecha_inicio date,
+Pfecha_final	date)
+RETURN INT
+IS
+   BEGIN	
+	update promocion set nuevo_precio = PNuevo_precio,
+						 fecha_inicio = PFecha_inicio,
+						 fecha_final  = PFecha_final
+	where id_promocion = Pid_promocion;
+  
+   return seq_id_promocion.currval;
+   END fun_actualizar_promocion;
+/
+show error
 
 PROMPT.................................TRIGGERS DE REGISTRO............................................
 PROMPT inserto triger insertar_empresa
@@ -195,6 +278,15 @@ CREATE OR REPLACE TRIGGER trig_insertar_det_producto
 ;
 /
 
+PROMPT inserto triger insertar_promocion
+CREATE OR REPLACE TRIGGER trig_insertar_promocion
+  BEFORE INSERT ON promocion
+  FOR EACH ROW
+  BEGIN
+    SELECT seq_id_promocion.nextval INTO :new.id_promocion FROM dual;
+  END
+;
+/
 PROMPT.............................PROCEDIMIENTO ALMACENADOS.........................................
 
 PROMPT procedimiento registrar cliente
@@ -300,13 +392,106 @@ end prc_insertar_usuario;
 /
 show error
 
+PROMPT.............................PROCEDIMIENTO ALMACENADOS PARA ELIMINAR...........................................
+PROMPT Procedimiento para eliminar deseo
+create or replace procedure prc_eliminar_deseo(Pid_producto in number, Pcorreo_cliente in varchar2) is
+  
+begin
+	
+	  delete deseo where id_producto = Pid_producto or correo_cliente = PCorreo_cliente;
+	  commit;
+	  
+end prc_eliminar_deseo;
+/
+show error
+
+PROMPT Procedimiento para eliminar detalle_producto
+create or replace procedure prc_eliminar_detalle(Pid_detalle in number) is
+  
+begin
+	
+	  delete detalle_producto where id_detalle = Pid_detalle;
+	  commit;
+	  
+end prc_eliminar_detalle;
+/
+show error
+
+PROMPT Procedimiento para eliminar promocion
+create or replace procedure prc_eliminar_promocion(Pid_promocion in number) is
+  
+begin
+	
+	  delete promocion where id_promocion = Pid_promocion;
+	  commit;
+	  
+end prc_eliminar_promocion;
+/
+show error
+
+PROMPT Procedimiento para eliminar producto
+create or replace procedure prc_eliminar_producto(Pid_producto in number) is
+  
+begin
+	
+	  delete producto where id_producto = Pid_producto;
+	  commit;
+	  
+end prc_eliminar_producto;
+/
+show error
+
+PROMPT Procedimiento para eliminar producto
+create or replace procedure prc_eliminar_empresa(Pcorreo_tienda in varchar2) is
+  
+begin
+	
+	  delete empresa where correo_tienda = Pcorreo_tienda;
+	  commit;
+	  
+end prc_eliminar_empresa;
+/
+show error
+
+PROMPT Procedimiento para eliminar cliente
+create or replace procedure prc_eliminar_cliente(Pcorreo_cliente in varchar2) is
+  
+begin
+	
+	  delete cliente where correo_cliente = Pcorreo_cliente;
+	  commit;
+	  
+end prc_eliminar_cliente;
+/
+show error
+
+PROMPT Procedimiento para eliminar usuario
+create or replace procedure prc_eliminar_usuario(Pcorreo in varchar2) is
+  
+begin
+	
+	  delete usuario where correo = Pcorreo;
+	  commit;
+	  
+end prc_eliminar_usuario;
+/
+
+show error
 insert into usuario (correo, tipo) values ('dacorcam@hotmail.com','C');
 insert into cliente (nombre_cliente,apellido_cliente,password,correo_cliente) 
 values ('Jose','Cordero','4a7d1ed414474e4033ac29ccb8653d9b','dacorcam@hotmail.com');
+
+insert into usuario (correo, tipo) values ('carcamaron@gmail.com','C');
+insert into cliente (nombre_cliente,apellido_cliente,password,correo_cliente) 
+values ('Carlos','Camaron','4a7d1ed414474e4033ac29ccb8653d9b','carcamaron@gmail.com');
 
 insert into usuario (correo, tipo) values ('arenascr@gmail.com','E');
 insert into empresa (nombre_empresa,password_empresa,numero_telefono,direccion,correo_tienda,provincia)
 values ('Arenas','4a7d1ed414474e4033ac29ccb8653d9b','88654355','Heredia Centro','arenascr@gmail.com','Heredia');
 --Clave 0000: 4a7d1ed414474e4033ac29ccb8653d9b
+PROMPT eliminó cliente
+execute prc_eliminar_cliente('carcamaron@gmail.com');
+PROMPT eliminó usuario
+execute prc_eliminar_usuario('carcamaron@gmail.com');
 
 commit;
