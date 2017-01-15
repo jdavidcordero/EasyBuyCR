@@ -48,8 +48,11 @@ $(document).ready(function () {
         GuardarDetalle();
         $('#btnAgrede').attr('disabled', false);
     });
-
-
+    //Evento Eliminar detalle
+    $('body').on('submit', '#FormEliminar', function (e) {
+        e.preventDefault();
+        EliminarDetalle();
+    });
 });
 
 //Carga la ventana modal
@@ -63,8 +66,8 @@ function abrirVentana(Page) {
                 autoOpen: false,
                 resizable: true,
                 model: true,
-                height: 600,
-                width: 1100,
+                height: 350,
+                width: 900,
                 scrollable: true,
                 close: function () {
                     $dialog.dialog('destroy').remove();
@@ -73,7 +76,7 @@ function abrirVentana(Page) {
     $dialog.dialog('open');
 }
 
-//Valida los datos del formulario crear plan 
+//Valida los datos del formulario 
 function validarProducto() {
 
     if ($('#description').val().trim() == '') {
@@ -83,7 +86,7 @@ function validarProducto() {
     return true;
 }
 
-//Guardar Plan de Capacitaciones por AJAX
+//Guardar  por AJAX
 function GuardarProducto() {
 
    // Validación
@@ -92,7 +95,8 @@ function GuardarProducto() {
     }
 
     var producto = {
-        description: $('#description').val()
+        description: $('#description').val(),
+        //id_producto: $('#id_producto').val()
     };
     //Agrega validation token
     producto.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
@@ -103,13 +107,12 @@ function GuardarProducto() {
         data: producto,
         success: function (data) {
             if (data.description!='') {
-
                 $('#description').attr("readonly", "readonly");
+                $('#id_producto').attr("value", data.id_producto);
                 $('#btnCrearProducto').hide();
                 $('#btnAgregarDetalle').show();
-                $('#contenido').show();
                 $('#divDetalle').show();
-                $('#id_producto').attr("value", data.id_producto);
+                $('#contenido').show();
                 swal({ title: "Bien!", text: data.mensaje, timer: 2000, type: "success", showConfirmButton: false });
             }
             else {
@@ -122,7 +125,7 @@ function GuardarProducto() {
     });
 }
 
-//Guardar Capacitación por AJAX
+//Guardar detalle
 function GuardarDetalle() {
 
     //Validar campos
@@ -148,10 +151,7 @@ function GuardarDetalle() {
         data: detalle_producto,
         success: function (data) {
             if (data.estado) {
-                //cargarCapacitaciones();
-                //ajustesValores(capacitacion);
-
-                $('#id_producto').val('');
+                cargarDetalles();
                 $('#talla').val('');
                 $('#precio').val('');
                 $('#cantidad').val('');
@@ -196,8 +196,8 @@ function validarDetalle() {
 }
 
 
-//Carga la tabla de capacitaciones que pertenecen al plan
-function cargarCapacitaciones() {
+//Carga la tabla de detalle
+function cargarDetalles() {
     $('#contenido').html("Cargando...");
 
     $.ajax({
@@ -222,3 +222,36 @@ function cargarCapacitaciones() {
     });
 }
 
+
+//Eliminar Detalle por AJAX
+function EliminarDetalle() {
+
+    $.ajax({
+        url: '/Producto/EliminarDetalle',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            'id_detalle': $('#id_detalle').val(),
+            '__RequestVerificationToken': $('input[name=__RequestVerificationToken]').val()
+        },
+        success: function (data) {
+            if (data.estado) {
+                $dialog.dialog('close');
+                cargarDetalles();
+                swal({
+                    title: "Bien!",
+                    text: data.mensaje,
+                    timer: 2000,
+                    type: "success",
+                    showConfirmButton: false
+                });
+            }
+            else {
+                swal("Error!", data.mensaje, "error");
+            }
+        },
+        error: function () {
+            swal("Error!", "Error al eliminar el detalle...", "error");
+        }
+    });
+}

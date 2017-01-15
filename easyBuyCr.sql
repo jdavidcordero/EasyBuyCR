@@ -76,9 +76,9 @@ create table detalle_producto(
 	cantidad		 number,	
 	color	         varchar2(20),
 	talla			 varchar2(2),
-	precio			 varchar2(20),
+	precio			 number,
 	imagen			 varchar2(100),
-	promocion		 char
+	promocion		 varchar2(20)
 );
 
 PROMPT promocion
@@ -150,7 +150,7 @@ show error
 
 PROMPT inserto funcion detalle_producto
 CREATE OR REPLACE FUNCTION fun_insertar_detalle(Pid_producto number, 
-Pcantidad number, Pcolor varchar2, Ptalla varchar2, Pprecio varchar2, Pimagen varchar2, Ppromocion char)
+Pcantidad number, Pcolor varchar2, Ptalla varchar2, Pprecio number, Pimagen varchar2, Ppromocion char)
 RETURN number
 IS
    BEGIN	
@@ -162,6 +162,18 @@ IS
    END;
 /
 show error
+
+CREATE OR REPLACE FUNCTION ObtenerDetalle(id_det number)
+     RETURN SYS_REFCURSOR
+  IS
+     deta SYS_REFCURSOR;
+  BEGIN
+           OPEN deta FOR
+                SELECT * from detalle_producto where id_detalle = id_det;
+     RETURN deta;
+END ObtenerDetalle;
+/
+
 
 PROMPT inserto funcion promocion
 CREATE OR REPLACE FUNCTION fun_insertar_promocion(Pid_producto number, Pnuevo_precio number,
@@ -273,7 +285,7 @@ CREATE OR REPLACE TRIGGER trig_insertar_det_producto
   BEFORE INSERT ON detalle_producto
   FOR EACH ROW
   BEGIN
-    SELECT seq_id_det_producto.nextval INTO :new.id_producto FROM dual;
+    SELECT seq_id_det_producto.nextval INTO :new.id_detalle FROM dual;
   END
 ;
 /
@@ -322,13 +334,12 @@ show error
 
 PROMPT procedimiento registrar producto
 create or replace procedure prc_insertar_producto
-(PId_producto in number, Pcorreo_tienda in number, 
-PDescripcion in varchar2)is
+(Pcorreo_tienda in varchar2, PDescripcion in varchar2)is
 
 begin
 
-		insert into producto (id_producto, correo_tienda, descripcion)
-		values (PId_producto, Pcorreo_tienda, PDescripcion);
+		insert into producto (correo_tienda, descripcion)
+		values (Pcorreo_tienda, PDescripcion);
 		commit;
 		
 end prc_insertar_producto;
@@ -337,18 +348,21 @@ show error
 
 PROMPT procedimiento registrar detalle_producto
 create or replace procedure prc_insertar_det_producto
-(PId_detalle in number, PId_producto in number, 
-PCantidad in number, PColor in varchar2, PTalla in varchar2, PPrecio in varchar2, PImagen in varchar2)is
+(PId_producto in number, 
+PCantidad in number, PColor in varchar2, PTalla in varchar2, PPrecio in varchar2, PImagen in varchar2,PPromocion in varchar2)is
 
 begin
 
-		insert into detalle_producto (id_detalle, id_producto, cantidad, color, talla, precio, imagen)
-		values (PId_detalle, PId_producto, PCantidad, PColor, PTalla, PPrecio, PImagen);
+		insert into detalle_producto (id_producto, cantidad, color, talla, precio, imagen, promocion)
+		values (PId_producto, PCantidad, PColor, PTalla, PPrecio, PImagen,PPromocion);
 		commit;
 		
 end prc_insertar_det_producto;
 /
 show error
+
+
+
 
 PROMPT procedimiento registrar promocion
 create or replace procedure prc_insertar_promocion
@@ -492,17 +506,12 @@ insert into usuario (correo, tipo) values ('arenascr@gmail.com','E');
 insert into empresa (nombre_empresa,password_empresa,numero_telefono,direccion,correo_tienda,provincia)
 values ('Arenas','4a7d1ed414474e4033ac29ccb8653d9b','88654355','Heredia Centro','arenascr@gmail.com','Heredia');
 
-insert into usuario (correo, tipo) values ('nikecr@gmail.com','E');
-insert into empresa (nombre_empresa,password_empresa,numero_telefono,direccion,correo_tienda,provincia)
-values ('Nike','4a7d1ed414474e4033ac29ccb8653d9b','88654355','Alajuela Centro','nikecr@gmail.com','Alajuela');
---Clave 0000: 4a7d1ed414474e4033ac29ccb8653d9b
-=======
 insert into usuario (correo, tipo) values ('prueba@gmail.com','E');
 insert into empresa (nombre_empresa,password_empresa,numero_telefono,direccion,correo_tienda,provincia)
 values ('Prueba','123','88654355','Heredia','prueba@gmail.com','Sna jose');
 
 insert into producto(correo_tienda,descripcion) values ('prueba@gmail.com','Camisa tirantes');
->>>>>>> bc33817f0ee036d19c2aecee908caca21c8ac429
+--Clave 0000: 4a7d1ed414474e4033ac29ccb8653d9b
 
 PROMPT eliminó cliente
 execute prc_eliminar_cliente('carcamaron@gmail.com');
