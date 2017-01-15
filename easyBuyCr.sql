@@ -491,6 +491,10 @@ values ('Carlos','Camaron','4a7d1ed414474e4033ac29ccb8653d9b','carcamaron@gmail.
 insert into usuario (correo, tipo) values ('arenascr@gmail.com','E');
 insert into empresa (nombre_empresa,password_empresa,numero_telefono,direccion,correo_tienda,provincia)
 values ('Arenas','4a7d1ed414474e4033ac29ccb8653d9b','88654355','Heredia Centro','arenascr@gmail.com','Heredia');
+
+insert into usuario (correo, tipo) values ('nikecr@gmail.com','E');
+insert into empresa (nombre_empresa,password_empresa,numero_telefono,direccion,correo_tienda,provincia)
+values ('Nike','4a7d1ed414474e4033ac29ccb8653d9b','88654355','Alajuela Centro','nikecr@gmail.com','Alajuela');
 --Clave 0000: 4a7d1ed414474e4033ac29ccb8653d9b
 
 PROMPT eliminó cliente
