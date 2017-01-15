@@ -322,13 +322,13 @@ show error
 
 PROMPT procedimiento registrar producto
 create or replace procedure prc_insertar_producto
-(PId_producto in number, Pcorreo_tienda in number, 
+(Pcorreo_tienda in number, 
 PDescripcion in varchar2)is
 
 begin
 
-		insert into producto (id_producto, correo_tienda, descripcion)
-		values (PId_producto, Pcorreo_tienda, PDescripcion);
+		insert into producto (correo_tienda, descripcion)
+		values (Pcorreo_tienda, PDescripcion);
 		commit;
 		
 end prc_insertar_producto;
@@ -337,13 +337,13 @@ show error
 
 PROMPT procedimiento registrar detalle_producto
 create or replace procedure prc_insertar_det_producto
-(PId_detalle in number, PId_producto in number, 
+(PId_producto in number, 
 PCantidad in number, PColor in varchar2, PTalla in varchar2, PPrecio in varchar2, PImagen in varchar2)is
 
 begin
 
-		insert into detalle_producto (id_detalle, id_producto, cantidad, color, talla, precio, imagen)
-		values (PId_detalle, PId_producto, PCantidad, PColor, PTalla, PPrecio, PImagen);
+		insert into detalle_producto (id_producto, cantidad, color, talla, precio, imagen)
+		values (PId_producto, PCantidad, PColor, PTalla, PPrecio, PImagen);
 		commit;
 		
 end prc_insertar_det_producto;
