@@ -78,7 +78,7 @@ create table detalle_producto(
 	talla			 varchar2(2),
 	precio			 varchar2(20),
 	imagen			 varchar2(100),
-	promocion		 char
+	promocion		 varchar2(20)
 );
 
 PROMPT promocion
@@ -162,6 +162,8 @@ IS
    END;
 /
 show error
+
+
 
 PROMPT inserto funcion promocion
 CREATE OR REPLACE FUNCTION fun_insertar_promocion(Pid_producto number, Pnuevo_precio number,
@@ -273,7 +275,7 @@ CREATE OR REPLACE TRIGGER trig_insertar_det_producto
   BEFORE INSERT ON detalle_producto
   FOR EACH ROW
   BEGIN
-    SELECT seq_id_det_producto.nextval INTO :new.id_producto FROM dual;
+    SELECT seq_id_det_producto.nextval INTO :new.id_detalle FROM dual;
   END
 ;
 /
@@ -337,17 +339,20 @@ show error
 PROMPT procedimiento registrar detalle_producto
 create or replace procedure prc_insertar_det_producto
 (PId_producto in number, 
-PCantidad in number, PColor in varchar2, PTalla in varchar2, PPrecio in varchar2, PImagen in varchar2)is
+PCantidad in number, PColor in varchar2, PTalla in varchar2, PPrecio in varchar2, PImagen in varchar2,PPromocion in varchar2)is
 
 begin
 
-		insert into detalle_producto (id_producto, cantidad, color, talla, precio, imagen)
-		values (PId_producto, PCantidad, PColor, PTalla, PPrecio, PImagen);
+		insert into detalle_producto (id_producto, cantidad, color, talla, precio, imagen, promocion)
+		values (PId_producto, PCantidad, PColor, PTalla, PPrecio, PImagen,PPromocion);
 		commit;
 		
 end prc_insertar_det_producto;
 /
 show error
+
+
+
 
 PROMPT procedimiento registrar promocion
 create or replace procedure prc_insertar_promocion

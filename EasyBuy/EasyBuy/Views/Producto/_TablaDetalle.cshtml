@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "_TablaDetalle";
+}
+
+<h2>_TablaDetalle</h2>
+@model List<EasyBuy.Models.detalle_producto>
+
+@if (Model.Count != 0)
+{
+    <table class="table table-responsive table-striped tablaCapacitaciones">
+        <tr>
+             <th>
+                <label>Cantidad</label>
+            </th>
+            <th>
+                <label>Color</label>
+            </th>
+            <th>
+                <label>Talla</label>
+            </th>
+            <th>
+                <label>Precio</label>
+            </th>
+            <th>
+                <label>Imagen</label>
+            </th>
+            <th>
+                <label>Promocion</label>
+            </th>
+      
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td id="nombreCapa">
+                    @Html.DisplayFor(modelItem => item.cantidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.color)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.talla)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.imagen)
+                </td>
+
+                <td>
+                    @*@Html.CheckBoxFor(modelItem => item.Contrato, new { @class = "form-control", id = "contrato", @checked = item.Contrato, @readonly= "readonly" } )*@
+                    @if (item.promocion)
+                    {
+                        <label id="contrato">Si</label>
+                    }
+                    else
+                    {
+                        <label id="contrato">No</label>
+                    }
+                </td>
+               
+            </tr>
+        }
+
+    </table>
+}
+

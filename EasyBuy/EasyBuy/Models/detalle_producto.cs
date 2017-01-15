@@ -14,6 +14,6 @@ namespace EasyBuy.Models
         public String talla { get; set; }
         public String precio { get; set; } 
         public String imagen { get; set; }
-        public char promocion { get; set; }
+        public bool promocion { get; set; }
     }
 }
