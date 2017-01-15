@@ -140,7 +140,27 @@ namespace EasyBuyCR.Models
                 return false;
             }
         }
+        public int GuardarProducto(Producto producto)
+        {
+             conexion = new OracleConnection(cadena);
+            conexion.Open();
 
+            cmd = new OracleCommand();
+            cmd.Connection = conexion;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "fun_insertar_producto";
+            OracleParameter Resultado = new OracleParameter("Resultado", OracleDbType.Int32, ParameterDirection.ReturnValue);
+            cmd.Parameters.Add(Resultado);
+            cmd.Parameters.Add("descripcion",producto.description);
+            cmd.Parameters.Add("id_empresa", producto.id_empresa);
+
+            cmd.ExecuteNonQuery();
+
+            int idPlan = int.Parse(Resultado.Value.ToString());
+
+            conexion.Close();
+            return idPlan;
+        }
 
         public void insertarProducto(String description, int id_empresa, List<detalle_producto> Lista_detalles)
         {
@@ -179,5 +199,7 @@ namespace EasyBuyCR.Models
             }
             conexion.Close();
         }
+
+        public void insertarDetalle() { }
     }
 }

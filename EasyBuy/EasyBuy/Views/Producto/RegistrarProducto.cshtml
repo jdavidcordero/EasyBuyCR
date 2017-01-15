@@ -1,0 +1,60 @@
+﻿
+@model  EasyBuy.Models.Producto
+@{
+    ViewBag.Title = "RegistrarProducto";
+}
+
+<body>
+    <div class="divEncabezado">
+        <h1 class="Titulos">Agregar Producto</h1>
+        <ol class="breadcrumb migas breadcrumb-arrow"></ol>
+    </div>
+    <label id="detallesCP">Detalles del Producto</label>
+    <span id="forEditar" class="form-editar glyphicon glyphicon-pencil" title="Editar Plan"></span>
+    <br />
+    <div id="Divformulario">
+        @using (Html.BeginForm("RegistrarProducto", "Producto", FormMethod.Post, new { role = "form", id = "FormPlan" }))
+        {
+            @Html.AntiForgeryToken() //Esto es para prevenir ataques CSRF
+                                    @Html.ValidationSummary(true)
+
+                                    @* Datos necesarios para crear el plan *@
+                                    <table class="tablaPlan">
+                                        <tr>
+                                            <td>Descripcion del producto</td>
+                                            <td>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon"><span class="glyphicon glyphicon-ok" style="font-size: 9px;"></span></div>
+                                                    @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control", @maxlength = "100", id = "descripcion" } })
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="info glyphicon glyphicon-info-sign" title="Descripcion detallada de producto" data-toggle="tooltip" data-placement="top"></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <input type="submit" value="Agregar Producto" class="boton" name="Agregar_Producto" id="btnCrearPlan" />
+        }
+
+    </div>
+    @Html.Hidden("id_producto")
+
+    @Html.ActionLink("Agregar Producto", "AgregarDetalleCP", "Producto", null, new { @class = "popup boton", id = "btnAgregarCapa" })
+
+    <div id="contenido"></div>
+
+</body>
+@section Scripts{
+
+    <script src="~/Scripts/jquery-2.1.0.js"></script>
+    <script src="~/Scripts/Producto.js"></script>
+    <script src="~/Scripts/Accounting.js"></script>
+    <script src="~/Scripts/sweetalert.min.js"></script>
+    <script src="~/Scripts/Accounting.js"></script>
+}
+
+
+
+
+
