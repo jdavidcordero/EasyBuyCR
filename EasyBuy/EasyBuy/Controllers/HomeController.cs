@@ -26,6 +26,8 @@ namespace EasyBuyCR.Controllers
 
             return View();
         }
+      
+  
 
         public ActionResult LogOff()
         {
