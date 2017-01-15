@@ -30,9 +30,6 @@ $(document).ready(function () {
 
     });
 
-    //Tooltip
-    $('[data-toggle="tooltip"]').tooltip();
-
     //Abre la ventana modal
     $('body').on("click", ".popup", function (e) {
         e.preventDefault();
@@ -40,10 +37,17 @@ $(document).ready(function () {
         abrirVentana(page);
     });
 
-    //Guarda el plan
-    $("body").on('submit', '#FormPlan', function (e) {
+    //Guarda el producto
+    $("body").on('submit', '#FormProducto', function (e) {
         e.preventDefault();
-        validarProducto();
+        GuardarProducto();
+    });
+    //Evento Guardar detalle
+    $("body").on('submit', '#FormGuardar', function (e) {
+        e.preventDefault();
+        $('#btnAgrede').attr('disabled', true);
+        GuardarDetalle();
+        $('#btnAgrede').attr('disabled', false);
     });
 
 
@@ -92,17 +96,19 @@ function GuardarProducto() {
         descripcion: $('#descripcion').val()
     };
     //Agrega validation token
-    descripcion.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
+    producto.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
 
     $.ajax({
         url: '/Producto/RegistrarProducto',
         type: 'POST',
         data: producto,
         success: function (data) {
-            if (data.estado) {
+            if (data.descripcion!='') {
 
                 $('#descripcion').attr("readonly", "readonly");
-
+                $('#btnCrearProducto').hide();
+                $('#btnAgregarDetalle').show();
+                $('#contenido').show();
                 swal({ title: "Bien!", text: data.mensaje, timer: 2000, type: "success", showConfirmButton: false });
             }
             else {
@@ -115,7 +121,6 @@ function GuardarProducto() {
     });
 }
 
-
 //Guardar Capacitación por AJAX
 function GuardarDetalle() {
 
@@ -123,12 +128,6 @@ function GuardarDetalle() {
     if (!validarDetalle()) {
         return false;
     }
-
-    //Valida si la capacitacion se puede ingresar en el plan de acuerdo al Presupusto
-    if (!validarPresupuestos()) {
-        return false;
-    }
-
     var detalle = {
         id_producto: $('#id_producto').val(),
         talla: 'talla',
@@ -184,7 +183,7 @@ function validarDetalle() {
     }
 
     if (isNaN($('#precio').val().trim())) {
-        swal("Error!", "El Costo Capacitación debe ser un numero", "error");
+        swal("Error!", "El Costo  debe ser un numero", "error");
         return false;
     }
     return true;

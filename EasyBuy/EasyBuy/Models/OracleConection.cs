@@ -196,15 +196,16 @@ namespace EasyBuyCR.Models
         {
              conexion = new OracleConnection(cadena);
             conexion.Open();
-
+            producto.id_empresa = "prueba@gmail.com";
             cmd = new OracleCommand();
             cmd.Connection = conexion;
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "fun_insertar_producto";
+            cmd.CommandText = "fun_insertar_producto"; 
             OracleParameter Resultado = new OracleParameter("Resultado", OracleDbType.Int32, ParameterDirection.ReturnValue);
             cmd.Parameters.Add(Resultado);
+            cmd.Parameters.Add("correo_tienda", producto.id_empresa);
             cmd.Parameters.Add("descripcion",producto.description);
-            cmd.Parameters.Add("id_empresa", producto.id_empresa);
+            
 
             cmd.ExecuteNonQuery();
 
@@ -213,6 +214,26 @@ namespace EasyBuyCR.Models
             conexion.Close();
             return idPlan;
         }
+
+        public void guardarDetalle(detalle_producto detalle)
+        {
+            cmd = new OracleCommand();
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+            cmd.Connection = conexion;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "fun_insertar_detalle";
+            cmd.Parameters.Add("id_producto", detalle.id_producto);
+            cmd.Parameters.Add("cantidad", detalle.cantidad);
+            cmd.Parameters.Add("color", detalle.color);
+            cmd.Parameters.Add("talla", detalle.talla);
+            cmd.Parameters.Add("precio", detalle.precio);
+            cmd.Parameters.Add("imagen", detalle.imagen);
+            cmd.Parameters.Add("promocion", detalle.promocion);
+            cmd.ExecuteNonQuery();
+            conexion.Close();
+        }
+
 
         public void insertarProducto(String description, int id_empresa, List<detalle_producto> Lista_detalles)
         {
