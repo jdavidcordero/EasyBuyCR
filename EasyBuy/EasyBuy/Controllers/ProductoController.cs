@@ -3,6 +3,7 @@ using EasyBuyCR.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -45,13 +46,13 @@ namespace EasyBuy.Controllers
         public JsonResult RegistrarProducto(Producto producto)
         {
             String mensaje = "";
-            int idProducto = 0;
+            int id_producto = 0;
             bool estado = false;
             try
             {
                 String id = (String)Session["correo_tienda"];
                 producto.id_empresa = id;
-                idProducto = con.GuardarProducto(producto);
+                id_producto = con.GuardarProducto(producto);
                 mensaje = "El   producto se ha ingresado correctamente \n";
                 estado = true;
             }
@@ -60,7 +61,7 @@ namespace EasyBuy.Controllers
                 mensaje = "Error al crear producto" + exc.Message;
             }
 
-            return new JsonResult { Data = new { estado = estado, mensaje = mensaje, id_producto = idProducto } };
+            return new JsonResult { Data = new { estado = estado, mensaje = mensaje, id_producto = id_producto } };
         }
 
    
@@ -94,5 +95,55 @@ namespace EasyBuy.Controllers
             return new JsonResult { Data = new { estado = estado, mensaje = mensaje } };
         }
 
+        public ActionResult ObtenerDetalle(int id_producto)
+        {
+            return PartialView("_TablaDetalle", con.getDetalles(id_producto));
+        }
+
+        public ActionResult ObtenerDetalleCP(int id_producto)
+        {
+            //ViewBag.direccion = "CP";
+            return PartialView("_TablaDetalle", con.getDetalles(id_producto));
+        }
+
+
+        public ActionResult EliminarDetalle(int id_detalle)
+        {
+            if (id_detalle < 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            detalle_producto detalle = con.ObtenerDetalle(id_detalle);
+
+            return PartialView(detalle);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("EliminarDetalle")]
+        public JsonResult Eliminar(int id_detalle)
+        {
+            bool estado = false;
+            string mensaje = "";
+            try
+            {
+
+
+                if (id_detalle < 0)
+                {
+                    mensaje = "EL id no puede ser negativo";
+                }
+
+                con.EliminarDetalle(id_detalle);
+                estado = true;
+                mensaje = "Detalle eliminada...";
+            }
+            catch (Exception exc)
+            {
+                mensaje = "Error al eliminar Detalle";
+            }
+
+            return new JsonResult { Data = new { estado = estado, mensaje = mensaje } };
+        }
     }
 }

@@ -10,10 +10,10 @@ namespace EasyBuy.Models
         public int id_detalle { get; set; }
         public int id_producto { get; set;}
         public int cantidad { get; set; }
+        public int precio { get; set; }
         public String color { get; set; }
-        public String talla { get; set; }
-        public String precio { get; set; } 
+        public String talla { get; set; }       
         public String imagen { get; set; }
-        public char promocion { get; set; }
+        public bool promocion { get; set; }
     }
 }

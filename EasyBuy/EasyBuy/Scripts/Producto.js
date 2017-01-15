@@ -4,11 +4,10 @@ var ultimoScroll = 0;
 
 $(document).ready(function () {
 
-    //Oculta el boton btnAgregarCapa hasta que se cree un plan
-    $('#btnAgregarCapa').hide();
+    //Oculta el boton btnAgregardetalle hasta que se cree un plan
+    $('#btnAgregarDetalle').hide();
 
-    //Oculta los datos del presupuesto del plan
-    $('#divPresupuestos').hide();
+    $('#contenido').hide();
 
     //Ocultar y mostrar Formulario Crear Plan 
     $('#forMostrar').hide();
@@ -49,8 +48,11 @@ $(document).ready(function () {
         GuardarDetalle();
         $('#btnAgrede').attr('disabled', false);
     });
-
-
+    //Evento Eliminar detalle
+    $('body').on('submit', '#FormEliminar', function (e) {
+        e.preventDefault();
+        EliminarDetalle();
+    });
 });
 
 //Carga la ventana modal
@@ -64,8 +66,8 @@ function abrirVentana(Page) {
                 autoOpen: false,
                 resizable: true,
                 model: true,
-                height: 600,
-                width: 1100,
+                height: 350,
+                width: 900,
                 scrollable: true,
                 close: function () {
                     $dialog.dialog('destroy').remove();
@@ -74,26 +76,27 @@ function abrirVentana(Page) {
     $dialog.dialog('open');
 }
 
-//Valida los datos del formulario crear plan 
+//Valida los datos del formulario 
 function validarProducto() {
 
-    if ($('#descripcion').val().trim() == '') {
+    if ($('#description').val().trim() == '') {
         swal("Error!", "Debe Agregar una descripcion", "error");
         return false;
     }
     return true;
 }
 
-//Guardar Plan de Capacitaciones por AJAX
+//Guardar  por AJAX
 function GuardarProducto() {
 
-    //Validación
+   // Validación
     if (!validarProducto()) {
         return false;
     }
 
     var producto = {
-        descripcion: $('#descripcion').val()
+        description: $('#description').val(),
+        //id_producto: $('#id_producto').val()
     };
     //Agrega validation token
     producto.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
@@ -103,11 +106,12 @@ function GuardarProducto() {
         type: 'POST',
         data: producto,
         success: function (data) {
-            if (data.descripcion!='') {
-
-                $('#descripcion').attr("readonly", "readonly");
+            if (data.description!='') {
+                $('#description').attr("readonly", "readonly");
+                $('#id_producto').attr("value", data.id_producto);
                 $('#btnCrearProducto').hide();
                 $('#btnAgregarDetalle').show();
+                $('#divDetalle').show();
                 $('#contenido').show();
                 swal({ title: "Bien!", text: data.mensaje, timer: 2000, type: "success", showConfirmButton: false });
             }
@@ -121,35 +125,37 @@ function GuardarProducto() {
     });
 }
 
-//Guardar Capacitación por AJAX
+//Guardar detalle
 function GuardarDetalle() {
 
     //Validar campos
     if (!validarDetalle()) {
         return false;
     }
-    var detalle = {
+    var detalle_producto = {
         id_producto: $('#id_producto').val(),
-        talla: 'talla',
+        talla: $('#talla').val(),
         precio: $('#precio').val(),
         cantidad: $('#cantidad').val(),
-        color: $('#imagen').val(),
+        color: $('#color').val(),
+        imagen: $('#imagen').val(),
+        promocion: $('#promocion').prop('checked')
      };
 
     //Agregar validation token
-    detalle.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
+    detalle_producto.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
 
     $.ajax({
-        url: '/Producto/RegistrarProducto',
+        url: '/Producto/AgregarDetalle',
         type: 'POST',
-        data: detalle,
+        data: detalle_producto,
         success: function (data) {
             if (data.estado) {
-                //cargarCapacitaciones();
-                //ajustesValores(capacitacion);
+                cargarDetalles();
                 $('#talla').val('');
                 $('#precio').val('');
                 $('#cantidad').val('');
+                $('#color').val('');
                 $('#imagen').val('');
                 $dialog.dialog('close');
 
@@ -189,3 +195,63 @@ function validarDetalle() {
     return true;
 }
 
+
+//Carga la tabla de detalle
+function cargarDetalles() {
+    $('#contenido').html("Cargando...");
+
+    $.ajax({
+        url: '/Producto/ObtenerDetalleCP',
+        type: 'GET',
+        data: {
+            'id_producto': $('#id_producto').val()
+        },
+        success: function (data) {
+            if (data.length > 0) {
+                $('#contenido').html(data);
+            }
+            else {
+                $('#contenido').html('');
+            }
+        },
+        error: function () {
+            swal("Error!", "Error al cargar detalles...", "error");
+            $('#contenido').html("No se ha podido cargar los detalles...");
+        }
+
+    });
+}
+
+
+//Eliminar Detalle por AJAX
+function EliminarDetalle() {
+
+    $.ajax({
+        url: '/Producto/EliminarDetalle',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            'id_detalle': $('#id_detalle').val(),
+            '__RequestVerificationToken': $('input[name=__RequestVerificationToken]').val()
+        },
+        success: function (data) {
+            if (data.estado) {
+                $dialog.dialog('close');
+                cargarDetalles();
+                swal({
+                    title: "Bien!",
+                    text: data.mensaje,
+                    timer: 2000,
+                    type: "success",
+                    showConfirmButton: false
+                });
+            }
+            else {
+                swal("Error!", data.mensaje, "error");
+            }
+        },
+        error: function () {
+            swal("Error!", "Error al eliminar el detalle...", "error");
+        }
+    });
+}
