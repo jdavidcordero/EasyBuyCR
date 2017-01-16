@@ -286,6 +286,7 @@
     <Content Include="Views\Producto\_AgregarDetalle.cshtml" />
     <Content Include="Views\Producto\_TablaDetalle.cshtml" />
     <Content Include="Views\Producto\EliminarDetalle.cshtml" />
+    <Content Include="Views\Producto\_AgregarPromocion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -378,17 +378,19 @@ namespace EasyBuyCR.Models
             conexion.Open();
             cmd = new OracleCommand(sql, conexion);
             OracleDataReader reader = cmd.ExecuteReader();
-
+            List<detalle_producto> listadet = new List<detalle_producto>();
             while (reader.Read())
             {
                 item = new Producto();
+                listadet = new List<detalle_producto>();
                 item.id_empresa = correo_tienda;
                 item.id_producto = reader.GetInt32(0);
                 item.description = reader.IsDBNull(1) ? "" : reader.GetString(1);
+                listadet = getDetalles(item.id_producto);
+                item.list_detalle_producto = listadet;
                 listaItem.Add(item);
             }
-            List<detalle_producto> listadet = new List<detalle_producto>();
-            listadet = getDetalles(item.id_producto);
+           
             reader.Dispose();
             cmd.Dispose();
             conexion.Close();
@@ -483,6 +485,24 @@ namespace EasyBuyCR.Models
             cmd.Parameters.Add("Pid_detalle", idDeta);
             cmd.ExecuteNonQuery();
             cmd.Dispose();
+            conexion.Close();
+        }
+
+        public void guardarPromocion(Promocion promocion)
+        {
+            cmd = new OracleCommand();
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+            cmd.Connection = conexion;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "fun_insertar_promocion";
+            OracleParameter Resultado = new OracleParameter("Resultado", OracleDbType.Int32, ParameterDirection.ReturnValue);
+            cmd.Parameters.Add(Resultado);
+            cmd.Parameters.Add("Pid_detalle", promocion.id_detalle);
+            cmd.Parameters.Add("Pnuevo_precio", promocion.nuevo_precio);
+            cmd.Parameters.Add("Pfecha_inicio", promocion.fecha_inicio);
+            cmd.Parameters.Add("Pfecha_final", promocion.fecha_final);
+            cmd.ExecuteNonQuery();
             conexion.Close();
         }
     }
