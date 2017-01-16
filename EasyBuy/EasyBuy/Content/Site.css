@@ -64,7 +64,17 @@
     color:white;
 }
 
+.btn-blue:focus {
+    background-color: #31437a;
+    color:white;
+}
+
 .btn-white:hover {
+    background-color: white;
+    color: #162656;
+}
+
+.btn-white:focus {
     background-color: white;
     color: #162656;
 }
@@ -107,6 +117,53 @@
     background-color: white;
     color: #162656;
     border-bottom: 4px solid #162656;
+}
+
+.div-homuj {
+    background-image: url("../images/hombremujer.png");
+    background-size: 100%;
+}
+
+.a-hombre {
+    margin-top: 200px;
+    margin-bottom: 300px;
+    margin-right: 90px;
+}
+
+.a-mujer {
+    margin-top: 200px;
+    margin-bottom: 300px;
+    margin-left: 100px;
+}
+
+.nav-cliente {
+    margin-left: 10px !important;
+}
+
+.nav-sub-cliente {
+    margin-left: 30px !important;
+}
+
+.nav-sub-cliente > li > a {
+    color: #162656;
+}
+
+.nav-sub-cliente > li > a:hover {
+    color: #162656;
+    border-bottom: 3px solid #162656;
+}
+
+.active-blue {
+    color: #162656;
+    border-bottom: 3px solid #162656;
+}
+
+.thumbnail-blue {
+    background-color: #162656 !important;
+    margin-bottom: 10px;
+}
+.thumbnail-blue > div > h3 {
+    color: white;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 

@@ -9,7 +9,8 @@ namespace EasyBuy.Models
     {
         public int id_producto { get; set; }
         public String description { get; set; }
-        public int id_empresa { get; set; }
+        public String id_empresa { get; set; }
+        public String categoria { get; set; }
         public List<detalle_producto> list_detalle_producto { set; get; }
     }
 }

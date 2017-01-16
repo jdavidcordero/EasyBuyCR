@@ -60,7 +60,8 @@ PROMPT producto
 create table producto(
 	id_producto	     number,
 	correo_tienda    varchar2(30),
-	descripcion      varchar2(20)
+	descripcion      varchar2(20),
+	categoria        varchar2(20)
 );
 
 PROMPT deseo

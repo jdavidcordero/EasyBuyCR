@@ -193,7 +193,41 @@ namespace EasyBuyCR.Models
             }
         }
 
+        //---------------CLIENTE---------------
 
+        public List<Producto> ObtenerAbrigosHombre() {
+            List<Producto> listaAbrigos = null;
+
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+
+            cmd = new OracleCommand("select id_producto,correo_tienda,descripcion,categoria from producto where categoria = :categoria", conexion);
+            cmd.Parameters.Add("categoria", OracleDbType.Varchar2).Value = "abrigos";
+
+            OracleDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                Producto abrigo = new Producto();
+                abrigo.id_producto = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
+                abrigo.id_empresa = reader.IsDBNull(1) ? "" : reader.GetString(1);
+                abrigo.description = reader.IsDBNull(2) ? "" : reader.GetString(2);
+                abrigo.categoria = reader.IsDBNull(3) ? "" : reader.GetString(3);
+                List<detalle_producto> listaDetalle = new List<detalle_producto>();
+                //listaDetalle = getDetalles(abrigo.id_producto);
+            }
+
+            reader.Dispose();
+            cmd.Dispose();
+            conexion.Close();
+            conexion.Dispose();
+
+            return listaAbrigos;
+        }
+
+        
+
+        //---------------EMPRESA---------------
         public void insertarProducto(String description, int id_empresa, List<detalle_producto> Lista_detalles)
         {
             conexion = new OracleConnection(cadena);
