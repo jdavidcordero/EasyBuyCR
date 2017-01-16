@@ -107,13 +107,13 @@ namespace EasyBuy.Controllers
         }
 
 
-        public ActionResult EliminarDetalle(int id_detalle)
+        public ActionResult EliminarDetalle(int id)
         {
-            if (id_detalle < 0)
+            if (id < 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            detalle_producto detalle = con.ObtenerDetalle(id_detalle);
+            detalle_producto detalle = con.ObtenerDetalle(id);
 
             return PartialView(detalle);
         }
@@ -145,5 +145,8 @@ namespace EasyBuy.Controllers
 
             return new JsonResult { Data = new { estado = estado, mensaje = mensaje } };
         }
+
+
+   
     }
 }

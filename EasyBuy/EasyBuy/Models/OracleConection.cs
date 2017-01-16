@@ -318,19 +318,20 @@ namespace EasyBuyCR.Models
 
             conexion = new OracleConnection(cadena);
             conexion.Open();
-            String sql = String.Format("select id_detalle,cantidad,color,talla,precio,imagen,promocion from detalle_producto  where id_detalle={0}", id_detalle);
+            String sql = String.Format("select id_detalle,id_producto, cantidad,color,talla,precio,imagen,promocion from detalle_producto  where id_detalle={0}", id_detalle);
             cmd = new OracleCommand(sql, conexion);
             OracleDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {
                 detalle = new detalle_producto();
-                detalle.talla = reader.IsDBNull(3) ? "" : reader.GetString(0);
-                detalle.cantidad = reader.GetInt32(1);
-                detalle.precio = reader.GetInt32(2);
-                detalle.imagen = reader.IsDBNull(3) ? "" : reader.GetString(3);
-                detalle.color = reader.IsDBNull(4) ? "" : reader.GetString(4);
-              
-                if (reader.GetString(12).Equals("True"))
+                detalle.id_detalle = reader.GetInt32(0);
+                detalle.id_producto = reader.GetInt32(1);
+                detalle.cantidad = reader.GetInt32(2);
+                detalle.color = reader.IsDBNull(3) ? "" : reader.GetString(3);
+                detalle.talla = reader.IsDBNull(4) ? "" : reader.GetString(4);
+                detalle.precio = reader.GetInt32(5);
+                detalle.imagen = reader.IsDBNull(6) ? "" : reader.GetString(6);
+                if (reader.GetString(7).Equals("True"))
                 {
                     detalle.promocion = true;
                 }
