@@ -494,29 +494,4 @@ end prc_eliminar_usuario;
 
 show error
 
-insert into usuario (correo, tipo) values ('dacorcam@hotmail.com','C');
-insert into cliente (nombre_cliente,apellido_cliente,password,correo_cliente) 
-values ('Jose','Cordero','4a7d1ed414474e4033ac29ccb8653d9b','dacorcam@hotmail.com');
-
-insert into usuario (correo, tipo) values ('carcamaron@gmail.com','C');
-insert into cliente (nombre_cliente,apellido_cliente,password,correo_cliente) 
-values ('Carlos','Camaron','4a7d1ed414474e4033ac29ccb8653d9b','carcamaron@gmail.com');
-
-
-insert into usuario (correo, tipo) values ('arenascr@gmail.com','E');
-insert into empresa (nombre_empresa,password_empresa,numero_telefono,direccion,correo_tienda,provincia)
-values ('Arenas','4a7d1ed414474e4033ac29ccb8653d9b','88654355','Heredia Centro','arenascr@gmail.com','Heredia');
-
-insert into usuario (correo, tipo) values ('prueba@gmail.com','E');
-insert into empresa (nombre_empresa,password_empresa,numero_telefono,direccion,correo_tienda,provincia)
-values ('Prueba','123','88654355','Heredia','prueba@gmail.com','Sna jose');
-
-insert into producto(correo_tienda,descripcion) values ('prueba@gmail.com','Camisa tirantes');
---Clave 0000: 4a7d1ed414474e4033ac29ccb8653d9b
-
-PROMPT eliminó cliente
-execute prc_eliminar_cliente('carcamaron@gmail.com');
-PROMPT eliminó usuario
-execute prc_eliminar_usuario('carcamaron@gmail.com');
-
 commit;

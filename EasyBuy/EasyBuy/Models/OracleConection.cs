@@ -236,7 +236,7 @@ namespace EasyBuyCR.Models
         //---------------CLIENTE---------------
 
         public List<Producto> ObtenerAbrigosHombre() {
-            List<Producto> listaAbrigos = null;
+            List<Producto> listaAbrigos = new List<Producto>();
 
             conexion = new OracleConnection(cadena);
             conexion.Open();
@@ -246,15 +246,15 @@ namespace EasyBuyCR.Models
 
             OracleDataReader reader = cmd.ExecuteReader();
 
-            if (reader.Read())
+            while (reader.Read())
             {
                 Producto abrigo = new Producto();
                 abrigo.id_producto = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
                 abrigo.id_empresa = reader.IsDBNull(1) ? "" : reader.GetString(1);
                 abrigo.description = reader.IsDBNull(2) ? "" : reader.GetString(2);
                 abrigo.categoria = reader.IsDBNull(3) ? "" : reader.GetString(3);
-                List<detalle_producto> listaDetalle = new List<detalle_producto>();
-                //listaDetalle = getDetalles(abrigo.id_producto);
+                abrigo.list_detalle_producto = getDetalles(abrigo.id_producto);
+                listaAbrigos.Add(abrigo);
             }
 
             reader.Dispose();
@@ -265,7 +265,69 @@ namespace EasyBuyCR.Models
             return listaAbrigos;
         }
 
-        
+        public List<Producto> ObtenerAbrigosHombreFiltros(Filtrar model)
+        {
+            List<Producto> listaAbrigos = new List<Producto>();
+
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+
+            String cad = "";
+
+            if (model.color != null) {
+                if (model.color.Count == 1)
+                    cad += " and d.color = '" + model.color.ElementAt(0) + "'";
+                else {
+                    cad += " and (";
+                    for (int i = 0; i < model.color.Count; i++) {
+                        if (model.color.Count != i + 1)
+                            cad += " d.color = '" + model.color.ElementAt(i) + "' or";
+                        else
+                            cad += " d.color = '" + model.color.ElementAt(i) + "'";
+                    }
+                    cad += ")";
+                }
+            }
+            if (model.precio != null) {
+                if (model.precio.Count == 1)
+                    cad += " and d.precio = '" + model.precio.ElementAt(0) + "'";
+                else
+                {
+                    cad += " and (";
+                    for (int i = 0; i < model.precio.Count; i++)
+                    {
+                        if (model.precio.Count != i + 1)
+                            cad += " d.precio = '" + model.precio.ElementAt(i) + "' or";
+                        else
+                            cad += " d.precio = '" + model.precio.ElementAt(i) + "'";
+                    }
+                    cad += ")";
+                }
+            }
+
+            cmd = new OracleCommand("select p.id_producto,p.correo_tienda,p.descripcion,p.categoria from producto p, detalle_producto d where p.categoria = :categoria and p.id_producto = d.id_producto"+cad, conexion);
+            cmd.Parameters.Add("categoria", OracleDbType.Varchar2).Value = "abrigos";
+
+            OracleDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Producto abrigo = new Producto();
+                abrigo.id_producto = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
+                abrigo.id_empresa = reader.IsDBNull(1) ? "" : reader.GetString(1);
+                abrigo.description = reader.IsDBNull(2) ? "" : reader.GetString(2);
+                abrigo.categoria = reader.IsDBNull(3) ? "" : reader.GetString(3);
+                abrigo.list_detalle_producto = getDetalles(abrigo.id_producto);
+                listaAbrigos.Add(abrigo);
+            }
+
+            reader.Dispose();
+            cmd.Dispose();
+            conexion.Close();
+            conexion.Dispose();
+
+            return listaAbrigos;
+        }
 
         //---------------EMPRESA---------------
         public void insertarProducto(String description, int id_empresa, List<detalle_producto> Lista_detalles)
@@ -350,11 +412,11 @@ namespace EasyBuyCR.Models
             while (reader.Read())
             {
                 item = new detalle_producto();
-                item.id_detalle = reader.GetInt32(0);
-                item.cantidad = reader.GetInt32(1);
+                item.id_detalle = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
+                item.cantidad = reader.IsDBNull(1) ? 0 : reader.GetInt32(1);
                 item.color = reader.IsDBNull(2) ? "" : reader.GetString(2);
                 item.talla = reader.IsDBNull(3) ? "" : reader.GetString(3);
-                item.precio = reader.GetInt32(4);
+                item.precio = reader.IsDBNull(4) ? 0 : reader.GetInt32(4);
                 item.imagen = reader.IsDBNull(5) ? "" : reader.GetString(5);
                 if (reader.GetString(6).Equals("True"))
                 {
@@ -385,12 +447,12 @@ namespace EasyBuyCR.Models
             if (reader.Read())
             {
                 detalle = new detalle_producto();
-                detalle.id_detalle = reader.GetInt32(0);
-                detalle.id_producto = reader.GetInt32(1);
-                detalle.cantidad = reader.GetInt32(2);
+                detalle.id_detalle = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
+                detalle.id_producto = reader.IsDBNull(1) ? 0 : reader.GetInt32(1);
+                detalle.cantidad = reader.IsDBNull(2) ? 0 : reader.GetInt32(2);
                 detalle.color = reader.IsDBNull(3) ? "" : reader.GetString(3);
                 detalle.talla = reader.IsDBNull(4) ? "" : reader.GetString(4);
-                detalle.precio = reader.GetInt32(5);
+                detalle.precio = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
                 detalle.imagen = reader.IsDBNull(6) ? "" : reader.GetString(6);
                 if (reader.GetString(7).Equals("True"))
                 {

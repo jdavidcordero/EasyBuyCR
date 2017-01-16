@@ -26,104 +26,91 @@
     <div class="col-md-10">
         <div class="row">
             <div class="col-md-12">
+                @using (Html.BeginForm("Filtrar", "Cliente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-inline", role = "form", id="formFiltrar" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="dropdown">
+                        <button class="btn btn-blue dropdown-toggle" type="button" id="ddmenu1" data-toggle="dropdown" aria-expanded="true">
+                            Color
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="ddmenu1">
+                            <li role="presentation">
+                                <div class="checkbox">
+                                    <label for="mensaje">
+                                        <input type="checkbox" name="color" id="color" value="azul"> Azul
+                                    </label>
+                                </div>
+                            </li>
+                            <li role="presentation">
+                                <div class="checkbox">
+                                    <label for="mensaje">
+                                        <input type="checkbox" name="color" id="color" value="cafe"> Cafe
+                                    </label>
+                                </div>
+                            </li>
+                            <li role="presentation">
+                                <div class="checkbox">
+                                    <label for="mensaje">
+                                        <input type="checkbox" name="color" id="color" value="gris"> Gris
+                                    </label>
+                                </div>
+                            </li>
+                            <li role="presentation">
+                                <div class="checkbox">
+                                    <label for="mensaje">
+                                        <input type="checkbox" name="color" id="color" value="negro"> Negro
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
 
+                    <div class="dropdown">
+                        <button class="btn btn-blue dropdown-toggle" type="button" id="ddmenu1" data-toggle="dropdown" aria-expanded="true">
+                            Precio
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="ddmenu1">
+                            <li role="presentation">
+                                <div class="checkbox">
+                                    <label for="mensaje">
+                                        <input type="checkbox" name="precio" id="precio" value="20000"> 20000
+                                    </label>
+                                </div>
+                            </li>
+                            <li role="presentation">
+                                <div class="checkbox">
+                                    <label for="mensaje">
+                                        <input type="checkbox" name="precio" id="precio" value="25000"> 25000
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <a href="javascript:document.getElementById('formFiltrar').submit()" class="btn btn-blue">Filtrar</a>
+                }
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">
-                <div class="thumbnail thumbnail-blue">
-                    <img src="~/images/Abrigos/abrigo1.jpg" alt="">
-                    <div class="caption">
-                        <h3>Abrigo negro</h3>
-                        <a href="#" class="btn btn-white">Ver más</a>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var produc = Model.ElementAt(i);
+                var det = produc.list_detalle_producto.ElementAt(0);
+
+                <div class="col-md-3">
+                    <div class="thumbnail thumbnail-blue">
+                        <img src="@det.imagen" alt="">
+                        <div class="caption">
+                            <h3>@produc.description</h3>
+                            <p class="txt-white">@det.precio</p>
+                            <a href="#" class="btn btn-white"> + </a>  
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="thumbnail thumbnail-blue">
-                    <img src="~/images/Abrigos/abrigo2.jpg" alt="">
-                    <div class="caption">
-                        <h3>Abrigo negro</h3>
-                        <a href="#" class="btn btn-white">Ver más</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="thumbnail thumbnail-blue">
-                    <img src="~/images/Abrigos/abrigo3.jpg" alt="">
-                    <div class="caption">
-                        <h3>Abrigo negro</h3>
-                        <a href="#" class="btn btn-white">Ver más</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="thumbnail thumbnail-blue">
-                    <img src="~/images/Abrigos/abrigo4.jpg" alt="">
-                    <div class="caption">
-                        <h3>Abrigo negro</h3>
-                        <a href="#" class="btn btn-white">Ver más</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="thumbnail thumbnail-blue">
-                    <img src="~/images/Abrigos/abrigo5.jpg" alt="">
-                    <div class="caption">
-                        <h3>Abrigo negro</h3>
-                        <a href="#" class="btn btn-white">Ver más</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="thumbnail thumbnail-blue">
-                    <img src="~/images/Abrigos/abrigo6.jpg" alt="">
-                    <div class="caption">
-                        <h3>Abrigo negro</h3>
-                        <a href="#" class="btn btn-white">Ver más</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="thumbnail thumbnail-blue">
-                    <img src="~/images/Abrigos/abrigo7.jpg" alt="">
-                    <div class="caption">
-                        <h3>Abrigo negro</h3>
-                        <a href="#" class="btn btn-white">Ver más</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="thumbnail thumbnail-blue">
-                    <img src="~/images/Abrigos/abrigo8.jpg" alt="">
-                    <div class="caption">
-                        <h3>Abrigo negro</h3>
-                        <a href="#" class="btn btn-white">Ver más</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="thumbnail thumbnail-blue">
-                    <img src="~/images/Abrigos/abrigo9.jpg" alt="">
-                    <div class="caption">
-                        <h3>Abrigo negro</h3>
-                        <a href="#" class="btn btn-white">Ver más</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="thumbnail thumbnail-blue">
-                    <img src="~/images/Abrigos/abrigo10.jpg" alt="">
-                    <div class="caption">
-                        <h3>Abrigo negro</h3>
-                        <a href="#" class="btn btn-white">Ver más</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+            }
+        </div>        
     </div>
 </div>

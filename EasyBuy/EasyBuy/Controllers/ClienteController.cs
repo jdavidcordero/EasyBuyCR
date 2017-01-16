@@ -24,7 +24,7 @@ namespace EasyBuy.Controllers
             if (Session["Correo"] != null)
             {
                 List<Producto> listaProductos = con.ObtenerAbrigosHombre();
-                return View();
+                return View(listaProductos);
             }
             else
                 return RedirectToAction("Login", "Account");
@@ -36,6 +36,16 @@ namespace EasyBuy.Controllers
                 return View();
             else
                 return RedirectToAction("Login", "Account");
+        }
+
+        [HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        public ActionResult Filtrar(Filtrar model) {
+
+            List<Producto> listaProductos = con.ObtenerAbrigosHombreFiltros(model);
+
+            return View("Hombre",listaProductos);
         }
     }
 }
