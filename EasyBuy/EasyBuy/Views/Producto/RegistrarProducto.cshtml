@@ -7,15 +7,19 @@
 <body>
     <div class="divEncabezado">
         <h1 class="Titulos">Agregar Producto</h1>
+        <ol class="breadcrumb migas breadcrumb-arrow">
+            <li><a href="~/Producto/EmpresaIndex">Regresar</a></li>
+        </ol>
         <ol class="breadcrumb migas breadcrumb-arrow"></ol>
     </div>
-    <label id="detallesCP">Detalles del Producto</label>
-    <span id="forEditar" class="form-editar glyphicon glyphicon-pencil" title="Editar Plan"></span>
-    <br />
-    <div id="Divformulario">
-        @using (Html.BeginForm("RegistrarProducto", "Producto", FormMethod.Post, new { role = "form", id = "FormProducto" }))
+    <div >
+        <label id="detallesCP">Detalles del Producto</label>
+        <span id="forEditar" class="form-editar glyphicon glyphicon-pencil" title="Editar Plan"></span>
+        <br />
+        <div id="Divformulario">
+            @using (Html.BeginForm("RegistrarProducto", "Producto", FormMethod.Post, new { role = "form", id = "FormProducto" }))
         {
-            @Html.AntiForgeryToken() //Esto es para prevenir ataques CSRF
+                @Html.AntiForgeryToken() //Esto es para prevenir ataques CSRF
                                     @Html.ValidationSummary(true)
 
                                     @* Datos necesarios para crear el plan *@
@@ -37,11 +41,11 @@
                                     <input type="submit" value="Agregar Producto" class="boton" name="Agregar_Producto" id="btnCrearProducto" />
         }
 
+        </div>
+        @Html.Hidden("id_producto")
+
+        @Html.ActionLink("Agregar Detalle", "AgregarDetalleCP", "Producto", null, new { @class = "popup boton", id = "btnAgregarDetalle" })
     </div>
-    @Html.Hidden("id_producto")
-
-    @Html.ActionLink("Agregar Detalle", "AgregarDetalleCP", "Producto", null, new { @class = "popup boton", id = "btnAgregarDetalle" })
-
     <div id="contenido"></div>
 
 </body>
