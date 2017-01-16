@@ -192,6 +192,46 @@ namespace EasyBuyCR.Models
                 return false;
             }
         }
+        public int GuardarProducto(Producto producto)
+        {
+             conexion = new OracleConnection(cadena);
+            conexion.Open();
+            cmd = new OracleCommand();
+            cmd.Connection = conexion;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "fun_insertar_producto"; 
+            OracleParameter Resultado = new OracleParameter("Resultado", OracleDbType.Int32, ParameterDirection.ReturnValue);
+            cmd.Parameters.Add(Resultado);
+            cmd.Parameters.Add("correo_tienda", producto.id_empresa);
+            cmd.Parameters.Add("descripcion",producto.description);
+            
+
+            cmd.ExecuteNonQuery();
+
+            int idPlan = int.Parse(Resultado.Value.ToString());
+
+            conexion.Close();
+            return idPlan;
+        }
+
+        public void guardarDetalle(detalle_producto detalle)
+        {
+            cmd = new OracleCommand();
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+            cmd.Connection = conexion;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "prc_insertar_det_producto";
+            cmd.Parameters.Add("id_producto", detalle.id_producto);
+            cmd.Parameters.Add("cantidad", detalle.cantidad);
+            cmd.Parameters.Add("color", detalle.color);
+            cmd.Parameters.Add("talla", detalle.talla);
+            cmd.Parameters.Add("precio", detalle.precio);
+            cmd.Parameters.Add("imagen", detalle.imagen);
+            cmd.Parameters.Add("promocion", detalle.promocion.ToString());
+            cmd.ExecuteNonQuery();
+            conexion.Close();
+        }
 
         //---------------CLIENTE---------------
 
@@ -245,7 +285,7 @@ namespace EasyBuyCR.Models
             int idArticulo = int.Parse(Resultado.Value.ToString());
             foreach (detalle_producto detalle in Lista_detalles)
             {
-                if (detalle.cantidad != 0 && detalle.color != null && detalle.precio != null)
+                if (detalle.cantidad != 0 && detalle.color != null && detalle.precio != 0)
                 {
                     cmd = new OracleCommand();
                     cmd.Connection = conexion;
@@ -263,6 +303,124 @@ namespace EasyBuyCR.Models
                     cmd.ExecuteNonQuery();
                 }
             }
+            conexion.Close();
+        }
+
+        public List<Producto> getProducto(String correo_tienda)
+        {
+            Producto item = new Producto();
+            List<Producto> listaItem = new List<Producto>();
+            listaItem.Clear();
+            conexion = new OracleConnection(cadena);
+            String sql = String.Format("select id_producto,descripcion from producto  where correo_tienda='{0}'", correo_tienda);
+            conexion.Open();
+            cmd = new OracleCommand(sql, conexion);
+            OracleDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                item = new Producto();
+                item.id_empresa = correo_tienda;
+                item.id_producto = reader.GetInt32(0);
+                item.description = reader.IsDBNull(1) ? "" : reader.GetString(1);
+                listaItem.Add(item);
+            }
+            List<detalle_producto> listadet = new List<detalle_producto>();
+            listadet = getDetalles(item.id_producto);
+            reader.Dispose();
+            cmd.Dispose();
+            conexion.Close();
+
+            return listaItem;
+        }
+
+        public void insertarDetalle() { }
+
+        public List<detalle_producto> getDetalles(int id_producto)
+        {
+            detalle_producto item = new detalle_producto();
+            List<detalle_producto> listaItem = new List<detalle_producto>();
+            listaItem.Clear();
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+            String sql = String.Format("select id_detalle,cantidad,color,talla,precio,imagen,promocion from detalle_producto  where id_producto={0}", id_producto);
+            cmd = new OracleCommand(sql, conexion);
+            OracleDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                item = new detalle_producto();
+                item.id_detalle = reader.GetInt32(0);
+                item.cantidad = reader.GetInt32(1);
+                item.color = reader.IsDBNull(2) ? "" : reader.GetString(2);
+                item.talla = reader.IsDBNull(3) ? "" : reader.GetString(3);
+                item.precio = reader.GetInt32(4);
+                item.imagen = reader.IsDBNull(5) ? "" : reader.GetString(5);
+                if (reader.GetString(6).Equals("True"))
+                {
+                    item.promocion = true;
+                }
+                else
+                {
+                    item.promocion = false;
+                }
+                listaItem.Add(item);
+            }
+            reader.Dispose();
+            cmd.Dispose();
+            conexion.Close();
+
+            return listaItem;
+        }
+
+        public detalle_producto ObtenerDetalle(int id_detalle)
+        {
+            detalle_producto detalle = new detalle_producto();
+
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+            String sql = String.Format("select id_detalle,id_producto, cantidad,color,talla,precio,imagen,promocion from detalle_producto  where id_detalle={0}", id_detalle);
+            cmd = new OracleCommand(sql, conexion);
+            OracleDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                detalle = new detalle_producto();
+                detalle.id_detalle = reader.GetInt32(0);
+                detalle.id_producto = reader.GetInt32(1);
+                detalle.cantidad = reader.GetInt32(2);
+                detalle.color = reader.IsDBNull(3) ? "" : reader.GetString(3);
+                detalle.talla = reader.IsDBNull(4) ? "" : reader.GetString(4);
+                detalle.precio = reader.GetInt32(5);
+                detalle.imagen = reader.IsDBNull(6) ? "" : reader.GetString(6);
+                if (reader.GetString(7).Equals("True"))
+                {
+                    detalle.promocion = true;
+                }
+                else
+                {
+                    detalle.promocion = false;
+                }
+            }
+            reader.Dispose();
+            cmd.Dispose();
+            conexion.Close();
+
+            return detalle;
+        }
+
+
+        public void EliminarDetalle(int idDeta)
+        {
+            cmd = new OracleCommand();
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+            cmd.Connection = conexion;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "prc_eliminar_detalle";
+
+            cmd.Parameters.Add("Pid_detalle", idDeta);
+            cmd.ExecuteNonQuery();
+            cmd.Dispose();
             conexion.Close();
         }
     }

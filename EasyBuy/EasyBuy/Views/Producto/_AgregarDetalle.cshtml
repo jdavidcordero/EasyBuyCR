@@ -1,0 +1,39 @@
+﻿@model  EasyBuy.Models.detalle_producto
+@{
+    ViewBag.Title = "_AgregarDetalle";
+}
+<br />
+
+@using (Html.BeginForm("AgregarDetalle", "Producto", FormMethod.Post, new { role = "form", id = "FormGuardar" }))
+{
+    @*here role = "form" for bootstrap design (optional) *@
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <table class="tablacrearPlan" id="tablacrearPlan">
+        <tr>
+            <td class="etiqueta"><label>Talla</label></td>
+            <td class="etiqueta"><label>Precio</label></td>
+            <td class="etiqueta"><label>Cantidad</label></td>
+            <td class="etiqueta"><label>Color</label></td>
+            <td class="etiqueta"><label>Imagen</label></td>
+            <td class="etiqueta"><label>Promocion</label></td>
+        </tr>
+        <tr>
+            <td class="etiqueta">@Html.EditorFor(model => model.talla, new { htmlAttributes = new { @class = "form-control", id = "talla" } })</td>
+            <td class="etiqueta">@Html.EditorFor(model => model.precio, new { htmlAttributes = new { @class = "form-control", id = "precio" } })</td>
+            <td class="etiqueta">@Html.EditorFor(model => model.cantidad, new { htmlAttributes = new { @class = "form-control", id = "cantidad" } })</td>
+            <td class="etiqueta">@Html.EditorFor(model => model.color, new { htmlAttributes = new { @class = "form-control", id = "color" } })</td>
+            <td class="etiqueta">@Html.EditorFor(model => model.imagen, new { htmlAttributes = new { @class = "form-control", id = "imagen" } })</td>
+            <td class="etiqueta">@Html.CheckBoxFor(model => model.promocion, new { @class = "form-control", id = "promocion" })</td>
+
+       </tr>
+              <tr>
+               <td id="tdBoton">
+                <input type="submit" value="Agregar Detalle" id="btnAgrede" class="boton" name="agregar" />
+            </td>
+        </tr>
+    </table>
+
+}
+

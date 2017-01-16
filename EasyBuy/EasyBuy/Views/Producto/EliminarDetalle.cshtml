@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewBag.Title = "EliminarDetalle";
+}
+
+
+@model EasyBuy.Models.detalle_producto
+
+@Html.Hidden("id", (String)ViewBag.id_detalle)
+<style>
+    #tituloElimi {
+        color: #575757;
+        font-size: 30px;
+        text-align: center;
+        font-weight: 600;
+        text-transform: none;
+    }
+
+    #icoInfo {
+        border-color: #F8BB86;
+        width: 80px;
+        height: 80px;
+        border: 4px solid gray;
+        -webkit-border-radius: 40px;
+        border-radius: 40px;
+        border-radius: 50%;
+        margin: 20px auto;
+        padding: 0;
+        position: relative;
+        box-sizing: content-box;
+        animation: pulseWarning 0.75s infinite alternate;
+    }
+
+    .palito {
+        position: absolute;
+        width: 5px;
+        height: 47px;
+        left: 50%;
+        top: 10px;
+        -webkit-border-radius: 2px;
+        border-radius: 2px;
+        margin-left: -2px;
+        background-color: #F8BB86;
+        animation: pulseWarningIns 0.75s infinite alternate;
+    }
+
+    .punto {
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        margin-left: -3px;
+        left: 50%;
+        bottom: 10px;
+        background-color: #F8BB86;
+        animation: pulseWarningIns 0.75s infinite alternate;
+    }
+
+    #txtcapa {
+        color: #797979;
+        font-size: 16px;
+    }
+
+    #btnEliminar {
+        box-shadow: rgba(221, 107, 85, 0.8) 0px 0px 2px, rgba(0, 0, 0, 0.0470588) 0px 0px 0px 1px inset;
+        background-color: rgb(221, 107, 85);
+        color: white;
+        border: none;
+        font-size: 17px;
+        font-weight: 500;
+        -webkit-border-radius: 4px;
+        border-radius: 5px;
+        width: 130px;
+        height: 50px;
+        margin-left: 450px;
+        margin-top: 40px;
+    }
+
+    #tablaElimi {
+        border: none;
+        width: 400px;
+        margin: 20px auto;
+    }
+
+        #tablaElimi td {
+            border: none;
+        }
+</style>
+
+<div id="icoInfo">
+    <span class="palito"></span>
+    <span class="punto"></span>
+</div>
+
+<h2 id="tituloElimi">¿Estas seguro de eliminar este detalle?</h2>
+<div>
+    <table id="tablaElimi" class="table table-responsive">
+        <tr>
+            <td><p>Talla: </p></td>
+            <td>@Html.DisplayFor(a => a.talla)</td>
+        </tr>
+        <tr>
+            <td><p>Cantidad: </p></td>
+            <td>@Html.DisplayFor(a => a.cantidad)</td>
+        </tr>
+        <tr>
+            <td><p>Precio: </p></td>
+            <td>@Html.DisplayFor(a => a.precio)</td>
+        </tr>
+        <tr>
+            <td><p>Color: </p></td>
+            <td>@Html.DisplayFor(a => a.color)</td>
+        </tr>
+        <tr>
+            <td><p>Imagen: </p></td>
+            <td>@Html.DisplayFor(a => a.imagen)</td>
+        </tr>
+        <tr>
+            <td><p>Promocion: </p></td>
+            <td>@Html.DisplayFor(a => a.promocion)</td>
+        </tr>
+    </table>
+</div>
+@using (Html.BeginForm("EliminarDetalle", "Producto", FormMethod.Post, new { id = "FormEliminar" }))
+{
+    <p>
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(a => a.id_detalle)
+        <input id="btnEliminar" type="submit" value="Eliminar" />
+    </p>
+}
