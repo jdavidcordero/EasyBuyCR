@@ -29,6 +29,9 @@
                     <label>Descripcion</label>
                 </th>
                 <th>
+                    <label>Categoria</label>
+                </th>
+                <th>
                     <label>Detalle</label>
                 </th>
             </tr>
@@ -41,6 +44,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.categoria)
                     </td>
                     @if (item.list_detalle_producto != null)
                 {

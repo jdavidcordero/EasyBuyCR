@@ -21,28 +21,40 @@
                 <br />
                 <div id="Divformulario">
                     @using (Html.BeginForm("RegistrarProducto", "Producto", FormMethod.Post, new { role = "form", id = "FormProducto" }))
-        {
-            @Html.AntiForgeryToken() //Esto es para prevenir ataques CSRF
-            @Html.ValidationSummary(true)
+                    {
+                        @Html.AntiForgeryToken() //Esto es para prevenir ataques CSRF
+                                    @Html.ValidationSummary(true)
 
-            @* Datos necesarios para crear el plan *@
-            <table class="tablaPlan">
-                <tr>
-                    <td>Descripcion del producto</td>
-                    <td>
-                        <div class="input-group">
-                            <div class="input-group-addon"><span class="glyphicon glyphicon-ok" style="font-size: 9px;"></span></div>
-                            @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control", @maxlength = "100", id = "description" } })
-                        </div>
-                    </td>
-                    <td>
-                        <span class="info glyphicon glyphicon-info-sign" title="Descripcion detallada de producto" data-toggle="tooltip" data-placement="top"></span>
-                    </td>
-                </tr>
-            </table>
-           
-            <input type = "submit" value = "Agregar Producto"  class= "btn btn-blue" name="Agregar_Producto" id="btnCrearProducto" />
-        }
+                                    @* Datos necesarios para crear el plan *@
+                                    <table class="tablaPlan">
+                                        <tr>
+                                            <td>Descripcion del producto</td>
+                                            <td>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon"><span class="glyphicon glyphicon-ok" style="font-size: 9px;"></span></div>
+                                                    @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control", @maxlength = "100", id = "description" } })
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="info glyphicon glyphicon-info-sign" title="Descripcion detallada de producto" data-toggle="tooltip" data-placement="top"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Categoria del producto</td>
+                                            <td>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon"><span class="glyphicon glyphicon-ok" style="font-size: 9px;"></span></div>
+                                                    @Html.EditorFor(model => model.categoria, new { htmlAttributes = new { @class = "form-control", @maxlength = "100", id = "categoria" } })
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="info glyphicon glyphicon-info-sign" title="Categoria" data-toggle="tooltip" data-placement="top"></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <br/>
+                                    <input type="submit" value="Agregar Producto" class="btn btn-blue" name="Agregar_Producto" id="btnCrearProducto" />
+                    }
 
                 </div>
                 @Html.Hidden("id_producto")
@@ -50,8 +62,8 @@
                 @Html.ActionLink("Agregar Detalle", "AgregarDetalleCP", "Producto", null, new { @class = "popup boton", id = "btnAgregarDetalle" })
             </div>
             <div id="contenido"></div>
-            </div>
         </div>
+    </div>
 </body>
 @section Scripts{
 
@@ -60,10 +72,10 @@
     <script src="~/Scripts/Accounting.js"></script>
     <script src="~/Scripts/sweetalert.min.js"></script>
     <script src="~/Scripts/Accounting.js"></script>
-<script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
 
-<link href="~/Content/smoothness.css" rel="stylesheet" />
-<link href="~/Content/sweetalert.css" rel="stylesheet" />
+    <link href="~/Content/smoothness.css" rel="stylesheet" />
+    <link href="~/Content/sweetalert.css" rel="stylesheet" />
 }
 
 

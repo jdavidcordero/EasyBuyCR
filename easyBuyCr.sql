@@ -137,11 +137,11 @@ show error
 
 PROMPT inserto funcion producto
 CREATE OR REPLACE FUNCTION fun_insertar_producto(Pcorreo_tienda varchar2, 
-Pdescripcion varchar2)
+Pdescripcion varchar2, Pcategoria varchar2)
 RETURN number
 IS
    BEGIN	
-	insert into producto(correo_tienda, descripcion) values(Pcorreo_tienda, Pdescripcion);
+	insert into producto(correo_tienda, descripcion, categoria) values(Pcorreo_tienda, Pdescripcion, Pcategoria);
 
 	return seq_id_producto.currval;
 	

@@ -204,7 +204,8 @@ namespace EasyBuyCR.Models
             cmd.Parameters.Add(Resultado);
             cmd.Parameters.Add("correo_tienda", producto.id_empresa);
             cmd.Parameters.Add("descripcion",producto.description);
-            
+            cmd.Parameters.Add("categoria", producto.categoria);
+
 
             cmd.ExecuteNonQuery();
 
@@ -330,7 +331,7 @@ namespace EasyBuyCR.Models
         }
 
         //---------------EMPRESA---------------
-        public void insertarProducto(String description, int id_empresa, List<detalle_producto> Lista_detalles)
+        public void insertarProducto(String description, string correo_tienda, String categoria, List<detalle_producto> Lista_detalles)
         {
             conexion = new OracleConnection(cadena);
             conexion.Open();
@@ -341,7 +342,8 @@ namespace EasyBuyCR.Models
             OracleParameter Resultado = new OracleParameter("Resultado", OracleDbType.Int32, ParameterDirection.ReturnValue);
             cmd.Parameters.Add(Resultado);
             cmd.Parameters.Add("descripcion", description);
-            cmd.Parameters.Add("id_empresa", id_empresa);
+            cmd.Parameters.Add("categoria", categoria);
+            cmd.Parameters.Add("correo_tienda", correo_tienda);
 
             cmd.ExecuteNonQuery();
             int idArticulo = int.Parse(Resultado.Value.ToString());
@@ -374,7 +376,7 @@ namespace EasyBuyCR.Models
             List<Producto> listaItem = new List<Producto>();
             listaItem.Clear();
             conexion = new OracleConnection(cadena);
-            String sql = String.Format("select id_producto,descripcion from producto  where correo_tienda='{0}'", correo_tienda);
+            String sql = String.Format("select id_producto,descripcion,categoria from producto  where correo_tienda='{0}'", correo_tienda);
             conexion.Open();
             cmd = new OracleCommand(sql, conexion);
             OracleDataReader reader = cmd.ExecuteReader();
@@ -386,6 +388,7 @@ namespace EasyBuyCR.Models
                 item.id_empresa = correo_tienda;
                 item.id_producto = reader.GetInt32(0);
                 item.description = reader.IsDBNull(1) ? "" : reader.GetString(1);
+                item.categoria = reader.IsDBNull(2) ? "" : reader.GetString(2);
                 listadet = getDetalles(item.id_producto);
                 item.list_detalle_producto = listadet;
                 listaItem.Add(item);
