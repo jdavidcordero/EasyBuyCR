@@ -278,7 +278,7 @@ namespace EasyBuyCR.Models
             List<Producto> listaItem = new List<Producto>();
             listaItem.Clear();
             conexion = new OracleConnection(cadena);
-            String sql = String.Format("select correo_tienda,id_producto,descripcion from producto  where correo_tienda='{0}'", correo_tienda);
+            String sql = String.Format("select id_producto,descripcion from producto  where correo_tienda='{0}'", correo_tienda);
             conexion.Open();
             cmd = new OracleCommand(sql, conexion);
             OracleDataReader reader = cmd.ExecuteReader();
@@ -286,9 +286,9 @@ namespace EasyBuyCR.Models
             while (reader.Read())
             {
                 item = new Producto();
-                item.id_empresa = reader.IsDBNull(0) ? "" : reader.GetString(0);
-                item.id_producto = reader.GetInt32(1);
-                item.description = reader.IsDBNull(2) ? "" : reader.GetString(2);
+                item.id_empresa = correo_tienda;
+                item.id_producto = reader.GetInt32(0);
+                item.description = reader.IsDBNull(1) ? "" : reader.GetString(1);
                 listaItem.Add(item);
             }
             List<detalle_producto> listadet = new List<detalle_producto>();
