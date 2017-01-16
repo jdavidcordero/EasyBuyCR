@@ -316,17 +316,19 @@ namespace EasyBuyCR.Models
             conexion.Open();
             cmd = new OracleCommand(sql, conexion);
             OracleDataReader reader = cmd.ExecuteReader();
-
+            List<detalle_producto> listadet = new List<detalle_producto>();
             while (reader.Read())
             {
                 item = new Producto();
+                listadet = new List<detalle_producto>();
                 item.id_empresa = correo_tienda;
                 item.id_producto = reader.GetInt32(0);
                 item.description = reader.IsDBNull(1) ? "" : reader.GetString(1);
+                listadet = getDetalles(item.id_producto);
+                item.list_detalle_producto = listadet;
                 listaItem.Add(item);
             }
-            List<detalle_producto> listadet = new List<detalle_producto>();
-            listadet = getDetalles(item.id_producto);
+           
             reader.Dispose();
             cmd.Dispose();
             conexion.Close();

@@ -10,66 +10,72 @@
 
 
 
-<div class="divEncabezado">
-    <h1 class="Titulos">Mis Productos</h1>
-    <ol class="breadcrumb migas breadcrumb-arrow">
-        <li><a href="~/Producto/EmpresaIndex">Regresar</a></li>
-    </ol>
-</div>
 
-<table class="table table-responsive table-striped tablaCapacitaciones">
-    <tr>
-        <th>
-            <label>Cod Producto</label>
-        </th>
-        <th>
-            <label>Descripcion</label>
-        </th>
-        <th>
-            <label>Detalle</label>
-        </th>
-    </tr>
+<div  class="row">
+    <div class="container">
+        <div class="divEncabezado">
+            <h1 class="Titulos">Mis Productos</h1>
+            <ol class="breadcrumb migas breadcrumb-arrow">
+                <li><a href="~/Producto/EmpresaIndex">Regresar</a></li>
+            </ol>
+        </div>
+        <table class="table table-responsive table-striped tablaCapacitaciones">
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td id="id_producto">
-                @Html.DisplayFor(modelItem => item.id_producto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.description)
-            </td>
-            @*<td>
-                @foreach (var item2 in item.list_detalle_producto)
+            <tr>
+                <th>
+                    <label>Cod Producto</label>
+                </th>
+                <th>
+                    <label>Descripcion</label>
+                </th>
+                <th>
+                    <label>Detalle</label>
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td id="id_producto">
+                        @Html.DisplayFor(modelItem => item.id_producto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.description)
+                    </td>
+                    @if (item.list_detalle_producto != null)
                 {
-                    <table>
-                        <tr>
-                        <th><label>Cantidad:</label></th>
-                        <th><label>Talla:</label></th>
-                        <th><label>Color:</label></th>
-                        </tr>
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item2.cantidad)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item2.talla)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item2.color)
-                            </td>
-                        </tr>
-                    </table>
-                }
-            </td>*@
-        </tr>
-    }
+                        <td>
+                            <table>
+                                <tr>
+                                    <th><label>Cantidad:</label></th>
+                                    <th><label>Talla:</label></th>
+                                    <th><label>Color:</label></th>
+                                </tr>
+                                @foreach (var item2 in item.list_detalle_producto)
+                                {
 
-</table>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item2.cantidad)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item2.talla)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item2.color)
+                                        </td>
+                                    </tr>
 
+                                }
+                            </table>
 
+                        </td>
 
+                    }
 
+                </tr>
+            }
 
-
-
+        </table>
+        </div>
+    </div>
