@@ -202,8 +202,8 @@ function validarDetalle() {
         swal("Error!", "El Costo  debe ser un numero", "error");
         return false;
     }
-    if (($('#cantidad').val().trim())) {
-        swal("Error!", "La  Cantidad ser un numero", "error");
+    if (isNaN($('#cantidad').val().trim())) {
+        swal("Error!", "La  Cantidad debe ser un numero", "error");
         return false;
     }
     return true;
