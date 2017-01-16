@@ -92,7 +92,7 @@ namespace EasyBuyCR.Controllers
                             Session["Tipo"] = usuario[0];
                             Session["Correo"] = usuario[2];
                             Session["NombreUsuario"] = usuario[1];
-                            return RedirectToAction("About", "Home");
+                            return RedirectToAction("EmpresaIndex", "Producto");
                         }
                         
                     }
@@ -103,7 +103,7 @@ namespace EasyBuyCR.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.Message = "Sucedió un error al iniciar sesión";
+                    ViewBag.Message = "Sucedió un error al iniciar sesión"+ ex;
                 }
 
             }
@@ -174,12 +174,14 @@ namespace EasyBuyCR.Controllers
             {
                 try {
                     con.RegistrarEmpresa(model);
+
+
                     Session["Tipo"] = "C";
                     Session["Correo"] = model.Email;
                     Session["NombreUsuario"] = model.CompanyName;
                     return RedirectToAction("About", "Home");
                 } catch (Exception ex) {
-                    ViewBag.Message = "Sucedió un error al registrar su empresa";
+                    ViewBag.Message = "Sucedió un error al registrar su empresa" + ex;
                 }
                 
             }
@@ -210,7 +212,7 @@ namespace EasyBuyCR.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.Message = "Sucedió un error al registrar su empresa";
+                    ViewBag.Message = "Sucedió un error al registrar su empresa"+ ex;
                 }
 
             }

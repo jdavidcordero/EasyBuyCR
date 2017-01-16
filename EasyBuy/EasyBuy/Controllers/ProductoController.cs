@@ -27,13 +27,6 @@ namespace EasyBuy.Controllers
 
             return View();
         }
-        public ActionResult ProductosInventario()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
         // GET: Producto
         public ActionResult Index()
         {
@@ -50,7 +43,7 @@ namespace EasyBuy.Controllers
             bool estado = false;
             try
             {
-                String id = (String)Session["correo_tienda"];
+                String id = (String)Session["Correo"];
                 producto.id_empresa = id;
                 id_producto = con.GuardarProducto(producto);
                 mensaje = "El   producto se ha ingresado correctamente \n";
@@ -140,13 +133,21 @@ namespace EasyBuy.Controllers
             }
             catch (Exception exc)
             {
-                mensaje = "Error al eliminar Detalle";
+                mensaje = "Error al eliminar Detalle" + exc;
             }
 
             return new JsonResult { Data = new { estado = estado, mensaje = mensaje } };
         }
 
+        public ActionResult ProductosInventario()
+        {
 
-   
+                String correo_tienda = (String)Session["Correo"];
+                Session["Notificaciones"] = null;
+                return View(con.getProducto(correo_tienda));
+          
+        }
+
+
     }
 }
