@@ -148,6 +148,30 @@ namespace EasyBuy.Controllers
           
         }
 
+        public ActionResult AgregarPromocion(int id)
+        {
+            ViewBag.id_detalle = id.ToString();
+            return PartialView("_AgregarPromocion");
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult AgregarPromocion(Promocion promocion)
+        {
+            bool estado = false;
+            string mensaje = "";
+            try
+            {
+                con.guardarPromocion(promocion);
+                mensaje = "Promocion ingresada correctamente \n";
+                estado = true;
+            }
+            catch (Exception exc)
+            {
+                mensaje = "Error al guardar la promocion" + exc.Message;
+            }
+
+            return new JsonResult { Data = new { estado = estado, mensaje = mensaje } };
+        }
     }
 }

@@ -54,10 +54,12 @@
                     @if (item.promocion)
                     {
                         <label id="contrato">Si</label>
+                        @Html.ActionLink("Eliminar Promocion", "EliminarPromocion", "Producto", null, new { @class = "popup", id = item.id_detalle })
                     }
                     else
                     {
                         <label id="contrato">No</label>
+                        @Html.ActionLink("Agregar Promocion", "AgregarPromocion", "Producto", null, new { @class = "popup", id = item.id_detalle })
                     }
                 </td>
                 <td>

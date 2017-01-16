@@ -425,5 +425,23 @@ namespace EasyBuyCR.Models
             cmd.Dispose();
             conexion.Close();
         }
+
+        public void guardarPromocion(Promocion promocion)
+        {
+            cmd = new OracleCommand();
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+            cmd.Connection = conexion;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "fun_insertar_promocion";
+            OracleParameter Resultado = new OracleParameter("Resultado", OracleDbType.Int32, ParameterDirection.ReturnValue);
+            cmd.Parameters.Add(Resultado);
+            cmd.Parameters.Add("Pid_detalle", promocion.id_detalle);
+            cmd.Parameters.Add("Pnuevo_precio", promocion.nuevo_precio);
+            cmd.Parameters.Add("Pfecha_inicio", promocion.fecha_inicio);
+            cmd.Parameters.Add("Pfecha_final", promocion.fecha_final);
+            cmd.ExecuteNonQuery();
+            conexion.Close();
+        }
     }
 }

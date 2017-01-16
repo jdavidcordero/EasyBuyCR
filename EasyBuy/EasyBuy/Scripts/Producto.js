@@ -53,6 +53,11 @@ $(document).ready(function () {
         e.preventDefault();
         EliminarDetalle();
     });
+    //Evento Guardar Promocion
+    $("body").on('submit', '#FormGuardarPromocion', function (e) {
+        e.preventDefault();
+        GuardarPromocion();
+    });
 });
 
 //Carga la ventana modal
@@ -252,6 +257,73 @@ function EliminarDetalle() {
         },
         error: function () {
             swal("Error!", "Error al eliminar el detalle...", "error");
+        }
+    });
+}
+
+//Valida los datos del formulario Crear
+function validarPromocion() {
+
+    if ($('#id_detalle').val().trim() == '' ||
+        $('#nuevo_precio').val().trim() == '' ||
+        $('#fecha_inicio').val().trim() == '' ||
+        $('#fecha_final').val().trim() == '') {
+        swal("Error!", "Todos los campos son requeridos", "error");
+        return false;
+    }
+
+    if (isNaN($('#nuevo_precio').val().trim())) {
+        swal("Error!", "El Costo  debe ser un numero", "error");
+        return false;
+    }
+    return true;
+}
+
+//Guardar detalle
+function GuardarPromocion() {
+
+    //Validar campos
+    if (!validarPromocion()) {
+        return false;
+    }
+    var promocion = {
+        id_detalle: $('#id_detalle').val(),
+        nuevo_precio: $('#nuevo_precio').val(),
+        fecha_inicio: $('#fecha_inicio').val(),
+        fecha_final: $('#fecha_final').val()
+    };
+
+    //Agregar validation token
+    promocion.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
+
+    $.ajax({
+        url: '/Producto/AgregarPromocion',
+        type: 'POST',
+        data: promocion,
+        success: function (data) {
+            if (data.estado) {
+                cargarDetalles();
+                $('#id_detalle').val('');
+                $('#nuevo_precio').val('');
+                $('#fecha_inicio').val('');
+                $('#fecha_final').val('');
+                $dialog.dialog('close');
+
+                swal({
+                    title: "Bien!",
+                    text: data.mensaje,
+                    timer: 2000,
+                    type: "success",
+                    showConfirmButton: false
+                });
+            }
+            else {
+                swal("Error!", data.mensaje, "error");
+            }
+
+        },
+        error: function () {
+            swal("Error!", "Error al crear la promocion...", "error");
         }
     });
 }

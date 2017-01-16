@@ -85,7 +85,7 @@ create table detalle_producto(
 PROMPT promocion
 create table promocion(
 	id_promocion 	 number,
-	id_producto      number,
+	id_detalle       number,
 	nuevo_precio	 number,
 	fecha_inicio     date,
 	fecha_final		 date
@@ -177,14 +177,13 @@ END ObtenerDetalle;
 
 
 PROMPT inserto funcion promocion
-CREATE OR REPLACE FUNCTION fun_insertar_promocion(Pid_producto number, Pnuevo_precio number,
-Pfecha_inicio date,
-Pfecha_final  date)
+CREATE OR REPLACE FUNCTION fun_insertar_promocion(Pid_detalle number, Pnuevo_precio number,
+Pfecha_inicio date, Pfecha_final  date)
 RETURN number
 IS
    BEGIN	
-	insert into promocion(id_producto, nuevo_precio, fecha_inicio, fecha_final)
-	values(Pid_producto, Pnuevo_precio, Pfecha_inicio, Pfecha_final);
+	insert into promocion(id_detalle, nuevo_precio, fecha_inicio, fecha_final)
+	values(Pid_detalle, Pnuevo_precio, Pfecha_inicio, Pfecha_final);
 
 	return seq_id_promocion.currval;
 	
