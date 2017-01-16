@@ -225,7 +225,7 @@ show error
 
 PROMPT actualizar funcion detalle_producto
 CREATE OR REPLACE FUNCTION fun_actualizar_detalle(Pid_detalle number, Pcantidad number,
-Pcolor varchar2, Ptalla	varchar2, Pprecio varchar2, Pimagen	varchar2, Ppromocion char)
+Pcolor varchar2, Ptalla	varchar2, Pprecio number, Pimagen	varchar2, Ppromocion char)
 RETURN INT
 IS
    BEGIN	
@@ -349,7 +349,7 @@ show error
 PROMPT procedimiento registrar detalle_producto
 create or replace procedure prc_insertar_det_producto
 (PId_producto in number, 
-PCantidad in number, PColor in varchar2, PTalla in varchar2, PPrecio in varchar2, PImagen in varchar2,PPromocion in varchar2)is
+PCantidad in number, PColor in varchar2, PTalla in varchar2, PPrecio in number, PImagen in varchar2,PPromocion in varchar2)is
 
 begin
 
