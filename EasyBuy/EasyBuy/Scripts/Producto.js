@@ -53,10 +53,21 @@ $(document).ready(function () {
         e.preventDefault();
         EliminarDetalle();
     });
+
+    //Evento Eliminar producto
+    $('body').on('submit', '#FormEliminarProducto', function (e) {
+        e.preventDefault();
+        EliminarProducto();
+    });
     //Evento Guardar Promocion
     $("body").on('submit', '#FormGuardarPromocion', function (e) {
         e.preventDefault();
         GuardarPromocion();
+    });
+    //Editar
+    $("body").on('submit', '#FormEditar', function (e) {
+        e.preventDefault();
+        EditarDetalle();
     });
 });
 
@@ -270,6 +281,39 @@ function EliminarDetalle() {
     });
 }
 
+//Eliminar Detalle por AJAX
+function EliminarProducto() {
+
+    $.ajax({
+        url: '/Producto/EliminarProducto',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            'id_producto': $('#id').val(),
+            '__RequestVerificationToken': $('input[name=__RequestVerificationToken]').val()
+        },
+        success: function (data) {
+            if (data.estado) {
+                $dialog.dialog('close');
+                location.reload();
+                swal({
+                    title: "Bien!",
+                    text: data.mensaje,
+                    timer: 2000,
+                    type: "success",
+                    showConfirmButton: false
+                });
+            }
+            else {
+                swal("Error!", data.mensaje, "error");
+            }
+        },
+        error: function () {
+            swal("Error!", "Error al eliminar el producto...", "error");
+        }
+    });
+}
+
 //Valida los datos del formulario Crear
 function validarPromocion() {
 
@@ -333,6 +377,79 @@ function GuardarPromocion() {
         },
         error: function () {
             swal("Error!", "Error al crear la promocion...", "error");
+        }
+    });
+}
+//Editar capacitacion
+function EditarDetalle() {
+    //Validar campos
+    if (!validarDetalle()) {
+        return false;
+    }
+
+    var det;
+
+    $.ajax({
+        url: '/Producto/ObtenerDetalle2',
+        async: false,
+        type: 'POST',
+        data: {
+            'id_detalle': $('#id_detalle').val(),
+            '__RequestVerificationToken': $('input[name=__RequestVerificationToken]').val()
+        },
+        success: function (data) {
+            if (data.estado) {
+                det = JSON.parse(data.Det);
+            }
+            else {
+                swal("Error!", "Error al editar", "error");
+                return false;
+            }
+        },
+        error: function () {
+            swal("Error!", "Error al editar", "error");
+            return false;
+        }
+    });
+    var detalle_producto = {
+        id_detalle: $('#id_detalle').val(),
+        id_producto: $('#id_producto').val(),
+        talla: $('#cantidad').val().trim(),
+        precio: $('#color').val(),
+        color: $('#talla').val(),
+        cantidad: $('#precio').val(),
+        imagen: $('#imagen').val(),
+        promocion: $('#promocion').prop('checked')
+    };
+
+    //Agrega validation token
+    detalle_producto.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
+
+    $.ajax({
+        url: '/Producto/EditarDetalle',
+        type: 'POST',
+        async: false,
+        data: detalle_producto,
+        success: function (data) {
+            if (data.estado) {
+                $('#id_detalle').val('');
+                $('#id_producto').val('');
+                $('#cantidad').val('');
+                $('#color').val('');
+                $('#talla').val('');
+                $('#precio').val('');
+                $('#imagen').val('');
+                $('#promocion').val('');
+                $dialog.dialog('close');
+                    location.reload();
+                swal({ title: "Bien!", text: data.mensaje, timer: 1800, showConfirmButton: false });
+            }
+            else {
+                swal("Error!", data.mensaje, "error");
+            }
+        },
+        error: function () {
+            swal("Error!", "Error al editar la Detalle...", "error");
         }
     });
 }

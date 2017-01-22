@@ -70,11 +70,23 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item2.color)
                                         </td>
-                                    </tr>
+                                        <td>
+                                            <br />
+                                            @Html.ActionLink("Editar", "EditarDetalle", "Producto", null, new { @class = "popup", id = item2.id_detalle })
 
+                                        </td>
+                                    </tr>
                                 }
                             </table>
 
+                        </td>
+                        <td>
+
+                            <br />
+                            @Html.ActionLink("Editar", "EditarProductoCP", "Producto", null, new { @class = "popup", id = item.id_producto })
+
+                            <br />
+                            @Html.ActionLink("Eliminar", "EliminarProducto", "Producto", null, new { @class = "popup", id = item.id_producto })
                         </td>
 
                     }
@@ -85,3 +97,15 @@
         </table>
         </div>
     </div>
+@section Scripts{
+
+    <script src="~/Scripts/jquery-2.1.0.js"></script>
+    <script src="~/Scripts/Producto.js"></script>
+    <script src="~/Scripts/Accounting.js"></script>
+    <script src="~/Scripts/sweetalert.min.js"></script>
+    <script src="~/Scripts/Accounting.js"></script>
+    <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+
+    <link href="~/Content/smoothness.css" rel="stylesheet" />
+    <link href="~/Content/sweetalert.css" rel="stylesheet" />
+}

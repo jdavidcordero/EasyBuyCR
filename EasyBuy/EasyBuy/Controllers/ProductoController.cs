@@ -139,6 +139,48 @@ namespace EasyBuy.Controllers
             return new JsonResult { Data = new { estado = estado, mensaje = mensaje } };
         }
 
+
+        public ActionResult EliminarProducto(int id)
+        {
+            String correo_tienda = (String)Session["Correo"];
+            if (id < 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Producto producto = con.ObtenerProducto(id);
+
+            return PartialView(producto);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("EliminarProducto")]
+        public JsonResult EliminarProduct(int id_producto)
+        {
+            bool estado = false;
+            string mensaje = "";
+            try
+            {
+
+
+                if (id_producto < 0)
+                {
+                    mensaje = "EL id no puede ser negativo";
+                }
+
+                con.EliminarDetallesProducto(id_producto);
+                con.EliminarProducto(id_producto);
+                estado = true;
+                mensaje = "Producto eliminado...";
+            }
+            catch (Exception exc)
+            {
+                mensaje = "Error al eliminar Producto" + exc;
+            }
+
+            return new JsonResult { Data = new { estado = estado, mensaje = mensaje } };
+        }
+
         public ActionResult ProductosInventario()
         {
 
@@ -173,5 +215,74 @@ namespace EasyBuy.Controllers
 
             return new JsonResult { Data = new { estado = estado, mensaje = mensaje } };
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult ObtenerDetalle2(int id)
+        {
+            bool estado = false;
+            detalle_producto det = new detalle_producto();
+            try
+            {
+                det = con.ObtenerDetalle(id);
+                estado = true;
+            }
+            catch (Exception exc)
+            {
+
+            }
+
+            //String Palimentacion = capa.CostoAlimentacion+"";
+            String Det = "";
+            var javaScriptSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            Det = javaScriptSerializer.Serialize(det);
+
+            return new JsonResult { Data = new { estado = estado, Det = Det } };
+        }
+
+        public ActionResult EditarDetalle(int id)
+        {
+            
+
+                if (id < 0)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                detalle_producto det = con.ObtenerDetalle(id);
+                ViewBag.detalle_producto = det;
+                if (det == null)
+                {
+                    return HttpNotFound();
+                }
+                return PartialView(det);
+            
+        }
+
+       [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult EditarDetalle(detalle_producto det)
+        {
+            bool estado = false;
+            string mensaje = "";
+            try
+            {
+                if (det.id_detalle > 0) {
+                    con.editarDetalle(det);
+                    estado = true;
+                    mensaje = "Detalle modificada exitosamente";
+                }
+                else
+                {
+                    mensaje = "Error al actualizar Detalle";
+                }
+            }
+            catch (Exception ex)
+            {
+                mensaje = "Error al actualizar Detalle";
+            }
+            return new JsonResult { Data = new { estado = estado, mensaje = mensaje } };
+        }
     }
+
+
 }

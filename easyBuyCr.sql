@@ -242,6 +242,37 @@ IS
 /
 show error
 
+CREATE OR REPLACE PROCEDURE PRC_actualizar_detalle(Pid_detalle number, Pcantidad number,
+Pcolor varchar2, Ptalla	varchar2, Pprecio number, Pimagen	varchar2, Ppromocion char)
+IS
+   BEGIN	
+	update detalle_producto set  cantidad = Pcantidad,
+								 color = Pcolor,
+								 talla = Ptalla,
+								 precio = Pprecio,
+								 imagen = Pimagen,
+								 promocion = Ppromocion
+	where id_detalle = Pid_detalle;
+  
+   END PRC_actualizar_detalle;
+/
+show error
+
+
+CREATE OR REPLACE PROCEDURE ActualizarCapacitacion(idCapa number, nombreCapacitacion2 varchar2,estado2 varchar2,
+  tipo2 varchar2, prioridad2 varchar2, capacitador2 varchar2, fecha2 date, horas2 number,impacto2 varchar2,
+  costoCapacitacion2 number,costoOtrosGastos2 number, contrato2 varchar2, nota2 varchar2) 
+IS
+   BEGIN 	
+	update capacitaciones set nombreCapacitacion=nombreCapacitacion2, estado= estado2, tipo= tipo2, prioridad= prioridad2, 
+							   capacitador= capacitador2, fecha= fecha2, horas= horas2, impacto= impacto2, costoCapacitacion= costoCapacitacion2, 
+							   costoOtrosGastos= costoOtrosGastos2, contrato= contrato2, nota= nota2 
+	where id_capacitacion = idCapa;
+   END;
+/
+
+
+
 PROMPT actualizar funcion promocion
 CREATE OR REPLACE FUNCTION fun_actualizar_promocion(Pid_promocion number, Pnuevo_precio number,
 Pfecha_inicio date,
