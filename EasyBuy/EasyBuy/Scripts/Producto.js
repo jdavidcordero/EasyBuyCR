@@ -414,10 +414,10 @@ function EditarDetalle() {
     var detalle_producto = {
         id_detalle: $('#id_detalle').val(),
         id_producto: $('#id_producto').val(),
-        talla: $('#cantidad').val().trim(),
-        precio: $('#color').val(),
-        color: $('#talla').val(),
-        cantidad: $('#precio').val(),
+        cantidad: $('#cantidad').val(),
+        color: $('#color').val(),
+        talla: $('#talla').val(),
+        precio: $('#precio').val(),
         imagen: $('#imagen').val(),
         promocion: $('#promocion').prop('checked')
     };
