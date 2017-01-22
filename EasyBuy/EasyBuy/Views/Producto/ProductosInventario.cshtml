@@ -6,7 +6,19 @@
     ViewBag.Title = "Mis Productos";
     WebGrid grid = new WebGrid();
 }
-
+<style>
+    #target {
+       background-color: cornflowerblue;
+       position: relative;
+    }
+    #tablaDetalle .tr {
+       background-color: cornflowerblue;
+       position: relative;
+    }
+    .divEncabezado {
+    color:cornflowerblue;
+    }
+</style>
 
 
 
@@ -19,10 +31,10 @@
                 <li><a href="~/Producto/EmpresaIndex">Regresar</a></li>
             </ol>
         </div>
-        <table class="table table-responsive table-striped tablaCapacitaciones">
+        <table id="tablaDetalle" class="table table-responsive table-striped tablaDetalle">
 
-            <tr>
-                <th>
+            <tr id="target">
+                <th >
                     <label>Cod Producto</label>
                 </th>
                 <th>
@@ -31,8 +43,8 @@
                 <th>
                     <label>Categoria</label>
                 </th>
-                <th>
-                    <label>Detalle</label>
+                <th colspan="2" align="left">
+                    <label style="text-align:left">Detalle</label>
                 </th>
             </tr>
 
@@ -50,12 +62,13 @@
                     </td>
                     @if (item.list_detalle_producto != null)
                 {
-                        <td>
+                        <td align="center">
                             <table>
                                 <tr>
                                     <th><label>Cantidad:</label></th>
                                     <th><label>Talla:</label></th>
                                     <th><label>Color:</label></th>
+                                    <td><label>Precio:</label></td>
                                 </tr>
                                 @foreach (var item2 in item.list_detalle_producto)
                                 {
@@ -69,6 +82,9 @@
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item2.color)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item2.precio)
                                         </td>
                                         <td>
                                             <br />
@@ -95,6 +111,7 @@
             }
 
         </table>
+        <hr />
         </div>
     </div>
 @section Scripts{

@@ -8,7 +8,7 @@ $(document).ready(function () {
     $('#btnAgregarDetalle').hide();
 
     $('#contenido').hide();
-
+    $('#btnAgregar').hide();
     //Ocultar y mostrar Formulario Crear Plan 
     $('#forMostrar').hide();
     $('#forEditar').hide();
@@ -29,6 +29,13 @@ $(document).ready(function () {
 
     });
 
+    $('#btnAgregar').on("click", function () {
+        location.reload();
+        $('#btnAgregar').hide();
+        $('#btnAgregarDetalle').hide();
+        $('#btnCrearProducto').show("slow");
+    });
+
     //Abre la ventana modal
     $('body').on("click", ".popup", function (e) {
         e.preventDefault();
@@ -36,6 +43,12 @@ $(document).ready(function () {
         abrirVentana(page);
     });
 
+    //Registrar otro
+    $('body').on("click", "#btnAgregar", function (e) {
+        e.preventDefault();
+        location.reload();
+    });
+   
     //Guarda el producto
     $("body").on('submit', '#FormProducto', function (e) {
         e.preventDefault();
@@ -131,6 +144,7 @@ function GuardarProducto() {
                 $('#categoria').attr("readonly", "readonly");
                 $('#id_producto').attr("value", data.id_producto);
                 $('#btnCrearProducto').hide();
+                $('#btnAgregar').show();
                 $('#btnAgregarDetalle').show();
                 $('#divDetalle').show();
                 $('#contenido').show();
