@@ -60,7 +60,8 @@ PROMPT producto
 create table producto(
 	id_producto	     number,
 	correo_tienda    varchar2(30),
-	descripcion      varchar2(20)
+	descripcion      varchar2(20),
+	categoria        varchar2(20)
 );
 
 PROMPT deseo
@@ -84,7 +85,7 @@ create table detalle_producto(
 PROMPT promocion
 create table promocion(
 	id_promocion 	 number,
-	id_producto      number,
+	id_detalle       number,
 	nuevo_precio	 number,
 	fecha_inicio     date,
 	fecha_final		 date
@@ -136,11 +137,11 @@ show error
 
 PROMPT inserto funcion producto
 CREATE OR REPLACE FUNCTION fun_insertar_producto(Pcorreo_tienda varchar2, 
-Pdescripcion varchar2)
+Pdescripcion varchar2, Pcategoria varchar2)
 RETURN number
 IS
    BEGIN	
-	insert into producto(correo_tienda, descripcion) values(Pcorreo_tienda, Pdescripcion);
+	insert into producto(correo_tienda, descripcion, categoria) values(Pcorreo_tienda, Pdescripcion, Pcategoria);
 
 	return seq_id_producto.currval;
 	
@@ -176,14 +177,13 @@ END ObtenerDetalle;
 
 
 PROMPT inserto funcion promocion
-CREATE OR REPLACE FUNCTION fun_insertar_promocion(Pid_producto number, Pnuevo_precio number,
-Pfecha_inicio date,
-Pfecha_final  date)
+CREATE OR REPLACE FUNCTION fun_insertar_promocion(Pid_detalle number, Pnuevo_precio number,
+Pfecha_inicio date, Pfecha_final  date)
 RETURN number
 IS
    BEGIN	
-	insert into promocion(id_producto, nuevo_precio, fecha_inicio, fecha_final)
-	values(Pid_producto, Pnuevo_precio, Pfecha_inicio, Pfecha_final);
+	insert into promocion(id_detalle, nuevo_precio, fecha_inicio, fecha_final)
+	values(Pid_detalle, Pnuevo_precio, Pfecha_inicio, Pfecha_final);
 
 	return seq_id_promocion.currval;
 	
@@ -241,6 +241,37 @@ IS
    END fun_actualizar_detalle;
 /
 show error
+
+CREATE OR REPLACE PROCEDURE PRC_actualizar_detalle(Pid_detalle number, Pcantidad number,
+Pcolor varchar2, Ptalla	varchar2, Pprecio number, Pimagen	varchar2, Ppromocion char)
+IS
+   BEGIN	
+	update detalle_producto set  cantidad = Pcantidad,
+								 color = Pcolor,
+								 talla = Ptalla,
+								 precio = Pprecio,
+								 imagen = Pimagen,
+								 promocion = Ppromocion
+	where id_detalle = Pid_detalle;
+  
+   END PRC_actualizar_detalle;
+/
+show error
+
+
+CREATE OR REPLACE PROCEDURE ActualizarCapacitacion(idCapa number, nombreCapacitacion2 varchar2,estado2 varchar2,
+  tipo2 varchar2, prioridad2 varchar2, capacitador2 varchar2, fecha2 date, horas2 number,impacto2 varchar2,
+  costoCapacitacion2 number,costoOtrosGastos2 number, contrato2 varchar2, nota2 varchar2) 
+IS
+   BEGIN 	
+	update capacitaciones set nombreCapacitacion=nombreCapacitacion2, estado= estado2, tipo= tipo2, prioridad= prioridad2, 
+							   capacitador= capacitador2, fecha= fecha2, horas= horas2, impacto= impacto2, costoCapacitacion= costoCapacitacion2, 
+							   costoOtrosGastos= costoOtrosGastos2, contrato= contrato2, nota= nota2 
+	where id_capacitacion = idCapa;
+   END;
+/
+
+
 
 PROMPT actualizar funcion promocion
 CREATE OR REPLACE FUNCTION fun_actualizar_promocion(Pid_promocion number, Pnuevo_precio number,
@@ -492,30 +523,5 @@ end prc_eliminar_usuario;
 /
 
 show error
-
-insert into usuario (correo, tipo) values ('dacorcam@hotmail.com','C');
-insert into cliente (nombre_cliente,apellido_cliente,password,correo_cliente) 
-values ('Jose','Cordero','4a7d1ed414474e4033ac29ccb8653d9b','dacorcam@hotmail.com');
-
-insert into usuario (correo, tipo) values ('carcamaron@gmail.com','C');
-insert into cliente (nombre_cliente,apellido_cliente,password,correo_cliente) 
-values ('Carlos','Camaron','4a7d1ed414474e4033ac29ccb8653d9b','carcamaron@gmail.com');
-
-
-insert into usuario (correo, tipo) values ('arenascr@gmail.com','E');
-insert into empresa (nombre_empresa,password_empresa,numero_telefono,direccion,correo_tienda,provincia)
-values ('Arenas','4a7d1ed414474e4033ac29ccb8653d9b','88654355','Heredia Centro','arenascr@gmail.com','Heredia');
-
-insert into usuario (correo, tipo) values ('prueba@gmail.com','E');
-insert into empresa (nombre_empresa,password_empresa,numero_telefono,direccion,correo_tienda,provincia)
-values ('Prueba','123','88654355','Heredia','prueba@gmail.com','Sna jose');
-
-insert into producto(correo_tienda,descripcion) values ('prueba@gmail.com','Camisa tirantes');
---Clave 0000: 4a7d1ed414474e4033ac29ccb8653d9b
-
-PROMPT eliminó cliente
-execute prc_eliminar_cliente('carcamaron@gmail.com');
-PROMPT eliminó usuario
-execute prc_eliminar_usuario('carcamaron@gmail.com');
 
 commit;

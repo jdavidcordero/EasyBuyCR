@@ -180,6 +180,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ClienteForms.cs" />
     <Compile Include="Models\detalle_producto.cs" />
     <Compile Include="Models\empresa.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -200,10 +201,21 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\Abrigos\abrigo1.jpg" />
+    <Content Include="images\Abrigos\abrigo10.jpg" />
+    <Content Include="images\Abrigos\abrigo2.jpg" />
+    <Content Include="images\Abrigos\abrigo3.jpg" />
+    <Content Include="images\Abrigos\abrigo4.jpg" />
+    <Content Include="images\Abrigos\abrigo5.jpg" />
+    <Content Include="images\Abrigos\abrigo6.jpg" />
+    <Content Include="images\Abrigos\abrigo7.jpg" />
+    <Content Include="images\Abrigos\abrigo8.jpg" />
+    <Content Include="images\Abrigos\abrigo9.jpg" />
     <Content Include="images\Company.png" />
     <Content Include="images\Costumer.png" />
     <Content Include="images\EBazul.png" />
     <Content Include="images\EBblanco.png" />
+    <Content Include="images\hombremujer.png" />
     <Content Include="images\pw_maze_white.png" />
     <Content Include="images\pw_maze_white_%402X.png" />
     <Content Include="Scripts\Accounting.js" />
@@ -266,12 +278,17 @@
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Views\Account\CustomerRegister.cshtml" />
     <Content Include="Views\Cliente\Index.cshtml" />
+    <Content Include="Views\Cliente\Hombre.cshtml" />
+    <Content Include="Views\Cliente\Mujer.cshtml" />
     <Content Include="Views\Producto\EmpresaIndex.cshtml" />
     <Content Include="Views\Producto\RegistrarProducto.cshtml" />
     <Content Include="Views\Producto\ProductosInventario.cshtml" />
     <Content Include="Views\Producto\_AgregarDetalle.cshtml" />
     <Content Include="Views\Producto\_TablaDetalle.cshtml" />
     <Content Include="Views\Producto\EliminarDetalle.cshtml" />
+    <Content Include="Views\Producto\_AgregarPromocion.cshtml" />
+    <Content Include="Views\Producto\EliminarProducto.cshtml" />
+    <Content Include="Views\Producto\EditarDetalle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

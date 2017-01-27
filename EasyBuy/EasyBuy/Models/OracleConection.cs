@@ -204,7 +204,8 @@ namespace EasyBuyCR.Models
             cmd.Parameters.Add(Resultado);
             cmd.Parameters.Add("correo_tienda", producto.id_empresa);
             cmd.Parameters.Add("descripcion",producto.description);
-            
+            cmd.Parameters.Add("categoria", producto.categoria);
+
 
             cmd.ExecuteNonQuery();
 
@@ -233,8 +234,104 @@ namespace EasyBuyCR.Models
             conexion.Close();
         }
 
+        //---------------CLIENTE---------------
 
-        public void insertarProducto(String description, int id_empresa, List<detalle_producto> Lista_detalles)
+        public List<Producto> ObtenerAbrigosHombre() {
+            List<Producto> listaAbrigos = new List<Producto>();
+
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+
+            cmd = new OracleCommand("select id_producto,correo_tienda,descripcion,categoria from producto where categoria = :categoria", conexion);
+            cmd.Parameters.Add("categoria", OracleDbType.Varchar2).Value = "abrigos";
+
+            OracleDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Producto abrigo = new Producto();
+                abrigo.id_producto = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
+                abrigo.id_empresa = reader.IsDBNull(1) ? "" : reader.GetString(1);
+                abrigo.description = reader.IsDBNull(2) ? "" : reader.GetString(2);
+                abrigo.categoria = reader.IsDBNull(3) ? "" : reader.GetString(3);
+                abrigo.list_detalle_producto = getDetalles(abrigo.id_producto);
+                listaAbrigos.Add(abrigo);
+            }
+
+            reader.Dispose();
+            cmd.Dispose();
+            conexion.Close();
+            conexion.Dispose();
+
+            return listaAbrigos;
+        }
+
+        public List<Producto> ObtenerAbrigosHombreFiltros(Filtrar model)
+        {
+            List<Producto> listaAbrigos = new List<Producto>();
+
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+
+            String cad = "";
+
+            if (model.color != null) {
+                if (model.color.Count == 1)
+                    cad += " and d.color = '" + model.color.ElementAt(0) + "'";
+                else {
+                    cad += " and (";
+                    for (int i = 0; i < model.color.Count; i++) {
+                        if (model.color.Count != i + 1)
+                            cad += " d.color = '" + model.color.ElementAt(i) + "' or";
+                        else
+                            cad += " d.color = '" + model.color.ElementAt(i) + "'";
+                    }
+                    cad += ")";
+                }
+            }
+            if (model.precio != null) {
+                if (model.precio.Count == 1)
+                    cad += " and d.precio = '" + model.precio.ElementAt(0) + "'";
+                else
+                {
+                    cad += " and (";
+                    for (int i = 0; i < model.precio.Count; i++)
+                    {
+                        if (model.precio.Count != i + 1)
+                            cad += " d.precio = '" + model.precio.ElementAt(i) + "' or";
+                        else
+                            cad += " d.precio = '" + model.precio.ElementAt(i) + "'";
+                    }
+                    cad += ")";
+                }
+            }
+
+            cmd = new OracleCommand("select p.id_producto,p.correo_tienda,p.descripcion,p.categoria from producto p, detalle_producto d where p.categoria = :categoria and p.id_producto = d.id_producto"+cad, conexion);
+            cmd.Parameters.Add("categoria", OracleDbType.Varchar2).Value = "abrigos";
+
+            OracleDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Producto abrigo = new Producto();
+                abrigo.id_producto = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
+                abrigo.id_empresa = reader.IsDBNull(1) ? "" : reader.GetString(1);
+                abrigo.description = reader.IsDBNull(2) ? "" : reader.GetString(2);
+                abrigo.categoria = reader.IsDBNull(3) ? "" : reader.GetString(3);
+                abrigo.list_detalle_producto = getDetalles(abrigo.id_producto);
+                listaAbrigos.Add(abrigo);
+            }
+
+            reader.Dispose();
+            cmd.Dispose();
+            conexion.Close();
+            conexion.Dispose();
+
+            return listaAbrigos;
+        }
+
+        //---------------EMPRESA---------------
+        public void insertarProducto(String description, string correo_tienda, String categoria, List<detalle_producto> Lista_detalles)
         {
             conexion = new OracleConnection(cadena);
             conexion.Open();
@@ -245,7 +342,8 @@ namespace EasyBuyCR.Models
             OracleParameter Resultado = new OracleParameter("Resultado", OracleDbType.Int32, ParameterDirection.ReturnValue);
             cmd.Parameters.Add(Resultado);
             cmd.Parameters.Add("descripcion", description);
-            cmd.Parameters.Add("id_empresa", id_empresa);
+            cmd.Parameters.Add("categoria", categoria);
+            cmd.Parameters.Add("correo_tienda", correo_tienda);
 
             cmd.ExecuteNonQuery();
             int idArticulo = int.Parse(Resultado.Value.ToString());
@@ -278,21 +376,24 @@ namespace EasyBuyCR.Models
             List<Producto> listaItem = new List<Producto>();
             listaItem.Clear();
             conexion = new OracleConnection(cadena);
-            String sql = String.Format("select id_producto,descripcion from producto  where correo_tienda='{0}'", correo_tienda);
+            String sql = String.Format("select id_producto,descripcion,categoria from producto  where correo_tienda='{0}'", correo_tienda);
             conexion.Open();
             cmd = new OracleCommand(sql, conexion);
             OracleDataReader reader = cmd.ExecuteReader();
-
+            List<detalle_producto> listadet = new List<detalle_producto>();
             while (reader.Read())
             {
                 item = new Producto();
+                listadet = new List<detalle_producto>();
                 item.id_empresa = correo_tienda;
                 item.id_producto = reader.GetInt32(0);
                 item.description = reader.IsDBNull(1) ? "" : reader.GetString(1);
+                item.categoria = reader.IsDBNull(2) ? "" : reader.GetString(2);
+                listadet = getDetalles(item.id_producto);
+                item.list_detalle_producto = listadet;
                 listaItem.Add(item);
             }
-            List<detalle_producto> listadet = new List<detalle_producto>();
-            listadet = getDetalles(item.id_producto);
+           
             reader.Dispose();
             cmd.Dispose();
             conexion.Close();
@@ -316,11 +417,11 @@ namespace EasyBuyCR.Models
             while (reader.Read())
             {
                 item = new detalle_producto();
-                item.id_detalle = reader.GetInt32(0);
-                item.cantidad = reader.GetInt32(1);
+                item.id_detalle = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
+                item.cantidad = reader.IsDBNull(1) ? 0 : reader.GetInt32(1);
                 item.color = reader.IsDBNull(2) ? "" : reader.GetString(2);
                 item.talla = reader.IsDBNull(3) ? "" : reader.GetString(3);
-                item.precio = reader.GetInt32(4);
+                item.precio = reader.IsDBNull(4) ? 0 : reader.GetInt32(4);
                 item.imagen = reader.IsDBNull(5) ? "" : reader.GetString(5);
                 if (reader.GetString(6).Equals("True"))
                 {
@@ -351,12 +452,12 @@ namespace EasyBuyCR.Models
             if (reader.Read())
             {
                 detalle = new detalle_producto();
-                detalle.id_detalle = reader.GetInt32(0);
-                detalle.id_producto = reader.GetInt32(1);
-                detalle.cantidad = reader.GetInt32(2);
+                detalle.id_detalle = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
+                detalle.id_producto = reader.IsDBNull(1) ? 0 : reader.GetInt32(1);
+                detalle.cantidad = reader.IsDBNull(2) ? 0 : reader.GetInt32(2);
                 detalle.color = reader.IsDBNull(3) ? "" : reader.GetString(3);
                 detalle.talla = reader.IsDBNull(4) ? "" : reader.GetString(4);
-                detalle.precio = reader.GetInt32(5);
+                detalle.precio = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
                 detalle.imagen = reader.IsDBNull(6) ? "" : reader.GetString(6);
                 if (reader.GetString(7).Equals("True"))
                 {
@@ -374,6 +475,56 @@ namespace EasyBuyCR.Models
             return detalle;
         }
 
+        public Producto ObtenerProducto(int id_producto)
+        {
+            Producto producto = new Producto();
+            List<detalle_producto> listadet = new List<detalle_producto>();
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+            String sql = String.Format("select id_producto, correo_tienda,descripcion,categoria from Producto  where id_producto={0}", id_producto);
+            cmd = new OracleCommand(sql, conexion);
+            OracleDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                producto = new Producto();
+                listadet = new List<detalle_producto>();
+                producto.id_producto = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
+                producto.id_empresa = reader.IsDBNull(1) ? "" : reader.GetString(1);
+                producto.description = reader.IsDBNull(2) ? "" : reader.GetString(2);
+                producto.categoria = reader.IsDBNull(3) ? "" : reader.GetString(3);
+                listadet = getDetalles(producto.id_producto);
+                producto.list_detalle_producto = listadet;
+            }
+            reader.Dispose();
+            cmd.Dispose();
+            conexion.Close();
+
+            return producto;
+        }
+
+        public void editarDetalle(detalle_producto detalle)
+        {
+            cmd = new OracleCommand();
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+
+            cmd.Connection = conexion;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "PRC_actualizar_detalle";
+          
+
+            cmd.Parameters.Add("id_detalle", detalle.id_detalle);
+            cmd.Parameters.Add("Pcantidad", detalle.cantidad);
+            cmd.Parameters.Add("Pcolor", detalle.color);
+            cmd.Parameters.Add("Ptalla", detalle.talla);
+            cmd.Parameters.Add("Pprecio", detalle.precio);
+            cmd.Parameters.Add("Pimagen", detalle.imagen);
+            cmd.Parameters.Add("Ppromocion", detalle.promocion.ToString());
+         
+            cmd.ExecuteNonQuery();
+            conexion.Close();
+        }
+
 
         public void EliminarDetalle(int idDeta)
         {
@@ -387,6 +538,49 @@ namespace EasyBuyCR.Models
             cmd.Parameters.Add("Pid_detalle", idDeta);
             cmd.ExecuteNonQuery();
             cmd.Dispose();
+            conexion.Close();
+        }
+
+        public void EliminarDetallesProducto(int id_producto)
+        {
+            cmd = new OracleCommand();
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+            String sql = String.Format("delete detalle_producto where id_producto = {0}", id_producto);
+            cmd = new OracleCommand(sql, conexion);
+            OracleDataReader reader = cmd.ExecuteReader();
+            reader.Dispose();
+            cmd.Dispose();
+            conexion.Close();
+        }
+        public void EliminarProducto(int id_producto)
+        {
+            cmd = new OracleCommand();
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+            String sql = String.Format("delete Producto where id_producto = {0}", id_producto);
+            cmd = new OracleCommand(sql, conexion);
+            OracleDataReader reader = cmd.ExecuteReader();
+            reader.Dispose();
+            cmd.Dispose();
+            conexion.Close();
+        }
+
+        public void guardarPromocion(Promocion promocion)
+        {
+            cmd = new OracleCommand();
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+            cmd.Connection = conexion;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "fun_insertar_promocion";
+            OracleParameter Resultado = new OracleParameter("Resultado", OracleDbType.Int32, ParameterDirection.ReturnValue);
+            cmd.Parameters.Add(Resultado);
+            cmd.Parameters.Add("Pid_detalle", promocion.id_detalle);
+            cmd.Parameters.Add("Pnuevo_precio", promocion.nuevo_precio);
+            cmd.Parameters.Add("Pfecha_inicio", promocion.fecha_inicio);
+            cmd.Parameters.Add("Pfecha_final", promocion.fecha_final);
+            cmd.ExecuteNonQuery();
             conexion.Close();
         }
     }

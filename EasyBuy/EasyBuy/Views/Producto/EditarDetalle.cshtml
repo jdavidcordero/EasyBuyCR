@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "Editar Detalle";
+}
+
+@model EasyBuy.Models.detalle_producto
+
+<h2>Editar Detalle</h2>
+
+@using (Html.BeginForm("ObtenerDetalle2", "Producto", FormMethod.Post, new { id = "FormEditar" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.id_detalle);
+    <table class="tablaEditar" id="tablaEditar">
+        <tr>
+            <td class="etiqueta"><label>id_detalle</label></td>
+            <td class="etiqueta"><label>id_producto</label></td>
+            <td class="etiqueta"><label>Cantidad</label></td>
+            <td class="etiqueta"><label>Color</label></td>
+            <td class="etiqueta"><label>Talla</label></td>
+            <td class="etiqueta"><label>Precio</label></td>
+            <td class="etiqueta"><label>Imagen</label></td>
+            <td class="etiqueta"><label>Promocion</label></td>
+        </tr>
+
+       <tr>
+
+           <td class="etiqueta">@Html.EditorFor(model => model.id_detalle, new { htmlAttributes = new { @class = "form-control", id = "id_detalle" } })</td>
+
+            <td class="etiqueta">@Html.EditorFor(model => model.id_producto, new { htmlAttributes = new { @class = "form-control", id = "id_producto" } })</td>
+            <td class="etiqueta">@Html.EditorFor(model => model.cantidad, new { htmlAttributes = new { @class = "form-control", id = "cantidad" } })</td>
+            <td class="etiqueta">@Html.EditorFor(model => model.color, new { htmlAttributes = new { @class = "form-control", id = "color" } })</td>
+            <td class="etiqueta">@Html.EditorFor(model => model.talla, new { htmlAttributes = new { @class = "form-control", id = "talla" } })</td>
+            <td class="etiqueta">@Html.EditorFor(model => model.precio, new { htmlAttributes = new { @class = "form-control", id = "precio" } })</td>
+           <td class="etiqueta">@Html.EditorFor(model => model.imagen, new { htmlAttributes = new { @class = "form-control", id = "imagen" } })</td>
+           <td class="etiqueta">@Html.EditorFor(model => model.promocion, new { htmlAttributes = new { @class = "form-control", id = "promocion" } })</td>
+           </tr>
+      
+   
+        <tr>
+            <td id="tdBoton">
+                <input type="submit" value="Guardar" id="btnAgreDetalle"  class="btn btn-blue" name="agregar" />
+            </td>
+        </tr>
+    </table>
+
+}
