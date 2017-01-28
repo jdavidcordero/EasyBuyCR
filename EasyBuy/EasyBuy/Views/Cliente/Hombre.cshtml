@@ -29,64 +29,68 @@
                 @using (Html.BeginForm("Filtrar", "Cliente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-inline", role = "form", id="formFiltrar" }))
                 {
                     @Html.AntiForgeryToken()
-                    <div class="dropdown">
-                        <button class="btn btn-blue dropdown-toggle" type="button" id="ddmenu1" data-toggle="dropdown" aria-expanded="true">
-                            Color
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="ddmenu1">
-                            <li role="presentation">
-                                <div class="checkbox">
-                                    <label for="mensaje">
-                                        <input type="checkbox" name="color" id="color" value="azul"> Azul
-                                    </label>
-                                </div>
-                            </li>
-                            <li role="presentation">
-                                <div class="checkbox">
-                                    <label for="mensaje">
-                                        <input type="checkbox" name="color" id="color" value="cafe"> Cafe
-                                    </label>
-                                </div>
-                            </li>
-                            <li role="presentation">
-                                <div class="checkbox">
-                                    <label for="mensaje">
-                                        <input type="checkbox" name="color" id="color" value="gris"> Gris
-                                    </label>
-                                </div>
-                            </li>
-                            <li role="presentation">
-                                <div class="checkbox">
-                                    <label for="mensaje">
-                                        <input type="checkbox" name="color" id="color" value="negro"> Negro
-                                    </label>
-                                </div>
-                            </li>
-                        </ul>
+                    <div class="form-group">
+                        <div class="dropdown">
+                            <button class="btn btn-blue dropdown-toggle" type="button" id="ddmenu1" data-toggle="dropdown" aria-expanded="true">
+                                Color
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="ddmenu1">
+                                <li role="presentation">
+                                    <div class="checkbox">
+                                        <label for="mensaje">
+                                            <input type="checkbox" name="color" id="color" value="azul"> Azul
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="presentation">
+                                    <div class="checkbox">
+                                        <label for="mensaje">
+                                            <input type="checkbox" name="color" id="color" value="cafe"> Cafe
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="presentation">
+                                    <div class="checkbox">
+                                        <label for="mensaje">
+                                            <input type="checkbox" name="color" id="color" value="gris"> Gris
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="presentation">
+                                    <div class="checkbox">
+                                        <label for="mensaje">
+                                            <input type="checkbox" name="color" id="color" value="negro"> Negro
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
 
-                    <div class="dropdown">
-                        <button class="btn btn-blue dropdown-toggle" type="button" id="ddmenu1" data-toggle="dropdown" aria-expanded="true">
-                            Precio
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="ddmenu1">
-                            <li role="presentation">
-                                <div class="checkbox">
-                                    <label for="mensaje">
-                                        <input type="checkbox" name="precio" id="precio" value="20000"> 20000
-                                    </label>
-                                </div>
-                            </li>
-                            <li role="presentation">
-                                <div class="checkbox">
-                                    <label for="mensaje">
-                                        <input type="checkbox" name="precio" id="precio" value="25000"> 25000
-                                    </label>
-                                </div>
-                            </li>
-                        </ul>
+                    <div class="form-group">
+                        <div class="dropdown">
+                            <button class="btn btn-blue dropdown-toggle" type="button" id="ddmenu1" data-toggle="dropdown" aria-expanded="true">
+                                Precio
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="ddmenu1">
+                                <li role="presentation">
+                                    <div class="checkbox">
+                                        <label for="mensaje">
+                                            <input type="checkbox" name="precio" id="precio" value="20000"> ₡ 20,000 
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="presentation">
+                                    <div class="checkbox">
+                                        <label for="mensaje">
+                                            <input type="checkbox" name="precio" id="precio" value="25000"> ₡ 25,000
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
 
                     <a href="javascript:document.getElementById('formFiltrar').submit()" class="btn btn-blue">Filtrar</a>
@@ -104,7 +108,7 @@
                         <img src="@det.imagen" alt="">
                         <div class="caption">
                             <h3>@produc.description</h3>
-                            <p class="txt-white">@det.precio</p>
+                            <p class="txt-white">₡ @det.precio</p>
                             <a href="#" class="btn btn-white"> + </a>  
                         </div>
                     </div>
