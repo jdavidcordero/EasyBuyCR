@@ -8,7 +8,7 @@ $(document).ready(function () {
     $('#btnAgregarDetalle').hide();
 
     $('#contenido').hide();
-
+    $('#btnAgregar').hide();
     //Ocultar y mostrar Formulario Crear Plan 
     $('#forMostrar').hide();
     $('#forEditar').hide();
@@ -29,6 +29,13 @@ $(document).ready(function () {
 
     });
 
+    $('#btnAgregar').on("click", function () {
+        location.reload();
+        $('#btnAgregar').hide();
+        $('#btnAgregarDetalle').hide();
+        $('#btnCrearProducto').show("slow");
+    });
+
     //Abre la ventana modal
     $('body').on("click", ".popup", function (e) {
         e.preventDefault();
@@ -36,6 +43,12 @@ $(document).ready(function () {
         abrirVentana(page);
     });
 
+    //Registrar otro
+    $('body').on("click", "#btnAgregar", function (e) {
+        e.preventDefault();
+        location.reload();
+    });
+   
     //Guarda el producto
     $("body").on('submit', '#FormProducto', function (e) {
         e.preventDefault();
@@ -53,10 +66,21 @@ $(document).ready(function () {
         e.preventDefault();
         EliminarDetalle();
     });
+
+    //Evento Eliminar producto
+    $('body').on('submit', '#FormEliminarProducto', function (e) {
+        e.preventDefault();
+        EliminarProducto();
+    });
     //Evento Guardar Promocion
     $("body").on('submit', '#FormGuardarPromocion', function (e) {
         e.preventDefault();
         GuardarPromocion();
+    });
+    //Editar
+    $("body").on('submit', '#FormEditar', function (e) {
+        e.preventDefault();
+        EditarDetalle();
     });
 });
 
@@ -88,6 +112,10 @@ function validarProducto() {
         swal("Error!", "Debe Agregar una descripcion", "error");
         return false;
     }
+    if ($('#categoria').val().trim() == '') {
+        swal("Error!", "Debe Agregar una Categoria", "error");
+        return false;
+    }
     return true;
 }
 
@@ -101,7 +129,7 @@ function GuardarProducto() {
 
     var producto = {
         description: $('#description').val(),
-        //id_producto: $('#id_producto').val()
+        categoria: $('#categoria').val()
     };
     //Agrega validation token
     producto.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
@@ -113,8 +141,10 @@ function GuardarProducto() {
         success: function (data) {
             if (data.description!='') {
                 $('#description').attr("readonly", "readonly");
+                $('#categoria').attr("readonly", "readonly");
                 $('#id_producto').attr("value", data.id_producto);
                 $('#btnCrearProducto').hide();
+                $('#btnAgregar').show();
                 $('#btnAgregarDetalle').show();
                 $('#divDetalle').show();
                 $('#contenido').show();
@@ -144,7 +174,9 @@ function GuardarDetalle() {
         cantidad: $('#cantidad').val(),
         color: $('#color').val(),
         imagen: $('#imagen').val(),
+        genero: $('#genero').val(),
         promocion: $('#promocion').prop('checked')
+       
      };
 
     //Agregar validation token
@@ -162,6 +194,7 @@ function GuardarDetalle() {
                 $('#cantidad').val('');
                 $('#color').val('');
                 $('#imagen').val('');
+                $('#genero').val('');
                 $dialog.dialog('close');
 
                 swal({
@@ -188,13 +221,17 @@ function validarDetalle() {
 
     if ($('#talla').val().trim() == '' ||
         $('#precio').val().trim() == '' || $('#cantidad').val().trim() == '' ||
-        $('#color').val().trim() == '' || $('#imagen').val().trim() == '') {
+        $('#color').val().trim() == '' || $('#imagen').val().trim() == '' || $('#genero').val().trim() == '') {
         swal("Error!", "Todos los campos son requeridos", "error");
         return false;
     }
 
     if (isNaN($('#precio').val().trim())) {
         swal("Error!", "El Costo  debe ser un numero", "error");
+        return false;
+    }
+        if (isNaN($('#cantidad').val().trim())) {
+        swal("Error!", "La  Cantidad debe ser un numero", "error");
         return false;
     }
     return true;
@@ -257,6 +294,39 @@ function EliminarDetalle() {
         },
         error: function () {
             swal("Error!", "Error al eliminar el detalle...", "error");
+        }
+    });
+}
+
+//Eliminar Detalle por AJAX
+function EliminarProducto() {
+
+    $.ajax({
+        url: '/Producto/EliminarProducto',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            'id_producto': $('#id').val(),
+            '__RequestVerificationToken': $('input[name=__RequestVerificationToken]').val()
+        },
+        success: function (data) {
+            if (data.estado) {
+                $dialog.dialog('close');
+                location.reload();
+                swal({
+                    title: "Bien!",
+                    text: data.mensaje,
+                    timer: 2000,
+                    type: "success",
+                    showConfirmButton: false
+                });
+            }
+            else {
+                swal("Error!", data.mensaje, "error");
+            }
+        },
+        error: function () {
+            swal("Error!", "Error al eliminar el producto...", "error");
         }
     });
 }
@@ -324,6 +394,82 @@ function GuardarPromocion() {
         },
         error: function () {
             swal("Error!", "Error al crear la promocion...", "error");
+        }
+    });
+}
+//Editar capacitacion
+function EditarDetalle() {
+    //Validar campos
+    if (!validarDetalle()) {
+        return false;
+    }
+
+    var det;
+
+    $.ajax({
+        url: '/Producto/ObtenerDetalle2',
+        async: false,
+        type: 'POST',
+        data: {
+            'id_detalle': $('#id_detalle').val(),
+            '__RequestVerificationToken': $('input[name=__RequestVerificationToken]').val()
+        },
+        success: function (data) {
+            if (data.estado) {
+                det = JSON.parse(data.Det);
+            }
+            else {
+                swal("Error!", "Error al editar", "error");
+                return false;
+            }
+        },
+        error: function () {
+            swal("Error!", "Error al editar", "error");
+            return false;
+        }
+    });
+    var detalle_producto = {
+        id_detalle: $('#id_detalle').val(),
+        id_producto: $('#id_producto').val(),
+        cantidad: $('#cantidad').val(),
+        color: $('#color').val(),
+        talla: $('#talla').val(),
+        precio: $('#precio').val(),
+        imagen: $('#imagen').val(),
+        genero: $('#genero').val(),
+        promocion: $('#promocion').prop('checked')
+    };
+
+    //Agrega validation token
+    detalle_producto.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
+
+    $.ajax({
+        url: '/Producto/EditarDetalle',
+        type: 'POST',
+        async: false,
+        data: detalle_producto,
+        success: function (data) {
+            if (data.estado) {
+                $('#id_detalle').val('');
+                $('#id_producto').val('');
+                $('#cantidad').val('');
+                $('#color').val('');
+                $('#talla').val('');
+                $('#precio').val('');
+                $('#imagen').val('');
+                $('#genero').val('');
+                $('#promocion').val('');
+                
+                $dialog.dialog('close');
+                    location.reload();
+                swal({ title: "Bien!", text: data.mensaje, timer: 1800, showConfirmButton: false });
+            }
+            else {
+                swal("Error!", data.mensaje, "error");
+            }
+        },
+        error: function () {
+            swal("Error!", "Error al editar la Detalle...", "error");
         }
     });
 }

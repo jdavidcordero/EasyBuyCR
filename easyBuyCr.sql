@@ -79,7 +79,8 @@ create table detalle_producto(
 	talla			 varchar2(2),
 	precio			 number,
 	imagen			 varchar2(100),
-	promocion		 varchar2(20)
+	promocion		 varchar2(20), 
+	genero           varchar2(20) 
 );
 
 PROMPT promocion
@@ -137,11 +138,11 @@ show error
 
 PROMPT inserto funcion producto
 CREATE OR REPLACE FUNCTION fun_insertar_producto(Pcorreo_tienda varchar2, 
-Pdescripcion varchar2)
+Pdescripcion varchar2, Pcategoria varchar2)
 RETURN number
 IS
    BEGIN	
-	insert into producto(correo_tienda, descripcion) values(Pcorreo_tienda, Pdescripcion);
+	insert into producto(correo_tienda, descripcion, categoria) values(Pcorreo_tienda, Pdescripcion, Pcategoria);
 
 	return seq_id_producto.currval;
 	
@@ -151,12 +152,12 @@ show error
 
 PROMPT inserto funcion detalle_producto
 CREATE OR REPLACE FUNCTION fun_insertar_detalle(Pid_producto number, 
-Pcantidad number, Pcolor varchar2, Ptalla varchar2, Pprecio number, Pimagen varchar2, Ppromocion char)
+Pcantidad number, Pcolor varchar2, Ptalla varchar2, Pprecio number, Pimagen varchar2, Ppromocion char,Pgenero varchar2)
 RETURN number
 IS
    BEGIN	
-	insert into detalle_producto(id_producto, cantidad, color, talla, precio, imagen, promocion)
-	values(Pid_producto, Pcantidad, Pcolor, Ptalla, Pprecio, Pimagen, Ppromocion);
+	insert into detalle_producto(id_producto, cantidad, color, talla, precio, imagen, promocion,genero)
+	values(Pid_producto, Pcantidad, Pcolor, Ptalla, Pprecio, Pimagen, Ppromocion, Pgenero);
 
 	return seq_id_det_producto.currval;
 	
@@ -225,7 +226,7 @@ show error
 
 PROMPT actualizar funcion detalle_producto
 CREATE OR REPLACE FUNCTION fun_actualizar_detalle(Pid_detalle number, Pcantidad number,
-Pcolor varchar2, Ptalla	varchar2, Pprecio number, Pimagen	varchar2, Ppromocion char)
+Pcolor varchar2, Ptalla	varchar2, Pprecio number, Pimagen	varchar2, Ppromocion char, Pgenero varchar2)
 RETURN INT
 IS
    BEGIN	
@@ -234,13 +235,34 @@ IS
 								 talla = Ptalla,
 								 precio = Pprecio,
 								 imagen = Pimagen,
-								 promocion = Ppromocion
+								 promocion = Ppromocion,
+								 genero = Pgenero
+								 
 	where id_detalle = Pid_detalle;
   
    return seq_id_det_producto.currval;
    END fun_actualizar_detalle;
 /
 show error
+
+CREATE OR REPLACE PROCEDURE PRC_actualizar_detalle(Pid_detalle number, Pcantidad number,
+Pcolor varchar2, Ptalla	varchar2, Pprecio number, Pimagen	varchar2, Ppromocion char, Pgenero varchar2)
+IS
+   BEGIN	
+	update detalle_producto set  cantidad = Pcantidad,
+								 color = Pcolor,
+								 talla = Ptalla,
+								 precio = Pprecio,
+								 imagen = Pimagen,
+								 promocion = Ppromocion,
+								 genero = Pgenero
+								 
+	where id_detalle = Pid_detalle;
+  
+   END PRC_actualizar_detalle;
+/
+show error
+
 
 PROMPT actualizar funcion promocion
 CREATE OR REPLACE FUNCTION fun_actualizar_promocion(Pid_promocion number, Pnuevo_precio number,
@@ -349,12 +371,12 @@ show error
 PROMPT procedimiento registrar detalle_producto
 create or replace procedure prc_insertar_det_producto
 (PId_producto in number, 
-PCantidad in number, PColor in varchar2, PTalla in varchar2, PPrecio in number, PImagen in varchar2,PPromocion in varchar2)is
+PCantidad in number, PColor in varchar2, PTalla in varchar2, PPrecio in number, PImagen in varchar2,PPromocion in varchar2,Pgenero in varchar2)is
 
 begin
 
-		insert into detalle_producto (id_producto, cantidad, color, talla, precio, imagen, promocion)
-		values (PId_producto, PCantidad, PColor, PTalla, PPrecio, PImagen,PPromocion);
+		insert into detalle_producto (id_producto, cantidad, color, talla, precio, imagen, promocion,genero)
+		values (PId_producto, PCantidad, PColor, PTalla, PPrecio, PImagen,PPromocion,Pgenero);
 		commit;
 		
 end prc_insertar_det_producto;

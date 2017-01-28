@@ -6,7 +6,19 @@
     ViewBag.Title = "Mis Productos";
     WebGrid grid = new WebGrid();
 }
-
+<style>
+    #target {
+       background-color: cornflowerblue;
+       position: relative;
+    }
+    #tablaDetalle .tr {
+       background-color: cornflowerblue;
+       position: relative;
+    }
+    .divEncabezado {
+    color:cornflowerblue;
+    }
+</style>
 
 
 
@@ -19,17 +31,20 @@
                 <li><a href="~/Producto/EmpresaIndex">Regresar</a></li>
             </ol>
         </div>
-        <table class="table table-responsive table-striped tablaCapacitaciones">
+        <table id="tablaDetalle" class="table table-responsive table-striped tablaDetalle">
 
-            <tr>
-                <th>
+            <tr id="target">
+                <th >
                     <label>Cod Producto</label>
                 </th>
                 <th>
                     <label>Descripcion</label>
                 </th>
                 <th>
-                    <label>Detalle</label>
+                    <label>Categoria</label>
+                </th>
+                <th colspan="2" align="left">
+                    <label style="text-align:left">Detalle</label>
                 </th>
             </tr>
 
@@ -42,14 +57,18 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.description)
                     </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.categoria)
+                    </td>
                     @if (item.list_detalle_producto != null)
                 {
-                        <td>
+                        <td align="center">
                             <table>
                                 <tr>
                                     <th><label>Cantidad:</label></th>
                                     <th><label>Talla:</label></th>
                                     <th><label>Color:</label></th>
+                                    <td><label>Precio:</label></td>
                                 </tr>
                                 @foreach (var item2 in item.list_detalle_producto)
                                 {
@@ -64,11 +83,26 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item2.color)
                                         </td>
-                                    </tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item2.precio)
+                                        </td>
+                                        <td>
+                                            <br />
+                                            @Html.ActionLink("Editar", "EditarDetalle", "Producto", null, new { @class = "popup", id = item2.id_detalle })
 
+                                        </td>
+                                    </tr>
                                 }
                             </table>
 
+                        </td>
+                        <td>
+
+                            <br />
+                            @Html.ActionLink("Editar", "EditarProductoCP", "Producto", null, new { @class = "popup", id = item.id_producto })
+
+                            <br />
+                            @Html.ActionLink("Eliminar", "EliminarProducto", "Producto", null, new { @class = "popup", id = item.id_producto })
                         </td>
 
                     }
@@ -77,5 +111,18 @@
             }
 
         </table>
+        <hr />
         </div>
     </div>
+@section Scripts{
+
+    <script src="~/Scripts/jquery-2.1.0.js"></script>
+    <script src="~/Scripts/Producto.js"></script>
+    <script src="~/Scripts/Accounting.js"></script>
+    <script src="~/Scripts/sweetalert.min.js"></script>
+    <script src="~/Scripts/Accounting.js"></script>
+    <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+
+    <link href="~/Content/smoothness.css" rel="stylesheet" />
+    <link href="~/Content/sweetalert.css" rel="stylesheet" />
+}
