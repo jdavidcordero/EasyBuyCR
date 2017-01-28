@@ -15,5 +15,14 @@ namespace EasyBuy.Models
         public String talla { get; set; }       
         public String imagen { get; set; }
         public bool promocion { get; set; }
+        public String genero { get; set; }
+
+        public List<String> ObtenerComboGenero()
+        {
+            List<String> list = new List<string>();
+            list.Add("Mujer");
+            list.Add("Hombre");
+            return list;
+        }
     }
 }

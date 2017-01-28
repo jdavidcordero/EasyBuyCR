@@ -21,7 +21,9 @@
             <td class="etiqueta"><label>Talla</label></td>
             <td class="etiqueta"><label>Precio</label></td>
             <td class="etiqueta"><label>Imagen</label></td>
+            <td class="etiqueta"><label>Genero</label></td>
             <td class="etiqueta"><label>Promocion</label></td>
+           
         </tr>
 
        <tr>
@@ -34,8 +36,11 @@
             <td class="etiqueta">@Html.EditorFor(model => model.talla, new { htmlAttributes = new { @class = "form-control", id = "talla" } })</td>
             <td class="etiqueta">@Html.EditorFor(model => model.precio, new { htmlAttributes = new { @class = "form-control", id = "precio" } })</td>
            <td class="etiqueta">@Html.EditorFor(model => model.imagen, new { htmlAttributes = new { @class = "form-control", id = "imagen" } })</td>
-           <td class="etiqueta">@Html.EditorFor(model => model.promocion, new { htmlAttributes = new { @class = "form-control", id = "promocion" } })</td>
-           </tr>
+           <td class="etiqueta">@Html.EditorFor(model => model.genero, new { htmlAttributes = new { @class = "form-control", id = "genero" } })</td>
+            <td class="etiqueta">@Html.EditorFor(model => model.promocion, new { htmlAttributes = new { @class = "form-control", id = "promocion" } })</td>
+         
+    
+       </tr>
       
    
         <tr>

@@ -230,6 +230,7 @@ namespace EasyBuyCR.Models
             cmd.Parameters.Add("precio", detalle.precio);
             cmd.Parameters.Add("imagen", detalle.imagen);
             cmd.Parameters.Add("promocion", detalle.promocion.ToString());
+            cmd.Parameters.Add("genero", detalle.genero.ToString());
             cmd.ExecuteNonQuery();
             conexion.Close();
         }
@@ -364,6 +365,7 @@ namespace EasyBuyCR.Models
                     cmd.Parameters.Add("precio", detalle.precio);
                     cmd.Parameters.Add("imagen", detalle.imagen);
                     cmd.Parameters.Add("promocion", detalle.promocion);
+                    cmd.Parameters.Add("genero", detalle.genero);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -410,7 +412,7 @@ namespace EasyBuyCR.Models
             listaItem.Clear();
             conexion = new OracleConnection(cadena);
             conexion.Open();
-            String sql = String.Format("select id_detalle,cantidad,color,talla,precio,imagen,promocion from detalle_producto  where id_producto={0}", id_producto);
+            String sql = String.Format("select id_detalle,cantidad,color,talla,precio,imagen,promocion,genero from detalle_producto  where id_producto={0}", id_producto);
             cmd = new OracleCommand(sql, conexion);
             OracleDataReader reader = cmd.ExecuteReader();
 
@@ -431,6 +433,7 @@ namespace EasyBuyCR.Models
                 {
                     item.promocion = false;
                 }
+                item.genero = reader.IsDBNull(7) ? "" : reader.GetString(7);
                 listaItem.Add(item);
             }
             reader.Dispose();
@@ -446,7 +449,7 @@ namespace EasyBuyCR.Models
 
             conexion = new OracleConnection(cadena);
             conexion.Open();
-            String sql = String.Format("select id_detalle,id_producto, cantidad,color,talla,precio,imagen,promocion from detalle_producto  where id_detalle={0}", id_detalle);
+            String sql = String.Format("select id_detalle,id_producto, cantidad,color,talla,precio,imagen,promocion,genero from detalle_producto  where id_detalle={0}", id_detalle);
             cmd = new OracleCommand(sql, conexion);
             OracleDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
@@ -459,6 +462,7 @@ namespace EasyBuyCR.Models
                 detalle.talla = reader.IsDBNull(4) ? "" : reader.GetString(4);
                 detalle.precio = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
                 detalle.imagen = reader.IsDBNull(6) ? "" : reader.GetString(6);
+              
                 if (reader.GetString(7).Equals("True"))
                 {
                     detalle.promocion = true;
@@ -467,6 +471,7 @@ namespace EasyBuyCR.Models
                 {
                     detalle.promocion = false;
                 }
+                detalle.genero = reader.IsDBNull(8) ? "" : reader.GetString(8);
             }
             reader.Dispose();
             cmd.Dispose();
@@ -520,7 +525,8 @@ namespace EasyBuyCR.Models
             cmd.Parameters.Add("Pprecio", detalle.precio);
             cmd.Parameters.Add("Pimagen", detalle.imagen);
             cmd.Parameters.Add("Ppromocion", detalle.promocion.ToString());
-         
+            cmd.Parameters.Add("Pgenero", detalle.genero);
+
             cmd.ExecuteNonQuery();
             conexion.Close();
         }

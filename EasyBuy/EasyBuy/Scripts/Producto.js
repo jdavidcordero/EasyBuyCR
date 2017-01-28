@@ -174,7 +174,9 @@ function GuardarDetalle() {
         cantidad: $('#cantidad').val(),
         color: $('#color').val(),
         imagen: $('#imagen').val(),
+        genero: $('#genero').val(),
         promocion: $('#promocion').prop('checked')
+       
      };
 
     //Agregar validation token
@@ -192,6 +194,7 @@ function GuardarDetalle() {
                 $('#cantidad').val('');
                 $('#color').val('');
                 $('#imagen').val('');
+                $('#genero').val('');
                 $dialog.dialog('close');
 
                 swal({
@@ -218,7 +221,7 @@ function validarDetalle() {
 
     if ($('#talla').val().trim() == '' ||
         $('#precio').val().trim() == '' || $('#cantidad').val().trim() == '' ||
-        $('#color').val().trim() == '' || $('#imagen').val().trim() == '') {
+        $('#color').val().trim() == '' || $('#imagen').val().trim() == '' || $('#genero').val().trim() == '') {
         swal("Error!", "Todos los campos son requeridos", "error");
         return false;
     }
@@ -227,7 +230,7 @@ function validarDetalle() {
         swal("Error!", "El Costo  debe ser un numero", "error");
         return false;
     }
-    if (isNaN($('#cantidad').val().trim())) {
+        if (isNaN($('#cantidad').val().trim())) {
         swal("Error!", "La  Cantidad debe ser un numero", "error");
         return false;
     }
@@ -433,6 +436,7 @@ function EditarDetalle() {
         talla: $('#talla').val(),
         precio: $('#precio').val(),
         imagen: $('#imagen').val(),
+        genero: $('#genero').val(),
         promocion: $('#promocion').prop('checked')
     };
 
@@ -453,7 +457,9 @@ function EditarDetalle() {
                 $('#talla').val('');
                 $('#precio').val('');
                 $('#imagen').val('');
+                $('#genero').val('');
                 $('#promocion').val('');
+                
                 $dialog.dialog('close');
                     location.reload();
                 swal({ title: "Bien!", text: data.mensaje, timer: 1800, showConfirmButton: false });
