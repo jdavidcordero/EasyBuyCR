@@ -79,7 +79,8 @@ create table detalle_producto(
 	talla			 varchar2(2),
 	precio			 number,
 	imagen			 varchar2(100),
-	promocion		 varchar2(20)
+	promocion		 varchar2(20), 
+	genero                   varchar2(20) 
 );
 
 PROMPT promocion
