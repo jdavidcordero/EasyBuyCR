@@ -114,7 +114,6 @@ alter table usuario add constraint usuario_pk primary key (correo);
 PROMPT....................................LLAVES FORANEAS.........................................
 alter table producto add constraint producto_fk1 foreign key (correo_tienda) references empresa;
 alter table detalle_producto add constraint detalle_producto_fk2 foreign key (id_producto) references producto;
-alter table promocion add constraint promocion_fk3 foreign key (id_producto) references producto;
 alter table cliente add constraint cliente_fk foreign key (correo_cliente) references usuario;
 alter table empresa add constraint empresa_fk foreign key (correo_tienda) references usuario;
 alter table deseo add constraint deseo_fk1 foreign key (correo_cliente) references cliente;
@@ -388,13 +387,13 @@ show error
 
 PROMPT procedimiento registrar promocion
 create or replace procedure prc_insertar_promocion
-(PId_promocion in number, PId_producto in number, 
+(PId_promocion in number, 
 PNuevo_precio in number, PFecha_inicio in date, PFecha_final in date)is
 
 begin
 
-		insert into promocion (id_promocion, id_producto, nuevo_precio, fecha_inicio, fecha_final)
-		values (PId_promocion, PId_producto, PNuevo_precio, PFecha_inicio, PFecha_final);
+		insert into promocion (id_promocion, nuevo_precio, fecha_inicio, fecha_final)
+		values (PId_promocion, PNuevo_precio, PFecha_inicio, PFecha_final);
 		commit;
 		
 end prc_insertar_promocion;

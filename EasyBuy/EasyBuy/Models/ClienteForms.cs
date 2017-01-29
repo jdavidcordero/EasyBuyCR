@@ -11,5 +11,7 @@ namespace EasyBuy.Models
         public List<String> precio { get; set; }
         public List<String> lugar { get; set; }
         public List<String> tienda { get; set; }
+        public String genero { get; set; }
+        public String categoria { get; set; }
     }
 }

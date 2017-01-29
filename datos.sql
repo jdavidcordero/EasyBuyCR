@@ -13,7 +13,7 @@ values ('Arenas','4a7d1ed414474e4033ac29ccb8653d9b','88654355','Heredia Centro',
 
 insert into usuario (correo, tipo) values ('prueba@gmail.com','E');
 insert into empresa (nombre_empresa,password_empresa,numero_telefono,direccion,correo_tienda,provincia)
-values ('Prueba','123','88654355','Heredia','prueba@gmail.com','Sna jose');
+values ('Prueba','123','88654355','Heredia','prueba@gmail.com','San jose');
 
 
 --Clave 0000: 4a7d1ed414474e4033ac29ccb8653d9b
@@ -31,7 +31,7 @@ values
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','jacket botones','abrigos');
+('arenascr@gmail.com','jacket botones','jeans');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
@@ -64,49 +64,49 @@ values
 ('arenascr@gmail.com','jacket cuero','abrigos');
 
 insert into detalle_producto
-(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion)
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
 values
-(1,1,3,'azul','S',25000,'../images/Abrigos/abrigo1.jpg','N');
+(1,1,3,'azul','S',25000,'../images/Abrigos/abrigo1.jpg','N','Hombre');
 
 insert into detalle_producto
-(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion)
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
 values
-(2,2,2,'cafe','M',20000,'../images/Abrigos/abrigo3.jpg','N');
+(2,2,2,'cafe','M',20000,'../images/Abrigos/abrigo3.jpg','N','Hombre');
 
 insert into detalle_producto
-(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion)
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
 values
-(3,3,2,'negro','M',20000,'../images/Abrigos/abrigo2.jpg','N');
+(3,3,2,'negro','M',20000,'../images/Abrigos/abrigo2.jpg','N','Hombre');
 
 insert into detalle_producto
-(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion)
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
 values
-(4,4,2,'azul','M',20000,'../images/Abrigos/abrigo4.jpg','N');
+(4,4,2,'azul','M',20000,'../images/Abrigos/abrigo4.jpg','N','Hombre');
 
 insert into detalle_producto
-(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion)
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
 values
-(5,5,2,'azul','M',20000,'../images/Abrigos/abrigo5.jpg','N');
+(5,5,2,'azul','M',20000,'../images/Abrigos/abrigo5.jpg','N','Hombre');
 
 insert into detalle_producto
-(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion)
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
 values
-(6,6,2,'gris','M',20000,'../images/Abrigos/abrigo6.jpg','N');
+(6,6,2,'gris','M',20000,'../images/Abrigos/abrigo6.jpg','N','Hombre');
 
 insert into detalle_producto
-(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion)
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
 values
-(7,7,2,'cafe','M',20000,'../images/Abrigos/abrigo8.jpg','N');
+(7,7,2,'cafe','M',20000,'../images/Abrigos/abrigo8.jpg','N','Hombre');
 
 insert into detalle_producto
-(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion)
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
 values
-(8,8,2,'cafe','M',20000,'../images/Abrigos/abrigo9.jpg','N');
+(8,8,2,'cafe','M',20000,'../images/Abrigos/abrigo9.jpg','N','Hombre');
 
 insert into detalle_producto
-(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion)
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
 values
-(9,9,2,'cafe','M',20000,'../images/Abrigos/abrigo10.jpg','N');
+(9,9,2,'cafe','M',20000,'../images/Abrigos/abrigo10.jpg','N','Hombre');
 
 
 insert into producto(correo_tienda,descripcion) values ('prueba@gmail.com','Camisa tirantes');

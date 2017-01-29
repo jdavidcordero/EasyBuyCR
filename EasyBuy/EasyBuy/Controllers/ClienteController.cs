@@ -20,10 +20,20 @@ namespace EasyBuy.Controllers
                 return RedirectToAction("Login","Account");
         }
 
-        public ActionResult Hombre() {
+        public ActionResult Hombre(String categoria = "abrigos") {
             if (Session["Correo"] != null)
             {
-                List<Producto> listaProductos = con.ObtenerAbrigosHombre();
+                List<Producto> listaProductos = con.ObtenerProductosHombre(categoria);
+                if (listaProductos != null && listaProductos.Count != 0)
+                {
+                    ViewBag.categoria = listaProductos.ElementAt(0).categoria;
+                    if (listaProductos.ElementAt(0).list_detalle_producto != null && listaProductos.ElementAt(0).list_detalle_producto.Count != 0)
+                    {
+                        ViewBag.genero = listaProductos.ElementAt(0).list_detalle_producto.ElementAt(0).genero;
+                        ViewBag.precios = con.ObtenerPreciosProductosHombre(categoria);
+                        ViewBag.colores = con.ObtenerColoresProductosHombre(categoria);
+                    }
+                }
                 return View(listaProductos);
             }
             else
@@ -43,8 +53,11 @@ namespace EasyBuy.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult Filtrar(Filtrar model) {
 
-            List<Producto> listaProductos = con.ObtenerAbrigosHombreFiltros(model);
-
+            List<Producto> listaProductos = con.ObtenerProductosHombreFiltros(model);
+            ViewBag.categoria = model.categoria;
+            ViewBag.genero = model.genero;
+            ViewBag.precios = con.ObtenerPreciosProductosHombre(model.categoria);
+            ViewBag.colores = con.ObtenerColoresProductosHombre(model.categoria);
             return View("Hombre",listaProductos);
         }
     }

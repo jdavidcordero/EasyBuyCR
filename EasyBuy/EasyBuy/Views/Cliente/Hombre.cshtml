@@ -3,67 +3,53 @@
     ViewBag.Title = "Hombre";
 }
 
-<div class="container"><center><h2>Hombre</h2></center></div>
-
+<div class="container"><center><h2>@ViewBag.genero</h2></center></div>
+<script>
+    $("#" + @ViewBag.categoria).addClass("active-blue");
+</script>
 <div class="row">
     <div class="col-md-2">
         <ul class="nav nav-pills nav-stacked nav-cliente">
             <li role="presentation"><a class="active-blue" href="#"><b>Ropa</b></a></li>
             <li>
                 <ul class="nav nav-pills nav-stacked nav-sub-cliente">
-                    <li role="presentation"><a class="active-blue" href="#"><b>Abrigos</b></a></li>
-                    <li role="presentation"><a href="#">Punto</a></li>
-                    <li role="presentation"><a href="#">Camisas</a></li>
-                    <li role="presentation"><a href="#">Camisetas</a></li>
-                    <li role="presentation"><a href="#">Jeans</a></li>
-                    <li role="presentation"><a href="#">Pantalones</a></li>
+                    <li role="presentation">@Html.ActionLink("Abrigos","Hombre","Cliente",new { categoria = "abrigos" }, new { id = "abrigos"})</li>
+                    <li role="presentation">@Html.ActionLink("Punto","Hombre","Cliente", new { categoria = "punto" }, new { id = "punto"})</li>
+                    <li role="presentation">@Html.ActionLink("Camisas", "Hombre", "Cliente", new { categoria = "camisas" }, new { id = "camisas" })</li>
+                    <li role="presentation">@Html.ActionLink("Camisetas", "Hombre", "Cliente", new { categoria = "camisetas" }, new { id = "camisetas" })</li>
+                    <li role="presentation">@Html.ActionLink("Jeans", "Hombre", "Cliente", new { categoria = "jeans" }, new { id = "jeans" })</li>
+                    <li role="presentation">@Html.ActionLink("Pantalones", "Hombre", "Cliente", new { categoria = "pantalones" }, new { id = "pantalones" })</li>
                 </ul>
             </li>
-            <li role="presentation"><a href="#">Calzado</a></li>
-            <li role="presentation"><a href="#">Accesorios</a></li>
+            <li role="presentation">@Html.ActionLink("Calzado", "Hombre", "Cliente", new { categoria = "calzado" }, new { id = "calzado" })</li>
+            <li role="presentation">@Html.ActionLink("Accesorios", "Hombre", "Cliente", new { categoria = "accesorios" }, new { id = "accesorios" })</li>
         </ul>
     </div>
     <div class="col-md-10">
         <div class="row">
             <div class="col-md-12">
-                @using (Html.BeginForm("Filtrar", "Cliente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-inline", role = "form", id="formFiltrar" }))
+                @using (Html.BeginForm("Filtrar", "Cliente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-inline", role = "form", id = "formFiltrar" }))
                 {
                     @Html.AntiForgeryToken()
                     <div class="form-group">
+                        <input type="hidden" value="@ViewBag.categoria" name="categoria" id="categoria" />
+                        <input type="hidden" value="@ViewBag.genero" id="genero" name="genero" />
                         <div class="dropdown">
                             <button class="btn btn-blue dropdown-toggle" type="button" id="ddmenu1" data-toggle="dropdown" aria-expanded="true">
                                 Color
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="ddmenu1">
-                                <li role="presentation">
-                                    <div class="checkbox">
-                                        <label for="mensaje">
-                                            <input type="checkbox" name="color" id="color" value="azul"> Azul
-                                        </label>
-                                    </div>
-                                </li>
-                                <li role="presentation">
-                                    <div class="checkbox">
-                                        <label for="mensaje">
-                                            <input type="checkbox" name="color" id="color" value="cafe"> Cafe
-                                        </label>
-                                    </div>
-                                </li>
-                                <li role="presentation">
-                                    <div class="checkbox">
-                                        <label for="mensaje">
-                                            <input type="checkbox" name="color" id="color" value="gris"> Gris
-                                        </label>
-                                    </div>
-                                </li>
-                                <li role="presentation">
-                                    <div class="checkbox">
-                                        <label for="mensaje">
-                                            <input type="checkbox" name="color" id="color" value="negro"> Negro
-                                        </label>
-                                    </div>
-                                </li>
+                                @foreach (var color in ViewBag.colores)
+                                {
+                                    <li role="presentation">
+                                        <div class="checkbox">
+                                            <label for="mensaje">
+                                                <input type="checkbox" name="color" id="color" value="@color"> @color
+                                            </label>
+                                        </div>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </div>
@@ -75,20 +61,16 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="ddmenu1">
-                                <li role="presentation">
-                                    <div class="checkbox">
-                                        <label for="mensaje">
-                                            <input type="checkbox" name="precio" id="precio" value="20000"> ₡ 20,000 
-                                        </label>
-                                    </div>
-                                </li>
-                                <li role="presentation">
-                                    <div class="checkbox">
-                                        <label for="mensaje">
-                                            <input type="checkbox" name="precio" id="precio" value="25000"> ₡ 25,000
-                                        </label>
-                                    </div>
-                                </li>
+                                @foreach (var precio in ViewBag.precios)
+                                {
+                                    <li role="presentation">
+                                        <div class="checkbox">
+                                            <label for="mensaje">
+                                                <input type="checkbox" name="precio" id="precio" value="@precio"> @precio 
+                                            </label>
+                                        </div>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </div>
@@ -108,12 +90,30 @@
                         <img src="@det.imagen" alt="">
                         <div class="caption">
                             <h3>@produc.description</h3>
-                            <p class="txt-white">₡ @det.precio</p>
-                            <a href="#" class="btn btn-white"> + </a>  
+                            <a href="#" data-toggle="modal" data-target="#prod_@produc.id_producto" class="btn btn-white"> + </a>
+                            <a href="#" class="btn btn-white"><span class="glyphicon glyphicon-shopping-cart"></span></a>  
                         </div>
                     </div>
                 </div>
-
+                <div class="modal fade" id="prod_@produc.id_producto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">@produc.description - @det.color</h4>
+                            </div>
+                            <div class="modal-body thumbnail-blue">
+                                <center><img src="@det.imagen" alt=""></center>
+                                <h4 class="txt-white">Talla: @det.talla</h4>
+                                <h4 class="txt-white">Cantidad: @det.cantidad</h4>
+                                <p class="txt-white">₡ @det.precio</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-blue" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             }
         </div>        
     </div>

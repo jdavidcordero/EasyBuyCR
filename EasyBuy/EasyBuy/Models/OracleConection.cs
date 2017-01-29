@@ -237,14 +237,15 @@ namespace EasyBuyCR.Models
 
         //---------------CLIENTE---------------
 
-        public List<Producto> ObtenerAbrigosHombre() {
+        public List<Producto> ObtenerProductosHombre(String categoria) {
             List<Producto> listaAbrigos = new List<Producto>();
 
             conexion = new OracleConnection(cadena);
             conexion.Open();
 
-            cmd = new OracleCommand("select id_producto,correo_tienda,descripcion,categoria from producto where categoria = :categoria", conexion);
-            cmd.Parameters.Add("categoria", OracleDbType.Varchar2).Value = "abrigos";
+            cmd = new OracleCommand("select p.id_producto,p.correo_tienda,p.descripcion,p.categoria from producto p, detalle_producto d where p.categoria = :categoria and d.genero = :genero and p.id_producto = d.id_producto", conexion);
+            cmd.Parameters.Add("categoria", OracleDbType.Varchar2).Value = categoria;
+            cmd.Parameters.Add("genero", OracleDbType.Varchar2).Value = "Hombre";
 
             OracleDataReader reader = cmd.ExecuteReader();
 
@@ -267,7 +268,63 @@ namespace EasyBuyCR.Models
             return listaAbrigos;
         }
 
-        public List<Producto> ObtenerAbrigosHombreFiltros(Filtrar model)
+        public List<int> ObtenerPreciosProductosHombre(String categoria)
+        {
+            List<int> listaPrecios = new List<int>();
+
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+
+            cmd = new OracleCommand("select distinct d.precio from producto p, detalle_producto d where p.categoria = :categoria and d.genero = :genero", conexion);
+            cmd.Parameters.Add("categoria", OracleDbType.Varchar2).Value = categoria;
+            cmd.Parameters.Add("genero", OracleDbType.Varchar2).Value = "Hombre";
+
+            OracleDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                int precio = 0;
+                precio = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
+                listaPrecios.Add(precio);
+            }
+
+            reader.Dispose();
+            cmd.Dispose();
+            conexion.Close();
+            conexion.Dispose();
+
+            return listaPrecios;
+        }
+
+        public List<String> ObtenerColoresProductosHombre(String categoria)
+        {
+            List<String> listaPrecios = new List<String>();
+
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+
+            cmd = new OracleCommand("select distinct d.color from producto p, detalle_producto d where p.categoria = :categoria and d.genero = :genero", conexion);
+            cmd.Parameters.Add("categoria", OracleDbType.Varchar2).Value = categoria;
+            cmd.Parameters.Add("genero", OracleDbType.Varchar2).Value = "Hombre";
+
+            OracleDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                String precio = "";
+                precio = reader.IsDBNull(0) ? "" : reader.GetString(0);
+                listaPrecios.Add(precio);
+            }
+
+            reader.Dispose();
+            cmd.Dispose();
+            conexion.Close();
+            conexion.Dispose();
+
+            return listaPrecios;
+        }
+
+        public List<Producto> ObtenerProductosHombreFiltros(Filtrar model)
         {
             List<Producto> listaAbrigos = new List<Producto>();
 
@@ -307,8 +364,9 @@ namespace EasyBuyCR.Models
                 }
             }
 
-            cmd = new OracleCommand("select p.id_producto,p.correo_tienda,p.descripcion,p.categoria from producto p, detalle_producto d where p.categoria = :categoria and p.id_producto = d.id_producto"+cad, conexion);
-            cmd.Parameters.Add("categoria", OracleDbType.Varchar2).Value = "abrigos";
+            cmd = new OracleCommand("select p.id_producto,p.correo_tienda,p.descripcion,p.categoria from producto p, detalle_producto d where p.categoria = :categoria and d.genero = :genero and p.id_producto = d.id_producto"+cad, conexion);
+            cmd.Parameters.Add("categoria", OracleDbType.Varchar2).Value = model.categoria;
+            cmd.Parameters.Add("genero", OracleDbType.Varchar2).Value = model.genero;
 
             OracleDataReader reader = cmd.ExecuteReader();
 
