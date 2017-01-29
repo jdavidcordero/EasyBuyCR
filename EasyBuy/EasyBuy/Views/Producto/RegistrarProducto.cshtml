@@ -44,7 +44,17 @@
                                             <td>
                                                 <div class="input-group">
                                                     <div class="input-group-addon"><span class="glyphicon glyphicon-ok" style="font-size: 9px;"></span></div>
-                                                    @Html.EditorFor(model => model.categoria, new { htmlAttributes = new { @class = "form-control", @maxlength = "100", id = "categoria" } })
+                                                    <select name="select" class="form-control" id="categoria">
+                                                        <option value="Abrigo">Abrigos</option>
+                                                        <option value="Punto" selected>Punto</option>
+                                                        <option value="Camisas" selected>Camisas</option>
+                                                        <option value="Camisetas" selected>Camisetas</option>
+                                                        <option value="Jeans" selected>Jeans</option>
+                                                        <option value="Pantalon" selected>Pantalon</option>
+                                                        <option value="Calzado" selected>Calzado</option>
+                                                        <option value="Accesorios" selected>Accesorios</option>
+                                                    </select>
+                                                       @*  @Html.EditorFor(model => model.categoria, new { htmlAttributes = new { @class = "form-control", @maxlength = "100", id = "categoria" } })*@
                                                 </div>
                                             </td>
                                             <td>

@@ -95,8 +95,8 @@ function abrirVentana(Page) {
                 autoOpen: false,
                 resizable: true,
                 model: true,
-                height: 350,
-                width: 900,
+                height: 450,
+                width: 1500,
                 scrollable: true,
                 close: function () {
                     $dialog.dialog('destroy').remove();
