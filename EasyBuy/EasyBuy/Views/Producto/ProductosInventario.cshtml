@@ -87,9 +87,9 @@
                                             @Html.DisplayFor(modelItem => item2.precio)
                                         </td>
                                         <td>
-                                            <br />
                                             @Html.ActionLink("Editar", "EditarDetalle", "Producto", null, new { @class = "popup", id = item2.id_detalle })
-
+                                            <br />
+                                            @Html.ActionLink("Agregar Promocion", "AgregarPromocion", "Producto", null, new { @class = "popup", id = item2.id_detalle })
                                         </td>
                                     </tr>
                                 }

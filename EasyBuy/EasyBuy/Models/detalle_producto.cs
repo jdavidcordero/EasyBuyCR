@@ -16,6 +16,7 @@ namespace EasyBuy.Models
         public String imagen { get; set; }
         public bool promocion { get; set; }
         public String genero { get; set; }
+        public int precio_promocion { get; set; }
 
         public List<String> ObtenerComboGenero()
         {

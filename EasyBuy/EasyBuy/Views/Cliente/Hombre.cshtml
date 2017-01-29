@@ -106,7 +106,14 @@
                                 <center><img src="@det.imagen" alt=""></center>
                                 <h4 class="txt-white">Talla: @det.talla</h4>
                                 <h4 class="txt-white">Cantidad: @det.cantidad</h4>
-                                <p class="txt-white">₡ @det.precio</p>
+                                @if (@det.promocion)
+                                {
+                                    <strike class="txt-white">₡ @det.precio</strike>
+                                    <p class="txt-white">₡ @det.precio_promocion</p>
+                                }
+                                else {
+                                    <p class="txt-white">₡ @det.precio</p>
+                                }
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-blue" data-dismiss="modal">Close</button>

@@ -24,7 +24,14 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                    @if (Session["Tipo"].Equals("C"))
+                    {
+                        <li>@Html.ActionLink("Inicio", "Index", "Cliente")</li>
+                    }
+                    @if (Session["Tipo"].Equals("E"))
+                    {
+                        <li>@Html.ActionLink("Inicio", "EmpresaIndex", "Producto")</li>
+                    }
                     <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
                     <li>@Html.ActionLink("Contactenos", "Contact", "Home")</li>
                 </ul>

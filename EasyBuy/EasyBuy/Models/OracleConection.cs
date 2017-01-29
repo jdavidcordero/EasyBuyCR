@@ -483,15 +483,22 @@ namespace EasyBuyCR.Models
                 item.talla = reader.IsDBNull(3) ? "" : reader.GetString(3);
                 item.precio = reader.IsDBNull(4) ? 0 : reader.GetInt32(4);
                 item.imagen = reader.IsDBNull(5) ? "" : reader.GetString(5);
+                item.genero = reader.IsDBNull(7) ? "" : reader.GetString(7);
                 if (reader.GetString(6).Equals("True"))
                 {
                     item.promocion = true;
+                    sql = String.Format("select nuevo_precio from promocion where id_detalle={0}", item.id_detalle);
+                    cmd = new OracleCommand(sql, conexion);
+                    OracleDataReader reader2 = cmd.ExecuteReader();
+                    while (reader2.Read())
+                    {
+                        item.precio_promocion = reader2.IsDBNull(0) ? 0 : reader2.GetInt32(0);
+                    }
                 }
                 else
                 {
                     item.promocion = false;
                 }
-                item.genero = reader.IsDBNull(7) ? "" : reader.GetString(7);
                 listaItem.Add(item);
             }
             reader.Dispose();
