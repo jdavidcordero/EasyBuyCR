@@ -17,7 +17,7 @@
             <td class="etiqueta"><label>Cantidad</label></td>
             <td class="etiqueta"><label>Color</label></td>
             <td class="etiqueta"><label>Imagen</label></td>
-            <td class="etiqueta"><label>Genero</label></td>
+            <td class="etiqueta" colspan="2"><label>Genero</label></td>
             <td class="etiqueta"><label>Promocion</label></td>
            
         </tr>
@@ -28,7 +28,7 @@
             <td class="etiqueta">@Html.EditorFor(model => model.cantidad, new { htmlAttributes = new { @class = "form-control", id = "cantidad" } })</td>
             <td class="etiqueta">@Html.EditorFor(model => model.color, new { htmlAttributes = new { @class = "form-control", id = "color" } })</td>
             <td class="etiqueta">@Html.EditorFor(model => model.imagen, new { htmlAttributes = new { @class = "form-control", id = "imagen" } })</td>
-            <td class="etiqueta"> 
+            <td class="etiqueta" colspan="2"> 
                 <select name="select" class="form-control"  id="genero">
                     <option value="Mujer">Mujer</option>
                     <option value="Hombre" selected>Hombre</option>
