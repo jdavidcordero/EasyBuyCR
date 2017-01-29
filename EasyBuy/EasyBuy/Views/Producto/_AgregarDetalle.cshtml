@@ -21,13 +21,31 @@
             <td class="etiqueta"><label>Promocion</label></td>
            
         </tr>
+        @{
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            listItems.Add(new SelectListItem
+            {
+                Text = "Mujer",
+                Value = "Mujer"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Hombre",
+                Value = "Hombre",
+            });
+        }
         <tr>
             <td class="etiqueta">@Html.EditorFor(model => model.talla, new { htmlAttributes = new { @class = "form-control", id = "talla" } })</td>
             <td class="etiqueta">@Html.EditorFor(model => model.precio, new { htmlAttributes = new { @class = "form-control", id = "precio" } })</td>
             <td class="etiqueta">@Html.EditorFor(model => model.cantidad, new { htmlAttributes = new { @class = "form-control", id = "cantidad" } })</td>
             <td class="etiqueta">@Html.EditorFor(model => model.color, new { htmlAttributes = new { @class = "form-control", id = "color" } })</td>
             <td class="etiqueta">@Html.EditorFor(model => model.imagen, new { htmlAttributes = new { @class = "form-control", id = "imagen" } })</td>
-            <td class="etiqueta">@Html.EditorFor(model => model.genero, new { htmlAttributes = new { @class = "form-control", id = "genero" } })</td>
+            <td class="etiqueta"> 
+                <select name="select" class="form-control"  id="genero">
+                    <option value="Mujer">Mujer</option>
+                    <option value="Hombre" selected>Hombre</option>
+                </select>
+            </td>
             <td class="etiqueta">@Html.CheckBoxFor(model => model.promocion, new { @class = "form-control", id = "promocion" })</td>
            
 
