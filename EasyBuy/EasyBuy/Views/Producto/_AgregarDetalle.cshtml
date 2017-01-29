@@ -21,19 +21,7 @@
             <td class="etiqueta"><label>Promocion</label></td>
            
         </tr>
-        @{
-            List<SelectListItem> listItems = new List<SelectListItem>();
-            listItems.Add(new SelectListItem
-            {
-                Text = "Mujer",
-                Value = "Mujer"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Hombre",
-                Value = "Hombre",
-            });
-        }
+       
         <tr>
             <td class="etiqueta">@Html.EditorFor(model => model.talla, new { htmlAttributes = new { @class = "form-control", id = "talla" } })</td>
             <td class="etiqueta">@Html.EditorFor(model => model.precio, new { htmlAttributes = new { @class = "form-control", id = "precio" } })</td>
