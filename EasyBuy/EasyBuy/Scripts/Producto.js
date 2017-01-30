@@ -371,26 +371,27 @@ function GuardarPromocion() {
         type: 'POST',
         data: promocion,
         success: function (data) {
+            swal({
+                title: "Bien!",
+                text: data.mensaje,
+                timer: 2000,
+                type: "success",
+                showConfirmButton: false
+            });
             if (data.estado) {
-                cargarDetalles();
                 $('#id_detalle').val('');
-                $('#nuevo_precio').val('');
-                $('#fecha_inicio').val('');
-                $('#fecha_final').val('');
+                $('#id_producto').val('');
+                $('#cantidad').val('');
+                $('#color').val('');
+                $('#talla').val('');
+                $('#precio').val('');
+                $('#imagen').val('');
+                $('#genero').val('');
+                $('#promocion').val('');
+
                 $dialog.dialog('close');
-
-                swal({
-                    title: "Bien!",
-                    text: data.mensaje,
-                    timer: 2000,
-                    type: "success",
-                    showConfirmButton: false
-                });
+                location.reload();
             }
-            else {
-                swal("Error!", data.mensaje, "error");
-            }
-
         },
         error: function () {
             swal("Error!", "Error al crear la promocion...", "error");
