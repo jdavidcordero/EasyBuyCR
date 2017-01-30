@@ -68,7 +68,7 @@
                                     <li role="presentation">
                                         <div class="checkbox">
                                             <label for="mensaje">
-                                                <input type="checkbox" name="precio" id="precio" value="@precio"> @precio 
+                                                <input type="checkbox" name="precio" id="precio" value="@precio"> @String.Format("₡ {0:0,0}", precio)
                                             </label>
                                         </div>
                                     </li>
@@ -93,7 +93,7 @@
                         <div class="caption">
                             <h3>@produc.description</h3>
                             <a href="#" data-toggle="modal" data-target="#prod_@produc.id_producto" class="btn btn-white"> + </a>
-                            <a href="#" class="btn btn-white"><span class="glyphicon glyphicon-shopping-cart"></span></a>  
+                            @*<a href="#" class="btn btn-white"><span class="glyphicon glyphicon-shopping-cart"></span></a>*@  
                         </div>
                     </div>
                 </div>
@@ -110,12 +110,12 @@
                                 <h4 class="txt-white">Cantidad: @det.cantidad</h4>
                                 @if (@det.promocion)
                                 {
-                                    <strike class="txt-white">₡ @det.precio</strike>
-                                    <p class="txt-white">₡ @det.precio_promocion</p>
+                                    <strike class="txt-white"> @String.Format("₡ {0:0,0}", det.precio)</strike>
+                                    <p class="txt-white">@String.Format("₡ {0:0,0}", det.precio_promocion) </p>
                                 }
                                 else
                                 {
-                                    <p class="txt-white">₡ @det.precio</p>
+                                    <p class="txt-white">  @String.Format("₡ {0:0,0}", det.precio)</p>
                                 }
                             </div>
                             <div class="modal-footer">
