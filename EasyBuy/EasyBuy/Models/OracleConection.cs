@@ -642,6 +642,13 @@ namespace EasyBuyCR.Models
             cmd = new OracleCommand();
             conexion = new OracleConnection(cadena);
             conexion.Open();
+            String sql = String.Format("delete from promocion where id_detalle={0}", promocion.id_detalle);
+            cmd = new OracleCommand(sql, conexion);
+            OracleDataReader reader = cmd.ExecuteReader();
+
+            cmd = new OracleCommand();
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
             cmd.Connection = conexion;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "fun_insertar_promocion";
