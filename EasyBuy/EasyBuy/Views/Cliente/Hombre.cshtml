@@ -5,7 +5,7 @@
 
 <div class="container"><center><h2>@ViewBag.genero</h2></center></div>
 <script>
-    $("#" + @ViewBag.categoria).addClass("active-blue");
+    $(document).ready(function () { $("#" + @ViewBag.categoria).addClass("active-blue")});
 </script>
 <div class="row">
     <div class="col-md-2">
@@ -25,6 +25,8 @@
             <li role="presentation">@Html.ActionLink("Accesorios", "Hombre", "Cliente", new { categoria = "accesorios" }, new { id = "accesorios" })</li>
         </ul>
     </div>
+    @if (Model != null && Model.Count != 0)
+    {
     <div class="col-md-10">
         <div class="row">
             <div class="col-md-12">
@@ -111,7 +113,8 @@
                                     <strike class="txt-white">₡ @det.precio</strike>
                                     <p class="txt-white">₡ @det.precio_promocion</p>
                                 }
-                                else {
+                                else
+                                {
                                     <p class="txt-white">₡ @det.precio</p>
                                 }
                             </div>
@@ -124,4 +127,8 @@
             }
         </div>        
     </div>
+    }
+    else {
+        <center><h1>No existen productos por ahora :( </h1></center>
+    }
 </div>
