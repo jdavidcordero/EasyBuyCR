@@ -33,7 +33,7 @@
                 @using (Html.BeginForm("Filtrar", "Cliente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-inline", role = "form", id = "formFiltrar" }))
                 {
                     @Html.AntiForgeryToken()
-                    <div class="form-group">
+                    <div class="form-group" >
                         <input type="hidden" value="@ViewBag.categoria" name="categoria" id="categoria" />
                         <input type="hidden" value="@ViewBag.genero" id="genero" name="genero" />
                         <div class="dropdown">

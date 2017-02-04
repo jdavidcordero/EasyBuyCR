@@ -389,6 +389,95 @@ namespace EasyBuyCR.Models
             return listaAbrigos;
         }
 
+        //---------------MUJER----------------
+        public List<Producto> ObtenerProductosMujer(String categoria)
+        {
+            List<Producto> listaAbrigos = new List<Producto>();
+
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+
+            cmd = new OracleCommand("select p.id_producto,p.correo_tienda,p.descripcion,p.categoria from producto p, detalle_producto d where p.categoria = :categoria and d.genero = :genero and p.id_producto = d.id_producto", conexion);
+            cmd.Parameters.Add("categoria", OracleDbType.Varchar2).Value = categoria;
+            cmd.Parameters.Add("genero", OracleDbType.Varchar2).Value = "Mujer";
+
+            OracleDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Producto abrigo = new Producto();
+                abrigo.id_producto = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
+                abrigo.id_empresa = reader.IsDBNull(1) ? "" : reader.GetString(1);
+                abrigo.description = reader.IsDBNull(2) ? "" : reader.GetString(2);
+                abrigo.categoria = reader.IsDBNull(3) ? "" : reader.GetString(3);
+                abrigo.list_detalle_producto = getDetalles(abrigo.id_producto);
+                listaAbrigos.Add(abrigo);
+            }
+
+            reader.Dispose();
+            cmd.Dispose();
+            conexion.Close();
+            conexion.Dispose();
+
+            return listaAbrigos;
+        }
+
+
+        public List<int> ObtenerPreciosProductosMujer(String categoria)
+        {
+            List<int> listaPrecios = new List<int>();
+
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+
+            cmd = new OracleCommand("select distinct d.precio from producto p, detalle_producto d where p.categoria = :categoria and d.genero = :genero", conexion);
+            cmd.Parameters.Add("categoria", OracleDbType.Varchar2).Value = categoria;
+            cmd.Parameters.Add("genero", OracleDbType.Varchar2).Value = "Mujer";
+
+            OracleDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                int precio = 0;
+                precio = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
+                listaPrecios.Add(precio);
+            }
+
+            reader.Dispose();
+            cmd.Dispose();
+            conexion.Close();
+            conexion.Dispose();
+
+            return listaPrecios;
+        }
+
+        public List<String> ObtenerColoresProductosMujer(String categoria)
+        {
+            List<String> listaPrecios = new List<String>();
+
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+
+            cmd = new OracleCommand("select distinct d.color from producto p, detalle_producto d where p.categoria = :categoria and d.genero = :genero", conexion);
+            cmd.Parameters.Add("categoria", OracleDbType.Varchar2).Value = categoria;
+            cmd.Parameters.Add("genero", OracleDbType.Varchar2).Value = "Mujer";
+
+            OracleDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                String precio = "";
+                precio = reader.IsDBNull(0) ? "" : reader.GetString(0);
+                listaPrecios.Add(precio);
+            }
+
+            reader.Dispose();
+            cmd.Dispose();
+            conexion.Close();
+            conexion.Dispose();
+
+            return listaPrecios;
+        }
         //---------------EMPRESA---------------
         public void insertarProducto(String description, string correo_tienda, String categoria, List<detalle_producto> Lista_detalles)
         {

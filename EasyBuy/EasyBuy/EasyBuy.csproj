@@ -203,13 +203,21 @@
     <Content Include="Content\Site.css" />
     <Content Include="images\Abrigos\abrigo1.jpg" />
     <Content Include="images\Abrigos\abrigo10.jpg" />
+    <Content Include="images\Abrigos\abrigo1_mujer.jpg" />
     <Content Include="images\Abrigos\abrigo2.jpg" />
+    <Content Include="images\Abrigos\abrigo2_mujer.jpg" />
     <Content Include="images\Abrigos\abrigo3.jpg" />
+    <Content Include="images\Abrigos\abrigo3_mujer.jpg" />
     <Content Include="images\Abrigos\abrigo4.jpg" />
+    <Content Include="images\Abrigos\abrigo4_mujer.jpg" />
     <Content Include="images\Abrigos\abrigo5.jpg" />
+    <Content Include="images\Abrigos\abrigo5_mujer.jpg" />
     <Content Include="images\Abrigos\abrigo6.jpg" />
+    <Content Include="images\Abrigos\abrigo6_mujer.jpg" />
     <Content Include="images\Abrigos\abrigo7.jpg" />
+    <Content Include="images\Abrigos\abrigo7_mujer.jpg" />
     <Content Include="images\Abrigos\abrigo8.jpg" />
+    <Content Include="images\Abrigos\abrigo8_mujer.jpg" />
     <Content Include="images\Abrigos\abrigo9.jpg" />
     <Content Include="images\Company.png" />
     <Content Include="images\Costumer.png" />
@@ -315,7 +323,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51289</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

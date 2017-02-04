@@ -40,10 +40,24 @@ namespace EasyBuy.Controllers
                 return RedirectToAction("Login", "Account");
         }
 
-        public ActionResult Mujer()
+        public ActionResult Mujer(String categoria = "abrigos")
         {
             if (Session["Correo"] != null)
-                return View();
+            {
+                List<Producto> listaProductos = con.ObtenerProductosMujer(categoria);
+
+                if (listaProductos != null && listaProductos.Count != 0)
+                {
+                    ViewBag.categoria = listaProductos.ElementAt(0).categoria;
+                    if (listaProductos.ElementAt(0).list_detalle_producto != null && listaProductos.ElementAt(0).list_detalle_producto.Count != 0)
+                    {
+                        ViewBag.genero = listaProductos.ElementAt(0).list_detalle_producto.ElementAt(0).genero;
+                        ViewBag.precios = con.ObtenerPreciosProductosMujer(categoria);
+                        ViewBag.colores = con.ObtenerColoresProductosMujer(categoria);
+                    }
+                }
+                return View(listaProductos);
+            }
             else
                 return RedirectToAction("Login", "Account");
         }
