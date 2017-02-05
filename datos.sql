@@ -18,7 +18,7 @@ insert into usuario (correo, tipo) values ('prueba@gmail.com','E');
 insert into empresa (nombre_empresa,password_empresa,numero_telefono,direccion,correo_tienda,provincia)
 values ('Prueba','123','88654355','Heredia','prueba@gmail.com','San jose');
 
-
+--no esta mostrando los productos de la tienda.
 --Clave 0000: 4a7d1ed414474e4033ac29ccb8653d9b
 -------------------------producto hombres-------------------------------------------
 
