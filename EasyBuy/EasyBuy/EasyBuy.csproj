@@ -219,6 +219,10 @@
     <Content Include="images\Abrigos\abrigo8.jpg" />
     <Content Include="images\Abrigos\abrigo8_mujer.jpg" />
     <Content Include="images\Abrigos\abrigo9.jpg" />
+    <Content Include="images\Accesorios\Accesoriomujer01.jpg" />
+    <Content Include="images\Accesorios\accesoriomujer02.jpg" />
+    <Content Include="images\Accesorios\Accesoriomujer03.jpg" />
+    <Content Include="images\Accesorios\Accesoriomujer04.jpg" />
     <Content Include="images\Blusas\blusas01.jpg" />
     <Content Include="images\Blusas\blusas02.jpg" />
     <Content Include="images\Blusas\blusas03.jpg" />
@@ -240,6 +244,10 @@
     <Content Include="images\Pantalones\pantalon02azul.jpg" />
     <Content Include="images\Pantalones\pantalon03cafe.jpg" />
     <Content Include="images\Pantalones\pantalon04azul.jpg" />
+    <Content Include="images\Punto\Punto01.jpg" />
+    <Content Include="images\Punto\Punto02.jpg" />
+    <Content Include="images\Punto\Punto03.jpg" />
+    <Content Include="images\Punto\Punto04.jpg" />
     <Content Include="images\pw_maze_white.png" />
     <Content Include="images\pw_maze_white_%402X.png" />
     <Content Include="images\Vestidos\Vestido01.jpg" />
