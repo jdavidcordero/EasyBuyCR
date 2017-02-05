@@ -4,9 +4,6 @@
 }
 
 <div class="container"><center><h2>@ViewBag.genero</h2></center></div>
-<script>
-    $(document).ready(function () { $("#" + @ViewBag.categoria).addClass("active-blue")});
-</script>
 <div class="row">
     <div class="col-md-2">
         <ul class="nav nav-pills nav-stacked nav-cliente">
@@ -92,6 +89,7 @@
                         <img src="@det.imagen" alt="">
                         <div class="caption">
                             <h3>@produc.description</h3>
+                            <h4 class="txt-white">@String.Format("₡ {0:0,0}", det.precio)</h4>
                             <a href="#" data-toggle="modal" data-target="#prod_@produc.id_producto" class="btn btn-white"> + </a>
                             @*<a href="#" class="btn btn-white"><span class="glyphicon glyphicon-shopping-cart"></span></a>*@  
                         </div>
@@ -105,18 +103,34 @@
                                 <h4 class="modal-title" id="myModalLabel">@produc.description - @det.color</h4>
                             </div>
                             <div class="modal-body thumbnail-blue">
-                                <center><img src="@det.imagen" alt=""></center>
-                                <h4 class="txt-white">Talla: @det.talla</h4>
-                                <h4 class="txt-white">Cantidad: @det.cantidad</h4>
-                                @if (@det.promocion)
-                                {
-                                    <strike class="txt-white"> @String.Format("₡ {0:0,0}", det.precio)</strike>
-                                    <p class="txt-white">@String.Format("₡ {0:0,0}", det.precio_promocion) </p>
-                                }
-                                else
-                                {
-                                    <p class="txt-white">  @String.Format("₡ {0:0,0}", det.precio)</p>
-                                }
+                                <div class="row">
+                                    <center><img src="@det.imagen" alt=""></center>
+                                </div>
+                                <hr class="txt-white" />
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h4 class="txt-white">Descripción: @produc.description</h4>
+                                        <h4 class="txt-white">Color: @det.color</h4>
+                                        <h4 class="txt-white">Talla: @det.talla</h4>
+                                        <h4 class="txt-white">Cantidad: @det.cantidad</h4>
+                                        @if (@det.promocion)
+                                        {
+                                            <strike class="txt-white"> @String.Format("₡ {0:0,0}", det.precio)</strike>
+                                            <h4 class="txt-white">@String.Format("₡ {0:0,0}", det.precio_promocion) </h4>
+                                        }
+                                        else
+                                        {
+                                            <h4 class="txt-white">  @String.Format("₡ {0:0,0}", det.precio)</h4>
+                                        }
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h4 class="txt-white">Tienda: @produc.empresa.nombre_empresa</h4>
+                                        <h4 class="txt-white">Provincia: @produc.empresa.provincia</h4>
+                                        <h4 class="txt-white">Dirección: @produc.empresa.direccion</h4>
+                                        <h4 class="txt-white">E-mail: @produc.empresa.correo_tienda</h4>
+                                        <h4 class="txt-white">Teléfono: @produc.empresa.numero_telefono</h4>
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-blue" data-dismiss="modal">Close</button>
@@ -129,6 +143,10 @@
     </div>
     }
     else {
-        <center><h1>No existen productos por ahora :( </h1></center>
+        <center><h1>No existen productos con esas especificaciones :(</h1></center>
     }
 </div>
+
+<script>
+    $(document).ready(function () { $("#" + @ViewBag.categoria).addClass("active-blue")});
+</script>

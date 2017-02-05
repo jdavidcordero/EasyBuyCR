@@ -243,7 +243,7 @@ namespace EasyBuyCR.Models
             conexion = new OracleConnection(cadena);
             conexion.Open();
 
-            cmd = new OracleCommand("select p.id_producto,p.correo_tienda,p.descripcion,p.categoria from producto p, detalle_producto d where p.categoria = :categoria and d.genero = :genero and p.id_producto = d.id_producto", conexion);
+            cmd = new OracleCommand("select p.id_producto,p.correo_tienda,p.descripcion,p.categoria,p.correo_tienda from producto p, detalle_producto d where p.categoria = :categoria and d.genero = :genero and p.id_producto = d.id_producto", conexion);
             cmd.Parameters.Add("categoria", OracleDbType.Varchar2).Value = categoria;
             cmd.Parameters.Add("genero", OracleDbType.Varchar2).Value = "Hombre";
 
@@ -256,6 +256,8 @@ namespace EasyBuyCR.Models
                 abrigo.id_empresa = reader.IsDBNull(1) ? "" : reader.GetString(1);
                 abrigo.description = reader.IsDBNull(2) ? "" : reader.GetString(2);
                 abrigo.categoria = reader.IsDBNull(3) ? "" : reader.GetString(3);
+                if(!reader.IsDBNull(4))
+                    abrigo.empresa = obtenerDetalleEmpresa(reader.GetString(4));
                 abrigo.list_detalle_producto = getDetalles(abrigo.id_producto);
                 listaAbrigos.Add(abrigo);
             }
@@ -266,6 +268,34 @@ namespace EasyBuyCR.Models
             conexion.Dispose();
 
             return listaAbrigos;
+        }
+
+        public empresa obtenerDetalleEmpresa(String correoEmpresa) {
+            empresa emp = new empresa();
+
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+
+            cmd = new OracleCommand("select nombre_empresa,numero_telefono,direccion,provincia,correo_tienda from empresa where correo_tienda = :correo", conexion);
+            cmd.Parameters.Add("correo", OracleDbType.Varchar2).Value = correoEmpresa;
+
+            OracleDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                emp.nombre_empresa = reader.IsDBNull(0) ? "" : reader.GetString(0);
+                emp.numero_telefono = reader.IsDBNull(1) ? "" : reader.GetString(1);
+                emp.direccion = reader.IsDBNull(2) ? "" : reader.GetString(2);
+                emp.provincia = reader.IsDBNull(3) ? "" : reader.GetString(3);
+                emp.correo_tienda = reader.IsDBNull(4) ? "" : reader.GetString(4);
+            }
+
+            reader.Dispose();
+            cmd.Dispose();
+            conexion.Close();
+            conexion.Dispose();
+
+            return emp;
         }
 
         public List<int> ObtenerPreciosProductosHombre(String categoria)
