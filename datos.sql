@@ -25,27 +25,27 @@ values ('Prueba','123','88654355','Heredia','prueba@gmail.com','San jose');
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Jacket tela','abrigos');
+('arenascr@gmail.com','Jacket Tela','abrigos');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Jacket cuero','abrigos');
+('arenascr@gmail.com','Jacket Cuero','abrigos');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Jacket botones','jeans');
+('arenascr@gmail.com','Jacket Botones','jeans');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Jacket largo','abrigos');
+('arenascr@gmail.com','Jacket Largo','abrigos');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Jacket gorro','abrigos');
+('arenascr@gmail.com','Jacket Gorro','abrigos');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
@@ -55,205 +55,347 @@ values
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Abrigo largo','abrigos');
+('arenascr@gmail.com','Abrigo Largo','abrigos');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Abrigo gorro','abrigos');
+('arenascr@gmail.com','Abrigo Gorro','abrigos');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Jacket cuero','abrigos');
+('arenascr@gmail.com','Jacket Cuero','abrigos');
 
 ---------------------Mujer---------------------------------
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Abrigo largo','abrigos');
+('arenascr@gmail.com','Abrigo Largo','abrigos');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Abrigo gorro','abrigos');
+('arenascr@gmail.com','Abrigo Gorro','abrigos');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Abrigo gorro','abrigos');
+('arenascr@gmail.com','Abrigo Gorro','abrigos');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Abrigo corto','abrigos');
+('arenascr@gmail.com','Abrigo Corto','abrigos');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Abrigo largo','abrigos');
+('arenascr@gmail.com','Abrigo Largo','abrigos');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Abrigo verano','abrigos');
+('arenascr@gmail.com','Abrigo Verano','abrigos');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Abrigo corto','abrigos');
+('arenascr@gmail.com','Abrigo Corto','abrigos');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Abrigo corto','abrigos');
+('arenascr@gmail.com','Abrigo Corto','abrigos');
 
 -------------vestidos-----------------------------------
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Vestido largo','camisetas');
+('arenascr@gmail.com','Vestido Largo','camisetas');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Vestido largo','camisetas');
+('arenascr@gmail.com','Vestido Largo','camisetas');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Vestido largo','camisetas');
+('arenascr@gmail.com','Vestido Largo','camisetas');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Vestido corto','camisetas');
+('arenascr@gmail.com','Vestido Corto','camisetas');
 
 -------------blusas------------------------------------
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Blusa manga larga','camisas');
+('arenascr@gmail.com','Blusa Manga Larga','camisas');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Blusa corta','camisas');
+('arenascr@gmail.com','Blusa Corta','camisas');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Blusa larga','camisas');
+('arenascr@gmail.com','Blusa Larga','camisas');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Blusa corta','camisas');
+('arenascr@gmail.com','Blusa Corta','camisas');
 
 -----------jeans mujer-----------------------------------
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Jeans manga larga','jeans');
+('arenascr@gmail.com','Jeans Manga Larga','jeans');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Jeans con cuadros','jeans');
+('arenascr@gmail.com','Jeans Cuadros','jeans');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Jeans sin mangas','jeans');
+('arenascr@gmail.com','Jeans sin Mangas','jeans');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Jeans manga larga','jeans');
+('arenascr@gmail.com','Jeans Manga Larga','jeans');
 
 -----------pantalon mujer-----------------------------------
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Pantalon licra','pantalones');
+('arenascr@gmail.com','Pantalon Licra','pantalones');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Pantalon largo','pantalones');
+('arenascr@gmail.com','Pantalon Largo','pantalones');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Pantalon verano','pantalones');
+('arenascr@gmail.com','Pantalon Verano','pantalones');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Pantalon largo','pantalones');
+('arenascr@gmail.com','Pantalon Largo','pantalones');
 
 -----------calzados mujer-----------------------------------
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Botas al tobillo','calzado');
+('arenascr@gmail.com','Botas al Tobillo','calzado');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Tennis nike','calzado');
+('arenascr@gmail.com','Tennis Nike','calzado');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Zapatillas oficina','calzado');
+('arenascr@gmail.com','Zapatillas Oficina','calzado');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Tennis k-light','calzado');
-
------------Accesorios mujer-----------------------------------
-insert into producto 
-(correo_tienda, descripcion,categoria)
-values
-('arenascr@gmail.com','Burton sombrero','accesorios');
-
-insert into producto 
-(correo_tienda, descripcion,categoria)
-values
-('arenascr@gmail.com','Medias de rayas','accesorios');
-
-insert into producto 
-(correo_tienda, descripcion,categoria)
-values
-('arenascr@gmail.com','Accesorio cabello','accesorios');
-
-insert into producto 
-(correo_tienda, descripcion,categoria)
-values
-('arenascr@gmail.com','Yoga ejercicio','accesorios');
+('arenascr@gmail.com','Tennis K-light','calzado');
 
 -----------Accesorios mujer-----------------------------------
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Ropa descanso mujer','punto');
+('arenascr@gmail.com','Burton Sombrero','accesorios');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Sweater punto','punto');
+('arenascr@gmail.com','Medias de Rayas','accesorios');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Pijama punto','punto');
+('arenascr@gmail.com','Accesorio Cabello','accesorios');
 
 insert into producto 
 (correo_tienda, descripcion,categoria)
 values
-('arenascr@gmail.com','Top camisa punto','punto');
+('arenascr@gmail.com','Yoga Ejercicio','accesorios');
+
+-----------Accesorios mujer-----------------------------------
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Ropa Descanso mujer','punto');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Sweater Punto','punto');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Pijama Punto','punto');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Top Camisa Punto','punto');
+
+-----------Camisas hombre-----------------------------------
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Camisa Tipo Polo','camisas');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Camisa Manga Larga','camisas');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Camisa Manga Corta','camisas');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Camisa con Rayas','camisas');
+
+-----------Camisetas hombre-----------------------------------
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Camiseta Estampada','camisetas');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Camiseta Estampada','camisetas');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Camiseta Estampada','camisetas');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Camiseta Manga Larga','camisetas');
+
+-----------Jeans hombre-----------------------------------
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Camiseta Estampada','jeans');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Camiseta Estampada','jeans');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Camiseta Estampada','jeans');
+
+-----------Pantalones hombre-----------------------------------
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Pantalon de Vestir','pantalones');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Pantalon Casual','pantalones');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Pantalon Gym','pantalones');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Pantalon Gym','pantalones');
+
+-----------Calzado hombre-----------------------------------
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Transpirable Gamuza','calzado');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Zapatos Altos','calzado');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Zapatos Casuales','calzado');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Tennis Casuales','calzado');
+
+-----------Accesorios hombre-----------------------------------
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Reloj Oro','accesorios');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Cadenas Bronce','accesorios');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Sombrero Ultimate','accesorios');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Sombrero Ultimate','accesorios');
+
+-----------Punto hombre-----------------------------------
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Chaqueta Punto','punto');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Chaqueta Punto','punto');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Sweater Punto','punto');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','Chaqueta Punto','punto');
 
 ----------------detalle_producto hombres-------------------
 
@@ -270,7 +412,7 @@ values
 insert into detalle_producto
 (id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
 values
-(3,3,2,'negro','M',20000,'../images/Abrigos/abrigo2.jpg','N','Hombre');
+(3,3,2,'azul','M',20000,'../images/Abrigos/abrigo002.jpg','N','Hombre');
 
 insert into detalle_producto
 (id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
@@ -410,22 +552,22 @@ values
 insert into detalle_producto
 (id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
 values
-(30,30,4,'negro','S',20000,'../images/Pantalones/pantalon01negro.jpg','N','Mujer');
+(30,30,4,'negro','6',20000,'../images/Pantalones/pantalon01negro.jpg','N','Mujer');
 
 insert into detalle_producto
 (id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
 values
-(31,31,10,'azul','M',25000,'../images/Pantalones/pantalon02azul.jpg','N','Mujer');
+(31,31,10,'azul','8',25000,'../images/Pantalones/pantalon02azul.jpg','N','Mujer');
 
 insert into detalle_producto
 (id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
 values
-(32,32,12,'cafe','L',20000,'../images/Pantalones/pantalon03cafe.jpg','N','Mujer');
+(32,32,12,'cafe','10',20000,'../images/Pantalones/pantalon03cafe.jpg','N','Mujer');
 
 insert into detalle_producto
 (id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
 values
-(33,33,15,'azul','S',25000,'../images/Pantalones/pantalon04azul.jpg','N','Mujer');
+(33,33,15,'azul','10',25000,'../images/Pantalones/pantalon04azul.jpg','N','Mujer');
 
 ---Calzado mujer
 insert into detalle_producto
@@ -489,6 +631,149 @@ insert into detalle_producto
 (id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
 values
 (45,45,15,'rojo','S',25000,'../images/Punto/Punto04.jpg','N','Mujer');
+
+---Camisas Hombre
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(46,46,4,'azul','S',20000,'../images/Camisas/Camisahombre01.jpg','N','Hombre');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(47,47,10,'blanco','M',25000,'../images/Camisas/Camisahombre02.jpg','N','Hombre');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(48,48,12,'verde','L',20000,'../images/Camisas/Camisahombre03.jpg','N','Hombre');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(49,49,15,'rayas','S',25000,'../images/Camisas/Camisahombre04.jpg','N','Hombre');
+
+---Camisas Hombre
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(50,50,4,'rojo','S',20000,'../images/Camisas/camisetashombre01.jpg','N','Hombre');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(51,51,10,'blanco','M',25000,'../images/Camisas/camisetashombre02.jpg','N','Hombre');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(52,52,12,'negro','L',20000,'../images/Camisas/camisetashombre03.jpg','N','Hombre');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(53,53,15,'blanco','S',25000,'../images/Camisas/camisetashombre04.jpg','N','Hombre');
+
+---Jeans Hombre
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(54,54,4,'azul','S',20000,'../images/Jeans/Jeanshombre01.jpg','N','Hombre');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(55,55,10,'azul','M',25000,'../images/Jeans/Jeanshombre02.jpg','N','Hombre');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(56,56,12,'azul','L',20000,'../images/Jeans/Jeanshombre03.jpg','N','Hombre');
+
+
+---Pantalon Hombre
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(57,57,4,'gris','28',20000,'../images/Pantalones/Pantaloneshombre01.jpg','N','Hombre');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(58,58,10,'negro','32',25000,'../images/Pantalones/Pantaloneshombre02.jpg','N','Hombre');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(59,59,12,'azul','37',20000,'../images/Pantalones/Pantaloneshombre03.jpg','N','Hombre');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(60,60,12,'rojo','30',20000,'../images/Pantalones/Pantaloneshombre04.jpg','N','Hombre');
+
+---Calzados Hombre
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(61,61,4,'cafe','40',15000,'../images/Calzados/calzadohombre01.jpg','N','Hombre');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(62,62,10,'cafe','38',25000,'../images/Calzados/calzadohombre02.jpg','N','Hombre');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(63,63,12,'negro','42',28000,'../images/Calzados/calzadohombre03.jpg','N','Hombre');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(64,64,12,'negro','45',25000,'../images/Calzados/calzadohombre04.jpg','N','Hombre');
+
+---Accesorios Hombre
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(65,65,4,'oro','S',15000,'../images/Accesorios/accesoriohombre01.jpg','N','Hombre');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(66,66,10,'bronce','M',25000,'../images/Accesorios/accesoriohombre02.jpg','N','Hombre');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(67,67,12,'negro','L',28000,'../images/Accesorios/accesoriohombre03.jpg','N','Hombre');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(68,68,12,'azul','L',25000,'../images/Accesorios/accesoriohombre04.jpg','N','Hombre');
+
+---Punto Hombre
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(69,69,4,'cafe','S',15000,'../images/Punto/Puntohombre01.jpg','N','Hombre');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(70,70,10,'negro','M',25000,'../images/Punto/Puntohombre02.jpg','N','Hombre');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(71,71,12,'negro','L',28000,'../images/Punto/Puntohombre03.jpg','N','Hombre');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(72,72,12,'gris','L',25000,'../images/Punto/Puntohombre04.jpg','N','Hombre');
 
 insert into producto(correo_tienda,descripcion) values ('prueba@gmail.com','Camisa tirantes');
 
