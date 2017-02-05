@@ -16,6 +16,7 @@ namespace EasyBuy.Models
         public String correo_tienda { get; set; }
         [Required(ErrorMessage = "Por favor ingrese su contraseña", AllowEmptyStrings = false)]
         public String password { get; set; }
+        public String provincia { get; set; }
         public List<Producto> lista_producto { get; set; }
     }
 }
