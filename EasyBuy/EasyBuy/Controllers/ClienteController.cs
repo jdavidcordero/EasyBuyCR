@@ -74,5 +74,16 @@ namespace EasyBuy.Controllers
             ViewBag.colores = con.ObtenerColoresProductosHombre(model.categoria);
             return View("Hombre",listaProductos);
         }
+
+        public ActionResult FiltrarMujer(Filtrar model)
+        {
+
+            List<Producto> listaProductos = con.ObtenerProductosHombreFiltros(model);
+            ViewBag.categoria = model.categoria;
+            ViewBag.genero = model.genero;
+            ViewBag.precios = con.ObtenerPreciosProductosMujer(model.categoria);
+            ViewBag.colores = con.ObtenerColoresProductosMujer(model.categoria);
+            return View("Mujer", listaProductos);
+        }
     }
 }

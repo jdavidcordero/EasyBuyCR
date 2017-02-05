@@ -478,6 +478,7 @@ namespace EasyBuyCR.Models
 
             return listaPrecios;
         }
+
         //---------------EMPRESA---------------
         public void insertarProducto(String description, string correo_tienda, String categoria, List<detalle_producto> Lista_detalles)
         {

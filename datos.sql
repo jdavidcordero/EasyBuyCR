@@ -108,6 +108,111 @@ insert into producto
 values
 ('arenascr@gmail.com','abrigo corto','abrigos');
 
+-------------vestidos-----------------------------------
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','vestido largo','camisetas');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','vestido largo','camisetas');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','vestido largo','camisetas');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','vestido corto','camisetas');
+
+-------------blusas------------------------------------
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','blusa manga larga','camisas');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','blusa corta','camisas');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','blusa larga','camisas');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','blusa corta','camisas');
+
+-----------jeans mujer-----------------------------------
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','jeans manga larga','jeans');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','jeans con cuadros','jeans');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','jeans sin mangas','jeans');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','jeans manga larga','jeans');
+
+-----------pantalon mujer-----------------------------------
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','pantalon licra','pantalones');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','pantalon largo','pantalones');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','pantalon verano','pantalones');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','pantalon largo','pantalones');
+
+-----------calzados mujer-----------------------------------
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','botas al tobillo','calzado');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','tennis nike','calzado');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','zapatillas oficina','calzado');
+
+insert into producto 
+(correo_tienda, descripcion,categoria)
+values
+('arenascr@gmail.com','tennis k-light','calzado');
+
 ----------------detalle_producto hombres-------------------
 
 insert into detalle_producto
@@ -184,7 +289,7 @@ values
 insert into detalle_producto
 (id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
 values
-(15,15,5,'cafe','L',20000,'../images/Abrigos/abrigo6_mujer.jpg','N','Mujer');
+(15,15,5,'café','L',20000,'../images/Abrigos/abrigo6_mujer.jpg','N','Mujer');
 
 insert into detalle_producto
 (id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
@@ -195,6 +300,110 @@ insert into detalle_producto
 (id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
 values
 (17,17,15,'negro','L',25000,'../images/Abrigos/abrigo8_mujer.jpg','N','Mujer');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(18,18,4,'blanco','S',25000,'../images/Vestidos/Vestido01.jpg','N','Mujer');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(19,19,10,'negro','M',25000,'../images/Vestidos/Vestido02.jpg','N','Mujer');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(20,20,12,'negro','L',25000,'../images/Vestidos/Vestido03.jpg','N','Mujer');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(21,21,15,'blanco','S',25000,'../images/Vestidos/Vestido04.jpg','N','Mujer');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(22,22,4,'gris','S',20000,'../images/Blusas/blusas01.jpg','N','Mujer');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(23,23,10,'blanco','M',25000,'../images/Blusas/blusas02.jpg','N','Mujer');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(24,24,12,'negro','L',20000,'../images/Blusas/blusas03.jpg','N','Mujer');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(25,25,15,'azul','S',25000,'../images/Blusas/blusas04.jpg','N','Mujer');
+
+--
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(26,26,4,'azul','S',20000,'../images/Jeans/jeans01.jpg','N','Mujer');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(27,27,10,'azul','M',25000,'../images/Jeans/jeans02.jpg','N','Mujer');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(28,28,12,'blanco','L',20000,'../images/Jeans/jeans03.jpg','N','Mujer');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(29,29,15,'negro','S',25000,'../images/Jeans/jeans04.jpg','N','Mujer');
+
+---
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(30,30,4,'negro','S',20000,'../images/Pantalones/pantalon01negro.jpg','N','Mujer');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(31,31,10,'azul','M',25000,'../images/Pantalones/pantalon02azul.jpg','N','Mujer');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(32,32,12,'cafe','L',20000,'../images/Pantalones/pantalon03cafe.jpg','N','Mujer');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(33,33,15,'azul','S',25000,'../images/Pantalones/pantalon04azul.jpg','N','Mujer');
+
+---
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(34,34,4,'negro','S',20000,'../images/Calzados/calzadomujer01.jpg','N','Mujer');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(35,35,10,'blanco','M',25000,'../images/Calzados/calzadomujer02.jpg','N','Mujer');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(36,36,12,'negro','L',20000,'../images/Calzados/calzadomujer03.jpg','N','Mujer');
+
+insert into detalle_producto
+(id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
+values
+(37,37,15,'gris','S',25000,'../images/Calzados/calzadomujer04.jpg','N','Mujer');
+
 insert into producto(correo_tienda,descripcion) values ('prueba@gmail.com','Camisa tirantes');
 
 PROMPT eliminó cliente
