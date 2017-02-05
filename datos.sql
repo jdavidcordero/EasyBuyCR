@@ -352,7 +352,7 @@ values
 insert into detalle_producto
 (id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
 values
-(19,19,10,'negro','M',25000,'../images/Vestidos/Vestido02.jpg','N','Mujer');
+(19,19,10,'negro','M',20000,'../images/Vestidos/Vestido02.jpg','N','Mujer');
 
 insert into detalle_producto
 (id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
@@ -362,7 +362,7 @@ values
 insert into detalle_producto
 (id_detalle,id_producto,cantidad,color,talla,precio,imagen,promocion,genero)
 values
-(21,21,15,'blanco','S',25000,'../images/Vestidos/Vestido04.jpg','N','Mujer');
+(21,21,15,'blanco','S',20000,'../images/Vestidos/Vestido04.jpg','N','Mujer');
 
 ----Blusas mujer
 insert into detalle_producto
