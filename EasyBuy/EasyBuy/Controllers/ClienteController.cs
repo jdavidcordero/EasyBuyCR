@@ -32,6 +32,9 @@ namespace EasyBuy.Controllers
                         ViewBag.genero = listaProductos.ElementAt(0).list_detalle_producto.ElementAt(0).genero;
                         ViewBag.precios = con.ObtenerPreciosProductosHombre(categoria);
                         ViewBag.colores = con.ObtenerColoresProductosHombre(categoria);
+                        ViewBag.tallas = con.ObtenerTallaProductosHombre(categoria);
+                        String[] prov = { "Alajuela", "Cartago", "Guanacaste", "Puntarenas", "Limon", "San Jose", "Heredia" };
+                        ViewBag.provincias = prov;
                     }
                 }
                 return View(listaProductos);
@@ -54,6 +57,9 @@ namespace EasyBuy.Controllers
                         ViewBag.genero = listaProductos.ElementAt(0).list_detalle_producto.ElementAt(0).genero;
                         ViewBag.precios = con.ObtenerPreciosProductosMujer(categoria);
                         ViewBag.colores = con.ObtenerColoresProductosMujer(categoria);
+                        ViewBag.tallas = con.ObtenerTallaProductosHombre(categoria);
+                        String[] prov = { "Alajuela", "Cartago", "Guanacaste", "Puntarenas", "Limon", "San Jose", "Heredia"};
+                        ViewBag.provincias = prov;
                     }
                 }
                 return View(listaProductos);
@@ -72,6 +78,9 @@ namespace EasyBuy.Controllers
             ViewBag.genero = model.genero;
             ViewBag.precios = con.ObtenerPreciosProductosHombre(model.categoria);
             ViewBag.colores = con.ObtenerColoresProductosHombre(model.categoria);
+            ViewBag.tallas = con.ObtenerTallaProductosHombre(model.categoria);
+            String[] prov = { "Alajuela", "Cartago", "Guanacaste", "Puntarenas", "Limon", "San Jose", "Heredia" };
+            ViewBag.provincias = prov;
             return View("Hombre",listaProductos);
         }
 
@@ -83,6 +92,9 @@ namespace EasyBuy.Controllers
             ViewBag.genero = model.genero;
             ViewBag.precios = con.ObtenerPreciosProductosMujer(model.categoria);
             ViewBag.colores = con.ObtenerColoresProductosMujer(model.categoria);
+            ViewBag.tallas = con.ObtenerTallaProductosHombre(model.categoria);
+            String[] prov = { "Alajuela", "Cartago", "Guanacaste", "Puntarenas", "Limon", "San Jose", "Heredia" };
+            ViewBag.provincias = prov;
             return View("Mujer", listaProductos);
         }
     }

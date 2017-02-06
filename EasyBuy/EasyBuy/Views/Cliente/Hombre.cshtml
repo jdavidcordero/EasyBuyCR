@@ -74,6 +74,48 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <div class="dropdown">
+                            <button class="btn btn-blue dropdown-toggle" type="button" id="ddmenu1" data-toggle="dropdown" aria-expanded="true">
+                                Talla
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="ddmenu1">
+                                @foreach (var talla in ViewBag.tallas)
+                                {
+                                    <li role="presentation">
+                                        <div class="checkbox">
+                                            <label for="mensaje">
+                                                <input type="checkbox" name="talla" id="talla" value="@talla"> @talla
+                                            </label>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="dropdown">
+                            <button class="btn btn-blue dropdown-toggle" type="button" id="ddmenu1" data-toggle="dropdown" aria-expanded="true">
+                                Provincia
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="ddmenu1">
+                                @foreach (var provincia in ViewBag.provincias)
+                                {
+                                    <li role="presentation">
+                                        <div class="checkbox">
+                                            <label for="mensaje">
+                                                <input type="checkbox" name="provincia" id="provincia" value="@provincia"> @provincia
+                                            </label>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
                     <a href="javascript:document.getElementById('formFiltrar').submit()" class="btn btn-blue">Filtrar</a>
                 }
             </div>

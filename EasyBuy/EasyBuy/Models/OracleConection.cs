@@ -326,6 +326,34 @@ namespace EasyBuyCR.Models
             return listaPrecios;
         }
 
+        public List<string> ObtenerTallaProductosHombre(String categoria)
+        {
+            List<string> listaTallas = new List<string>();
+
+            conexion = new OracleConnection(cadena);
+            conexion.Open();
+
+            cmd = new OracleCommand("select distinct d.talla from producto p, detalle_producto d where p.categoria = :categoria and d.genero = :genero", conexion);
+            cmd.Parameters.Add("categoria", OracleDbType.Varchar2).Value = categoria;
+            cmd.Parameters.Add("genero", OracleDbType.Varchar2).Value = "Hombre";
+
+            OracleDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                string talla = "";
+                talla = reader.IsDBNull(0) ? "" : reader.GetString(0);
+                listaTallas.Add(talla);
+            }
+
+            reader.Dispose();
+            cmd.Dispose();
+            conexion.Close();
+            conexion.Dispose();
+
+            return listaTallas;
+        }
+
         public List<String> ObtenerColoresProductosHombre(String categoria)
         {
             List<String> listaPrecios = new List<String>();
@@ -394,7 +422,43 @@ namespace EasyBuyCR.Models
                 }
             }
 
-            cmd = new OracleCommand("select p.id_producto,p.correo_tienda,p.descripcion,p.categoria from producto p, detalle_producto d where p.categoria = :categoria and d.genero = :genero and p.id_producto = d.id_producto"+cad, conexion);
+            if (model.talla != null)
+            {
+                if (model.talla.Count == 1)
+                    cad += " and d.talla = '" + model.talla.ElementAt(0) + "'";
+                else
+                {
+                    cad += " and (";
+                    for (int i = 0; i < model.talla.Count; i++)
+                    {
+                        if (model.talla.Count != i + 1)
+                            cad += " d.talla = '" + model.talla.ElementAt(i) + "' or";
+                        else
+                            cad += " d.talla = '" + model.talla.ElementAt(i) + "'";
+                    }
+                    cad += ")";
+                }
+            }
+
+            if (model.provincia != null)
+            {
+                if (model.provincia.Count == 1)
+                    cad += " and e.provincia = '" + model.provincia.ElementAt(0) + "'";
+                else
+                {
+                    cad += " and (";
+                    for (int i = 0; i < model.provincia.Count; i++)
+                    {
+                        if (model.provincia.Count != i + 1)
+                            cad += " e.provincia = '" + model.provincia.ElementAt(i) + "' or";
+                        else
+                            cad += " e.provincia = '" + model.provincia.ElementAt(i) + "'";
+                    }
+                    cad += ")";
+                }
+            }
+
+            cmd = new OracleCommand("select p.id_producto,p.correo_tienda,p.descripcion,p.categoria, p.correo_tienda from producto p, detalle_producto d, empresa e where p.categoria = :categoria and d.genero = :genero and p.id_producto = d.id_producto and e.correo_tienda = p.correo_tienda" + cad, conexion);
             cmd.Parameters.Add("categoria", OracleDbType.Varchar2).Value = model.categoria;
             cmd.Parameters.Add("genero", OracleDbType.Varchar2).Value = model.genero;
 
@@ -407,6 +471,8 @@ namespace EasyBuyCR.Models
                 abrigo.id_empresa = reader.IsDBNull(1) ? "" : reader.GetString(1);
                 abrigo.description = reader.IsDBNull(2) ? "" : reader.GetString(2);
                 abrigo.categoria = reader.IsDBNull(3) ? "" : reader.GetString(3);
+                if (!reader.IsDBNull(4))
+                    abrigo.empresa = obtenerDetalleEmpresa(reader.GetString(4));
                 abrigo.list_detalle_producto = getDetalles(abrigo.id_producto);
                 listaAbrigos.Add(abrigo);
             }
