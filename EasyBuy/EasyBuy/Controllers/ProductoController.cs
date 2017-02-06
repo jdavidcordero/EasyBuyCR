@@ -282,6 +282,8 @@ namespace EasyBuy.Controllers
             }
             return new JsonResult { Data = new { estado = estado, mensaje = mensaje } };
         }
+
+            
     }
 
 
